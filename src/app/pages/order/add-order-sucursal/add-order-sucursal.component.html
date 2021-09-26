@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="title-box text-center pt-5">
+            <h3 class="title-a">
+                Configurar pedido
+            </h3>
+            <p class="subtitle-a">
+                Complete todos los datos para realizar su pedido (los campos con * son requeridos)
+            </p>
+            <div class="line-mf"></div>
+        </div>
+    </div>
+</div>
+<div class="d-flex card">
+  <form (ngSubmit)="onSubmit( f )"  #f="ngForm">
+
+      <label class="fname"><strong>ID *</strong>  </label>
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderId"
+      [class.is-invalid]="orderId.invalid && orderId.touched"
+      required
+      placeholder="Identificador de Pedido"
+      name="orderId"
+      #orderId = "ngModel">
+
+
+      <label class="fname"><strong>Cliente</strong> </label>
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderClientName"
+      placeholder="Nombre del Cliente"
+      name="orderClientName"
+      #orderClientName = "ngModel">
+
+
+      <label class="lname"> <strong>Recibe *</strong> </label>
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderRecieverName"
+      [class.is-invalid]="orderRecieverName.invalid && orderRecieverName.touched"
+      required
+      placeholder="Nombre del que Recibe"
+      name="orderRecieverName"
+      #orderRecieverName = "ngModel">
+
+
+
+      <label> <strong>Provincia</strong>  </label>
+      <!-- <input  [(ngModel)]="order.orderProvince"
+
+      class="form-select"
+      name="orderProvince"
+      [class.is-invalid]="orderProvince.invalid && orderProvince.touched"
+      #orderProvince="ngModel"
+
+      > -->
+        <select [(ngModel)]="order.orderProvince" style="height: 30px;" name="orderProvince"  class="form-select" [class.is-invalid]="orderProvince.invalid && orderProvince.touched"
+        #orderProvince="ngModel" >
+          <option [ngValue]="null">Seleccione una categoria</option>
+          <option *ngFor="let p of provinces" [ngValue]="p.name">
+            {{p.name}}
+         </option>
+        </select>
+
+      <div class="col-md-12">
+        <div class="row">
+          <label> <strong>Móvil</strong>  </label>
+        <div class="col-md-6"> <input type="text"
+          class="form-control"
+          [(ngModel)]="order.orderMobile"
+          [class.is-invalid]="orderMobile.invalid && orderMobile.touched"
+          placeholder="Teléfono Móvil"
+          [pattern]="mobNumberPattern"
+          [required]="!order.orderPhone"
+          name="orderMobile"
+          #orderMobile = "ngModel">
+          <small *ngIf="orderMobile.invalid && orderMobile.touched" class="form-text text-danger">No es un número de teléfono válido. (Debe comenzar con 5 y tener 8 caracteres)</small>
+        </div>
+
+        </div>
+      </div>
+
+  <div class="Yorder">
+    <div class="card mb-3 shadow" >
+      <h3 class="text-center mt-2">
+        <b>
+          Subir Factura
+        </b>
+        </h3>
+      <div class="card-body text-center ">
+
+        <input type="file"
+        required
+        [(ngModel)]="file2"
+        [class.is-invalid]="file.invalid && file.touched"
+        #file = "ngModel"
+        (change)="detectFiles($event)">
+
+
+    </div>
+    </div>
+
+      <button type="submit" >Completar Pedido</button>
+    </div>
+</form>
+ </div>
+</div>

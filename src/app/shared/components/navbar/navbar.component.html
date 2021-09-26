@@ -1,0 +1,51 @@
+<div class="navbar navbar-dark bg-dar shadow doNotPrint">
+  <div class="nav_icon" onclick="toggleSidebar()">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </div>
+  <div class="navbar__left">
+
+
+  </div>
+  <div class="navbar__right">
+    <!-- <div class="navbar__actions">
+      <a href="#">
+        <i class="fa fa-envelope"></i>
+      </a>
+      <a href="#">
+        <i class="fa fa-bell"></i>
+      </a>
+    </div> -->
+    <div class="dropdown" style="float:right;" >
+      <div class="navbar__account dropbtn" *ngIf="auth.logedUser.userName">
+        <!-- <div class="navbar__avatar ">
+          <a href="#">
+
+            <img class="rounded-circle" src="{{img}}" alt="">
+          </a>
+        </div>
+        <div >
+          <div class="user__name">
+            {{ auth.logedUser.userName }}
+
+          </div>
+          <div class="user__role">
+            {{ auth.logedUser.userRole }}
+          </div>
+        </div> -->
+        <div class="sign__out">
+          <a  (click)="auth.logout()">
+            <i class="fa fa-sign-out fa-2x" alt="Salir"></i>
+          </a>
+        </div>
+      </div>
+      <!-- <div class="dropdown-content dropdown__content animated fadeIn">
+         <a (click)="openSettings()">
+          <span><i class="fa fa-user fa-2x"></i>Añadir usuario</span>
+        </a>
+        <a (click)="auth.logout({ returnTo: document.location.origin })">
+          <span><i class="fa fa-sign-out fa-2x"></i>Salir</span>
+        </a>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="title-box text-center pt-5">
+        <h3 class="title-a">
+          Editar producto
+        </h3>
+        <p class="subtitle-a">
+          Edite los campos del producto
+        </p>
+        <div class="line-mf"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-lg-4">
+      <div class="card mb-3 shadow">
+        <div class="card-body text-center "><img class="mb-3 mt-4" src='{{img}}' width="160" height="160" />
+          <input type="file" name="photo" accept="image/*" [(ngModel)]="photosrc" (change)="photo($event)"
+            class="form-control mb-4">
+
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-8">
+
+      <div class="row">
+        <div class="col">
+          <div class="card shadow mb-3">
+            <div class="card-body">
+              <form (ngSubmit)="saveProduct( f )" #f="ngForm">
+                <div class="form-row row">
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="username"><strong>Nombre</strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="product.productName"
+                        [class.is-invalid]="productName.invalid && productName.touched" placeholder="Nombre" required
+                        name="productName" #productName="ngModel" />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="price"><strong>Precio</strong></label>
+                      <input type="string" [(ngModel)]="product.productPrice" class="form-control"
+                        [class.is-invalid]="productPrice.invalid && productPrice.touched" value="0" required
+                        placeholder="Precio" name="productPrice" #productPrice="ngModel" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="cost"><strong>Costo</strong></label>
+                      <input type="string" [(ngModel)]="product.productCost"
+                        [class.is-invalid]="productCost.invalid && productCost.touched" class="form-control" value="0"
+                        placeholder="Costo" name="productCost" #productCost="ngModel" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="cost"><strong>UM</strong></label>
+                      <select [(ngModel)]="product.productUM" class="form-select" name="productUM"
+                        [class.is-invalid]="productUM.invalid && productUM.touched" #productUM="ngModel">
+                        <option value="u">
+                          u
+                        </option>
+                        <option value="lb">
+                          lb
+                        </option>
+                        <option value="pqt">
+                          pqt
+                        </option>
+
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group"><label for="amount"><strong>Cantidad</strong><br /></label>
+                      <input type="string" [(ngModel)]="product.productAmount"
+                        [class.is-invalid]="productAmount.invalid && productAmount.touched" class="form-control"
+                        value="0" placeholder="Cantidad" name="productAmount" #productAmount="ngModel" />
+                    </div>
+                    <div class="btn-toolbar"></div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+
+                  <div class="col">
+                    <div class="form-group"><label for="last_name"><strong>Provincia o Región</strong><br /></label>
+                      <select [(ngModel)]="product.productProvinces" multiple class="form-select" name="selectProvince"
+                        [class.is-invalid]="selectProvinces.invalid && selectProvinces.touched" #selectProvinces="ngModel"
+                        required>
+                        <option *ngFor="let t of provinces" (click)="selecProvince(t.name)">
+                          {{t.name}} <i *ngIf="verifyProvince(t.name)" class="fa fa-check"></i>
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group"><label for="last_name"><strong>Agencia</strong><br /></label>
+                      <select [(ngModel)]="product.productAgencys" multiple class="form-select" name="productAgency"
+                        [class.is-invalid]="productAgencys.invalid && productAgencys.touched" #productAgencys="ngModel">
+                        <option (click)="selectAgency('Todas')">
+                          Todas <i *ngIf="verifyAgency('Todas')" class="fa fa-check"></i>
+                        </option>
+                        <option *ngFor="let t of transporte" (click)="selectAgency(t.attributes.agencia)">
+                          {{t.attributes.agencia}} <i *ngIf="verifyAgency(t.attributes.agencia)" class="fa fa-check"></i>
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group"><label for="last_name"><strong>Catergoría</strong><br /></label>
+                      <select [(ngModel)]="product.productCategory" disabled class="form-select" name="productCategory"
+                        [class.is-invalid]="productCategory.invalid && productCategory.touched"
+                        #productCategory="ngModel" required>
+                        <option [value]="product.productCategory">
+                          {{product.productCategory}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="render__table mt-2" *ngIf="product.productCategory == 'Combo'">
+                  <div class="paste__box" (paste)="data($event)">
+                    <span>Pega los productos</span>
+
+
+                  </div>
+                  <div>{{val}}</div>
+
+                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                </div>
+                <div class="form-group ">
+                  <label for="first_name"><strong>Descripción</strong><br /></label>
+                  <textarea [(ngModel)]="product.productDescription" name="description"
+                    placeholder="Escriba una descripción ..." class="form-control"></textarea>
+                </div>
+
+                <button class="button mt-4" type="submit"><i class="fa fa-save"></i>Guardar Cambios</button>
+                <button class="button mt-4 delete__btn" type="button" (click)="deleteProduct()"><i
+                    class="fa fa-trash"></i>Eliminar Producto</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

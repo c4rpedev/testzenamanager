@@ -1,0 +1,47 @@
+input{
+    border-radius: 15px;
+}
+img{
+    border-radius: 15px;
+}
+select{
+    border-radius: 15px;
+}
+textarea{
+    border-radius: 15px;
+}
+
+p {
+  font-family: Lato;
+}
+table {
+  width: 100%;
+}
+
+.paste__box{
+  border:solid;
+  border-radius: 15px;
+  span{
+    margin-left: 15px;
+  }
+
+}
+
+//-- Editable Table --//
+@media all and (min-width: 768px) {
+    tr  {
+      td {
+        vertical-align: middle !important;
+      }
+      span {
+        &:not([class]) {
+          padding: 10px 10px;
+          color: black;
+          font-size: medium;
+          height: 100%;
+          border: 1px solid #343435;
+          display: block;
+        }
+      }
+    }
+  }

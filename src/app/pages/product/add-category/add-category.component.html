@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="title-box text-center pt-5">
+        <h3 class="title-a">
+          Añadir Categoría
+        </h3>
+        <p class="subtitle-a">
+          Añada una Categoría al sistema
+        </p>
+        <div class="line-mf"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-lg-4">
+      <div class="card mb-3 shadow">
+        <div class="card-body text-center ">
+          <img class="mb-3 mt-4" src='{{img}}' width="160" height="160" />
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-8">
+
+      <div class="row">
+        <div class="col">
+          <div class="card shadow mb-3">
+            <div class="card-body">
+              <form (ngSubmit)="saveProduct( f )" #f="ngForm">
+                <div class="form-row row">
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="username"><strong>Nombre</strong></label>
+                      <input type="text" class="form-control" [(ngModel)]="category.name"
+                        [class.is-invalid]="productName.invalid && productName.touched" placeholder="Nombre" required
+                        name="name" #productName="ngModel" />
+                    </div>
+                  </div>
+                </div>
+
+                <button class="button mt-4" type="submit">Guardar Cambios</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

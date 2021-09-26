@@ -1,0 +1,21 @@
+
+ <div *ngIf="auth.check" class="dashboard__main">
+  <nav>
+    <app-navbar  >
+    </app-navbar>
+  </nav>
+  <div id="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="first__columm container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div >
+  <div *ngIf="!auth.check">
+     <app-auth-login></app-auth-login>
+ </div>
+</div>
+
+
+

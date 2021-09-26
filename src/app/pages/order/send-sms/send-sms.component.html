@@ -1,0 +1,32 @@
+    <div class="col-md-12 ml-2">
+      <div >      
+          <form (ngSubmit)="sendSms( f )"  #f="ngForm">
+            <label>
+              <span class="fname">Móvil</span>
+              <input [(ngModel)]="mobile.mobile"
+                      type="text" 
+                      class="form-control"                      
+                      disabled 
+                      required 
+                      placeholder="Móvil"
+                      name="complainId"                     
+                      >
+            </label>          
+            <label>
+              <span>Mensaje </span>
+              <textarea  [(ngModel)]="text" 
+              [class.is-invalid]="text2.invalid && text2.touched"           
+              required               
+              name="complainMotive"
+              #text2 = "ngModel"
+              >
+              </textarea>
+              <small *ngIf="text2.invalid && text2.touched" class="form-text text-danger">Escriba el mensaje que desea enviar.</small>
+            </label>           
+            <div class="buttons__send mb-3"><button class="btn btn-primary btn-sm" type="submit">Enviar SMS</button><button class="btn btn-danger btn-sm" (click)="close()">Cerrar</button></div>
+          </form>
+      
+         </div>
+    </div>
+   
+ 

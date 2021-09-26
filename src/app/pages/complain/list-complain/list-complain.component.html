@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="title-box text-center pt-5">
+            <h3 class="title-a">
+                Quejas
+            </h3>
+            <p class="subtitle-a">
+                Listado de quejas
+            </p>
+            <div class="line-mf"></div>
+        </div>
+    </div>
+  </div>
+
+
+  <!-- <div class="btn-group " role="group" >
+    <button type="button" (click)="addComplain()">Realizar queja</button>
+  </div> -->
+  <div class="card">
+    <div class="order__spinner" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="table-responsive" *ngIf="!loading">
+
+
+      <table id="mytable" class="table table-bordred table-striped">
+
+           <thead>
+            <th scope="col">Id</th>
+            <th scope="col">Agencia</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Pedido</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+           </thead>
+    <tbody>
+
+    <tr *ngFor="let complain of complains">
+      <th scope="row">{{complain.attributes.complainId}}</th>
+      <td>{{complain.attributes.complainAgency}}</td>
+      <td>{{complain.attributes.complainClient}}</td>
+      <td>{{complain.attributes.complainOrder}}</td>
+      <td><div class="badge bg-success text-wrap" style="width: 6rem;" *ngIf="complain.attributes.complainState == 'Nuevo'">
+        {{complain.attributes.complainState}}
+      </div>
+      <div class="badge bg-primary text-wrap" style="width: 6rem;" *ngIf="complain.attributes.complainState == 'En Proceso'">
+        {{complain.attributes.complainState}}
+      </div>
+      <div class="badge bg-danger text-wrap" style="width: 6rem;" *ngIf="complain.attributes.complainState == 'Finalizado'">
+        {{complain.attributes.complainState}}
+      </div>
+    </td>
+     <td *ngIf="admin">
+       <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" (click)="editComplain(complain.attributes, complain.id)"><span class="fa fa-edit"></span></button>
+       <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" (click)="deleteComplain(complain)"><span class="fa fa-trash"></span></button>
+    </td>
+    <td  *ngIf="!admin">
+      <button class="btn btn-primary btn-xs" data-title="List" data-toggle="modal" data-target="#list" (click)="editComplain(complain.attributes, complain.id)"><span class="fa fa-list"></span></button>
+    </td>
+    </tr>
+    </tbody>
+
+    </table>
+
+
+
+    </div>
+
+  </div>

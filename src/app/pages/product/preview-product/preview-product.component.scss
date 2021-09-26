@@ -1,0 +1,21 @@
+label{
+    margin-bottom: 10px;
+}
+.preview__item{
+    display: flex;    
+    justify-content: space-between;
+}
+.card-body{
+    padding: 0;
+}
+table{
+    margin: 0;
+    padding: 0;
+}
+.img__preview{
+    img{
+        border: black;   
+        border-style: solid;
+    }
+  
+}

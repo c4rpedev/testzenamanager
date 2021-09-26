@@ -1,0 +1,22 @@
+[ 
+  {
+  "category" : "Angular, Frontend",
+  "cod" : "proj-1",
+  "date" : "May, 2021",
+  "github" : "https://github.com/StyvenSoft/friends-contapp",
+  "title" : "Angular Dashboard",
+  "url" : "assets/img/project1.png",
+  "web" : "https://friends-contapp.herokuapp.com"
+},
+
+{
+  "category" : "Laravel web application",
+  "cod" : "proj-2",
+  "date" : "Dec 5, 2020",
+  "github" : "https://github.com/StyvenSoft/postwi-app",
+  "title" : "Postwi App",
+  "url" : "assets/img/profile-pic.jpg",
+  "web" : "https://postwi-app.herokuapp.com"
+}
+
+]

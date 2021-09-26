@@ -1,0 +1,396 @@
+[
+    {
+        "user": {
+            "name": "Mercadito",
+            "role": "Agencia",
+            "cards": [
+                {
+                    "account_type": "PREMIUM",
+                    "number": "5840 **** **** 6745",
+                    "card_holder": "Mike Smith",
+                    "exp_date": "06/21",
+                    "balance": "2850.75",
+                    "income": "1500.50",
+                    "outcome": "350.60",
+                    "weekly_limit": "4000",
+                    "transactions":[
+                        {
+                            "reciever":"Tesco Market",
+                            "type": "Shopping",
+                            "date": "13 Dec 2020",
+                            "amount": "75.67",
+                            "icon": "shopping-cart"
+                        },
+                        {
+                            "reciever":"ElectroMen Market",
+                            "type": "Shopping",
+                            "date": "14 Dec 2020",
+                            "amount": "250.00",
+                            "icon": "shopping-cart"
+                        },
+                        {
+                            "reciever":"Fiorgio Restaurant",
+                            "type": "Food",
+                            "date": "07 Dec 2020",
+                            "amount": "19.50",
+                            "icon": "beer"
+                        },
+                        {
+                            "reciever":"John Mathew",
+                            "type": "Sport",
+                            "date": "06 Dec 2020",
+                            "amount": "350",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Ann Marlin",
+                            "type": "Electronics",
+                            "date": "31 Nov 200",
+                            "amount": "430",
+                            "icon": "shopping-cart"
+                        }
+                    ]
+                },
+                {
+                    "account_type": "GOLD",
+                    "number": "3455 **** **** 7845",
+                    "card_holder": "Alex Black",
+                    "exp_date": "08/22",
+                    "balance": "1547.32",
+                    "income": "1103.20",
+                    "outcome": "945.35",
+                    "weekly_limit": "3000",
+                    "transactions":[
+                        {
+                            "reciever":"Boulevard",
+                            "type": "Food",
+                            "date": "15 de May 2021",
+                            "amount": "205.70",
+                            "icon": "beer"
+                        },
+                        {
+                            "reciever":"Anthony Black",
+                            "type": "Sport",
+                            "date": "25 Jan 2021",
+                            "amount": "252.00",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Fiorgio Restaurant",
+                            "type": "Food",
+                            "date": "07 Dec 2020",
+                            "amount": "19.50",
+                            "icon": "beer"
+                        },
+                        {
+                            "reciever":"John Mathew",
+                            "type": "Sport",
+                            "date": "06 Dec 2020",
+                            "amount": "350",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Ann Marlin",
+                            "type": "Shopping",
+                            "date": "31 Nov 200",
+                            "amount": "430",
+                            "icon": "shopping-cart"
+                        }
+                    ]
+                }
+            ],
+            "goals":[
+                {
+                    "name":"Holiday",
+                    "amount": "550",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#70A6E8"
+                },
+                {
+                    "name":"Renovation",
+                    "amount": "200",
+                    "date": "10/20/20",
+                    "icon": "brush",
+                    "color": "#F78F42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "gamepad",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Gift",
+                    "amount": "150",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                }
+            ],
+            
+            "friends":[
+                {
+                    "name":"Ann",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"Monica",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"John",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"Mike",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"Mia",
+                    "card": "54255665465464565"                    
+                }
+            ]
+        }
+    },
+    {
+        "user": {
+            "name": "Alejandro",
+            "role": "Admin",
+            "cards": [
+                {
+                    "account_type": "PLATINUM",
+                    "number": "8954 **** **** 2211",
+                    "card_holder": "Alejandro Pérez",
+                    "exp_date": "06/21",
+                    "balance": "2850.75",
+                    "income": "1500.50",
+                    "outcome": "350.60",
+                    "weekly_limit": "4000",
+                    "transactions":[
+                        {
+                            "reciever":"Ebay",
+                            "type": "Shopping",
+                            "date": "14 Jun 2021",
+                            "amount": "88.40",
+                            "icon": "shopping-cart"
+                        },
+                        {
+                            "reciever":"Target",
+                            "type": "Sport",
+                            "date": "17 Dec 2021",
+                            "amount": "487.00",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Fiorgio Restaurant",
+                            "type": "Food",
+                            "date": "07 Dec 2020",
+                            "amount": "19.50",
+                            "icon": "beer"
+                        },
+                        {
+                            "reciever":"John Mathew",
+                            "type": "Sport",
+                            "date": "06 Dec 2020",
+                            "amount": "350",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Ann Marlin",
+                            "type": "Electronics",
+                            "date": "31 Nov 200",
+                            "amount": "384",
+                            "icon": "shopping-cart"
+                        }
+                    ]
+                },
+                {
+                    "account_type": "SILVER",
+                    "number": "7845 **** **** 2547",
+                    "card_holder": "Old New",
+                    "exp_date": "12/24",
+                    "balance": "4578.32",
+                    "income": "2587.20",
+                    "outcome": "748.45",
+                    "weekly_limit": "1000",
+                    "transactions":[
+                        {
+                            "reciever":"Boulevard",
+                            "type": "Food",
+                            "date": "15 de May 2021",
+                            "amount": "205.70",
+                            "icon": "beer"
+                        },
+                        {
+                            "reciever":"Anthony Black",
+                            "type": "Sport",
+                            "date": "25 Jan 2021",
+                            "amount": "252.00",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Fiorgio Restaurant",
+                            "type": "Food",
+                            "date": "07 Dec 2020",
+                            "amount": "19.50",
+                            "icon": "beer"
+                        },
+                        {
+                            "reciever":"John Mathew",
+                            "type": "Sport",
+                            "date": "06 Dec 2020",
+                            "amount": "350",
+                            "icon": "futbol"
+                        },
+                        {
+                            "reciever":"Ann Marlin",
+                            "type": "Shopping",
+                            "date": "31 Nov 200",
+                            "amount": "430",
+                            "icon": "shopping-cart"
+                        }
+                    ]
+                }
+            ],
+            "goals":[
+                {
+                    "name":"Renovation",
+                    "amount": "784",
+                    "date": "12/23/21",
+                    "icon": "brush",
+                    "color": "#F78F42"
+                },
+                {
+                    "name":"Vacation",
+                    "amount": "478",
+                    "date": "10/01/21",
+                    "icon": "mountain",
+                    "color": "#70A6E8"
+                },               
+                {
+                    "name":"PlayStation",
+                    "amount": "900",
+                    "date": "01/01/21",
+                    "icon": "gamepad",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Gift",
+                    "amount": "150",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                },
+                {
+                    "name":"Xbox",
+                    "amount": "800",
+                    "date": "10/20/20",
+                    "icon": "mountain",
+                    "color": "#1F9C42"
+                }
+            ],
+            
+            "friends":[                
+                {
+                    "name":"Mike",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"Mia",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"Ann",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"Monica",
+                    "card": "54255665465464565"                    
+                },
+                {
+                    "name":"John",
+                    "card": "54255665465464565"                    
+                }
+            ]
+        }
+    }
+]

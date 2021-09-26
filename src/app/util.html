@@ -1,0 +1,14 @@
+<div id="first__column">
+    <app-cards 
+    [card_empty]="card_empty"
+    [cards]="cards" 
+    [transactions]="transactions" 
+    [count]="count" 
+    [user_count]="user_count" 
+    (countChange)="getUser($event)"></app-cards>
+  </div>
+  <div id="second__column">
+    <app-goals 
+    [goals]="goals" [friends]="friends" [transactions]="transactions">
+  </app-goals>
+  </div>

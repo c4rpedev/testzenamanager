@@ -1,0 +1,23 @@
+.first__columm{
+  background-color: #f8f9fc;
+}
+.navbar {
+  background: #ffffff;
+  grid-area: nav;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px 0 30px;
+  border-bottom: 1px solid lightgray;
+}
+#sidebar{
+  background: white;  
+  box-shadow: 1px 0px 0px 0px lightgray;
+}
+.login{
+  background-color: rgb(11, 92, 168);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}

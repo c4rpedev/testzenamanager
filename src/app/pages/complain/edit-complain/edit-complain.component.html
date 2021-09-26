@@ -1,0 +1,128 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12" *ngIf="admin">
+          <div class="title-box text-center pt-5">
+              <h3 class="title-a">
+                  Editar queja
+              </h3>
+              <p class="subtitle-a">
+                  Modifique la queja
+              </p>
+              <div class="line-mf"></div>
+          </div>
+      </div>
+  </div>
+  <div class="order__spinner" *ngIf="loading">
+    <mat-spinner  ></mat-spinner>
+  </div>
+  <div class="complain" >
+    
+    <div class="col-md-2"></div>
+    <div class="col-md-8 ml-2">
+      <div class="d-flex card ">
+        
+          <form (ngSubmit)="onSubmit( f )"  #f="ngForm">
+            <label>
+              <span class="fname">Id </span>
+            
+                      {{complain.complainId}}
+                     
+            </label>
+            <label>
+              <span class="fname">Cliente </span>
+            
+                     {{complain.complainClient}}
+                     
+            </label>
+           
+           
+            <label>
+              <span class="fname">Id de Pedido</span>
+              {{complain.complainOrder}}
+            </label>
+            <label>
+              <span>Motivo </span>
+              {{complain.complainMotive}}             
+            </label>
+            <label *ngIf="(complain.complainState == 'En Proceso') || (complain.complainState == 'Finalizado')">
+              <span>Análisis</span>
+              <textarea  [(ngModel)]="complain.complainAnalisis" 
+              [class.is-invalid]="complainAnalisis.invalid && complainAnalisis.touched"
+              required     
+              [disabled]="!admin"                   
+              name="complainAnalisis"
+              #complainAnalisis = "ngModel">
+              </textarea>
+            </label>
+            <label *ngIf="(complain.complainState == 'Finalizado')">
+              <span>Solución</span>
+              <textarea  [(ngModel)]="complain.complainSolution" 
+              [class.is-invalid]="complainSolution.invalid && complainSolution.touched"
+              required     
+              [disabled]="!admin"                   
+              name="complainSolution"
+              #complainSolution = "ngModel">
+              </textarea>
+            </label>
+            <div class="card mb-3 shadow" *ngIf="(complain.complainState == 'Finalizado')">
+              <h3 class="text-center mt-2">
+                <b>
+                  Evidencias de la Solución
+                </b>
+                </h3>
+              <div class="card-body text-center ">
+                <div>
+                  <img *ngFor="let urlR of urlsResult" [src]="urlR" class="rounded mb-3" width="180">
+                </div>
+                <input *ngIf="admin" type="file" multiple (change)="detectFiles($event)">
+                
+               
+            </div>
+            </div>
+            <label>
+                <span>Estado</span>
+                <select 
+      [(ngModel)]="complain.complainState" 
+      [class.is-invalid]="complainState.invalid && complainState.touched"
+      required 
+      [disabled]="!admin"
+      name="complainState"
+      #complainState = "ngModel"
+      >
+        <option value="Nuevo">
+        Nuevo
+        </option>        
+        <option value="En Proceso">
+        En Proceso
+        </option>
+        <option value="Finalizado">
+        Finalizado
+        </option>
+
+</select>             
+              </label>
+              <div class="card mb-3 shadow" >
+                <h3 class="text-center mt-2">
+                  <b>
+                    Evidencias
+                  </b>
+                  </h3>
+                <div class="card-body text-center ">
+                  <div class="complains_pic">
+                    <a *ngFor="let url of urls" [href]="url" target="_blank" >
+                      <img  [src]="url" class="rounded mb-3" width="180">
+                    </a>
+                    
+                  </div>   
+              </div>
+              </div>
+            <div class="mb-3" *ngIf="admin"><button class="btn btn-primary btn-sm" type="submit">Actualizar</button></div>
+            
+          </form>
+          
+         </div>
+    </div>
+   
+  </div>
+ 
+  </div>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Buttymanager</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/devextreme/21.1.4/css/dx.light.css" rel="stylesheet">
+
+  <!-- Hacer todas las peticiones http-https -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+<script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js">
+  Parse.initialize("dRDCjU3raMLjkSVsZGAomqgWdBvioiBGnllFPJ69", "sh2t2um39n0stRBBF1nWVfIR7mN73srcN8205Jpi");
+  Parse.serverURL = "https://parseapi.back4app.com/";
+
+  var user = new Parse.User();
+    user.save({
+      username: document.getElementById("username").value,
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value
+    }).then(function(response) {
+      alert('New object create with success! ObjectId: ' + response.id + ', '+ user.get('username'));
+    }).catch(function(error) {
+      alert('Error: ' + error.message);
+  });
+</script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="dx-viewport bg-gradient-primary animated fadeIn slow mat-typography">
+  <app-root></app-root>
+</body>
+</html>
+
+

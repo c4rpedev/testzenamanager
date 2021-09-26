@@ -1,0 +1,154 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="title-box text-center pt-5">
+        <h3 class="title-a" *ngIf="!editar">
+          Crear Usuario
+        </h3>
+        <h3 class="title-a" *ngIf="editar">
+          Editar Usuario
+        </h3>
+        <p class="subtitle-a" *ngIf="!editar">
+          Complete todos los datos para crear el nuevo Usuario (los campos con * son requeridos)
+        </p>
+        <p class="subtitle-a" *ngIf="editar">
+          Complete todos los datos para editar el Usuario (los campos con * son requeridos)
+        </p>
+        <div class="line-mf"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-3 shadow">
+        <div class="card-body text-center ">
+          <img class="mb-3 mt-4" src='{{img}}' width="160" height="160" />
+          <div>
+            <input type="file" name="photo" accept="image/*" class="form-control mb-4" [(ngModel)]="photosrc"
+              (change)="photo($event)">
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3 shadow" *ngIf="selectedRole == 'Agencia'">
+        <div class="card-body text-center">
+          <label class="fname mt-2"><strong>Listado Mayoreo</strong> </label>
+          <div *ngIf="!mayoreo || mayoreo[0][0] == '' || !mayoreo[0]">
+            No hay Mayoreos que mostrar.
+          </div>
+          <table id="example1" class="table table-bordered table-striped"
+            *ngIf="mayoreo && mayoreo[0][0] != '' && mayoreo[0]">
+            <thead>
+              <tr>
+                <th>Categoría</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of mayoreo">
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+                <td>{{item[2]}}</td>
+                <td class="badge bg-danger" (click)="deleteMayoreo(item[0])" style="cursor: pointer;">Eliminar</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex card col-lg-8">
+      <form (ngSubmit)="onSubmit( f )" #f="ngForm">
+
+        <label class="fname"><strong>Id</strong> </label>
+        <input type="text" class="form-control" required [(ngModel)]="userService.selectedUser.userId"
+          [disabled]="editar" placeholder="Id de Usuario" name="userId" #userId="ngModel"
+          [class.is-invalid]="userId.invalid && userId.touched">
+
+        <label class="fname mt-2"><strong>Nombre</strong> </label>
+        <input type="text" class="form-control" required [(ngModel)]="userService.selectedUser.userName"
+          placeholder="Nombre de Usuario" name="userName" #userName="ngModel"
+          [class.is-invalid]="userName.invalid && userName.touched">
+
+        <label class="mt-2"><strong>Correo *</strong> </label>
+        <input type="email" class="form-control" [(ngModel)]="userService.selectedUser.emailId"
+          [class.is-invalid]="emailId.invalid && emailId.touched" required placeholder="Correo" name="emailId"
+          #emailId="ngModel">
+
+        <label class="mt-2"> <strong>Teléfono *</strong> </label>
+        <input type="text" class="form-control" [(ngModel)]="userService.selectedUser.phoneNumber"
+          [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" placeholder="Teléfono Móvil"
+          [pattern]="mobNumberPattern" [required]="!userService.selectedUser.phoneNumber" name="phoneNumber"
+          #phoneNumber="ngModel">
+        <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="form-text text-danger">No es un número de
+          teléfono válido. (Debe tener 8 caracteres)</small>
+
+        <div class="col">
+          <div class="form-group mt-2"><label for="last_name"><strong>Rol</strong><br /></label>
+            <select [(ngModel)]="userService.selectedUser.userRole" class="form-select" name="userRole"
+              [class.is-invalid]="userRole.invalid && userRole.touched" #userRole="ngModel" required>
+              <option (click)="selectRole(item.attributes.name)" [value]="item.attributes.name"
+                *ngFor="let item of roles">
+                {{item.attributes.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- MAYOREO!! -->
+        <div class="row mt-2" *ngIf="selectedRole == 'Agencia'">
+          <label for="last_name mb-1"><strong>Mayoreo de productos</strong><br /></label>
+          <div class="form-group col-3"><label for="last_name"><strong>Catergoría</strong><br /></label>
+            <select [(ngModel)]="categoriaMayoreo" class="form-select" name="cateMayoreo"
+              [class.is-invalid]="cateMayoreo.invalid && cateMayoreo.touched" #cateMayoreo="ngModel"
+              (click)="actualizarCategories()">
+              <option>--Seleccione una categoría--</option>
+              <option *ngFor="let item of categories">
+                {{item}}
+              </option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-group"><label for="last_name"><strong>Tipo</strong><br /></label>
+              <select [(ngModel)]="tipoMayoreo" class="form-select" name="tipoMayoreo"
+                [class.is-invalid]="tipoMayoreoo.invalid && tipoMayoreoo.touched" #tipoMayoreoo="ngModel">
+                <option>%</option>
+                <option>Fijo</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <label> <strong>Cantidad</strong> </label>
+            <input type="number" class="form-control" [(ngModel)]="cantMayoreo"
+              [class.is-invalid]="cantMayoreoo.invalid && cantMayoreoo.touched" name="cantMayoreo"
+              #cantMayoreoo="ngModel">
+          </div>
+          <div class="col-3 mt-3">
+            <button (click)="addMayoreo()" type="button">Añadir mayoreo</button>
+          </div>
+        </div>
+
+        <label class="mt-2" *ngIf="!editar"><strong>Contraseña *</strong> </label>
+        <div class="row" *ngIf="!editar">
+          <div class="col-6">
+            <input type="password" class="form-control" [(ngModel)]="userService.selectedUser.password" minlength="8"
+              [class.is-invalid]="pass.invalid && pass.touched" required placeholder="Contraseña" name="pass"
+              #pass="ngModel">
+          </div>
+          <div class="col-6">
+            <input type="password" class="form-control" [(ngModel)]="repeatpassword" minlength="8"
+              pattern="{{userService.selectedUser.password}}" [class.is-invalid]="passR.invalid && passR.touched"
+              required placeholder="Repetir Contraseña" name="passR" #passR="ngModel">
+          </div>
+          <small *ngIf="passR.invalid  && passR.touched && pass.touched" style="color: red;">Las contraseñas no
+            coinciden. (Debe tener mínimo 8 caracteres)</small>
+        </div>
+
+        <button class="mt-2" type="submit" *ngIf="!userService.selectedUser.createdAt">Crear Usuario</button>
+        <button class="mt-2" type="submit" *ngIf="userService.selectedUser.createdAt">Editar Usuario</button>
+      </form>
+    </div>
+  </div>
+</div>

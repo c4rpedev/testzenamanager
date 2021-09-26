@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="title-box text-center pt-5">
+                <h3 class="title-a">
+                    Editar Sucursales
+                </h3>
+                <p class="subtitle-a">
+                    Añada o elimine Sucursales
+                </p>
+                <div class="line-mf"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+    
+        </div>
+        <div class="col-lg-6">
+            <div class="card" > 
+                <div class="card-body">
+                        <label>  <strong>Sucursales</strong> </label>
+                          <select  [(ngModel)]="sucursal"  
+                          (ngModelChange)="onChangeSucursal()"
+                        class="form-select" 
+                        name="province"                       
+                        #provinceD="ngModel"                        
+                        >
+                        <option >
+                           <span>Seleccione una Sucursal</span> 
+                        </option>
+                  <option *ngFor="let t of sucursalName">
+                   {{t.attributes.name}}
+                  </option>
+                  </select>  
+                  <div class="container">          
+                    <div class="order__spinner" *ngIf="loading">
+                      <mat-spinner  ></mat-spinner>
+                    </div> 
+                    <form (ngSubmit)="onSubmit( f )" #f="ngForm">  
+                        
+                        <label class="fname mt-3"><strong>Nombre</strong> </label>
+                        <input type="text" 
+                        class="form-control" 
+                        [(ngModel)]="name" 
+                        [class.is-invalid]="nameD.invalid && nameD.touched"
+                        required 
+                        placeholder="Nombre de la Sucursal"
+                        name="nameD"
+                        #nameD = "ngModel">
+
+                        <label class="fname mt-3"><strong>Usuario</strong> </label>
+                        <input type="text" 
+                        class="form-control" 
+                        [(ngModel)]="user" 
+                        [class.is-invalid]="userD.invalid && userD.touched"
+                        required 
+                        placeholder="Usuario de la Sucursal"
+                        name="userD"
+                        #userD = "ngModel">
+                      
+                      
+                     
+                      
+                        
+                       
+                      <button type="submit" class="btn btn-success mt-3">Guardar</button>  
+                      <button (click)="deleteSucursal( f)" class="btn btn-primary mt-3 delete__btn">Eliminar</button>  
+                        
+                    </form>  
+                        
+                    
+                  </div>    
+                  
+                </div>
+              </div>
+        </div>
+    </div>
+    </div>

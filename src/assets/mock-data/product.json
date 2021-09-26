@@ -1,0 +1,57 @@
+[ 
+  {
+  "productId" : "1",
+  "productName" : "Combo1",
+  "productCategory" : "Combos",
+  "productPrice" : "50",
+  "productDescription" : "Combo de Carne",
+  "productImageUrl" : "assets/images/products/product_1.jpg",
+  "productProvince" : "Matanzas"
+},
+{
+  "productId" : "1",
+  "productName" : "Combo1",
+  "productCategory" : "Combos",
+  "productPrice" : "50",
+  "productDescription" : "Combo de Carne",
+  "productImageUrl" : "assets/images/products/product_2.jpg",
+  "productProvince" : "Matanzas"
+},
+{
+  "productId" : "1",
+  "productName" : "Combo1",
+  "productCategory" : "Combos",
+  "productPrice" : "50",
+  "productDescription" : "Combo de Carne",
+  "productImageUrl" : "assets/images/products/product_3.jpg",
+  "productProvince" : "Matanzas"
+},
+{
+  "productId" : "1",
+  "productName" : "Combo1",
+  "productCategory" : "Combos",
+  "productPrice" : "50",
+  "productDescription" : "Combo de Carne",
+  "productImageUrl" : "assets/images/products/product_1.jpg",
+  "productProvince" : "Matanzas"
+},
+{
+  "productId" : "1",
+  "productName" : "Combo1",
+  "productCategory" : "Combos",
+  "productPrice" : "50",
+  "productDescription" : "Combo de Carne",
+  "productImageUrl" : "assets/images/products/product_2.jpg",
+  "productProvince" : "Matanzas"
+},
+{
+  "productId" : "1",
+  "productName" : "Combo1",
+  "productCategory" : "Combos",
+  "productPrice" : "50",
+  "productDescription" : "Combo de Carne",
+  "productImageUrl" : "assets/images/products/product_3.jpg",
+  "productProvince" : "Matanzas"
+}
+
+]

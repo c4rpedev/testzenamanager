@@ -1,0 +1,92 @@
+<div class="container" >
+    <div class="print__header">
+        <div class="header__left" >
+            <img src="assets/images/buttymasterlogo.png" alt="">
+            <h2>ButtyMaster</h2>
+        </div>
+        <div class="header__right mt-3">
+            <b>ENTREGA</b><br>
+            <div >
+                <b>FECHA: </b>{{dateS}} <b>ID: </b>{{orders.orderId  }}
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="print__middle mt-5">
+        <div>
+            <b>Agencia: </b> {{orders.orderAgency  | uppercase}}
+        </div>
+        <div>
+            <b>Envia: </b> {{orders.orderClientName}}
+        </div>
+        <div>
+            <b>Recibe: </b> {{orders.orderRecieverName}}
+        </div>
+        <b>Dirección de Envio: </b>
+        <div>
+        {{orders.orderProvince}},
+        {{orders.orderMunicipio}},
+        {{orders.orderAddress}}
+        </div>
+
+       <div>
+       <b>Teléfono Móvil :</b> {{orders.orderMobile}}
+       </div>
+       <div>
+        <b>Teléfono Fijo :</b> {{orders.orderPhone}}
+       </div>
+       <div>
+        <b>Fecha Creación del Pedido :</b> {{orders.createdAt | date:'yyyy-MM-dd'}}
+       </div>
+    </div>
+
+    <div class="print__p mt-3">
+        <p>
+            Yo <b>{{orders.orderRecieverName}}</b> he recibido de manos del mensajero todos los productos que lista la Factura, estando de acuerdo con su calidad y cantidad ( pesaje), y ante la duda el mensajero me facilita una pesa digital para su comprobación sin apuro y siendo explicativo y amable, pareciéndome adecuado el actuar, porte, aspecto y presentación del mensajero y los productos entregados. Por ello entiendo que una vez firmada esta, pierdo todo derecho a reclamar tanto yo como el emisor de la misma. Ante apuros, mal actuar del mensajero o dudas, contacte con nuestro teléfono de atención a Clientes: <b>59769857</b>. Gracias.
+        </p>
+    </div>
+    <div class="product__name">
+     <h3><b>Productos</b> </h3>
+    </div>
+    <div>
+        <table mat-table [dataSource]="dataSource" >
+            <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+              <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+              <td mat-cell *matCellDef="let element"> {{element[column]}}  </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    </div>
+    <div >
+        <b>Nota:</b>
+        <p>
+            {{orders.orderNote}}
+        </p>
+    </div>
+    <div class="mt-5">
+        <p>
+            De estar en desacuerdo usted puede exigir la entrega correcta o el reembolso del pago integro a la agencia, siempre argumentando y documentando las causas. Recuerde que una vez firmada la misma no tienen derecho a Reclamacion ni el receptor ni el emisor.
+        </p>
+    </div>
+    <div class="mt-5">
+  __________________________________________________________ <br>
+  Firma de Conformidad contra Declaración Jurada del Cliente
+
+
+    </div>
+
+    <div class="mt-5 doNotPrint">
+        <button (click)="print()">Imprimir</button>
+    </div>
+</div>
+<style type="text/css" media="print">
+    @page {
+        size: auto;   /* auto is the initial value */
+        margin: 0;  /* this affects the margin in the printer settings */
+    }
+    </style>

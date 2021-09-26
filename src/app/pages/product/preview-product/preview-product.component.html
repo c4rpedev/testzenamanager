@@ -1,0 +1,70 @@
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-lg-4">
+            <div>
+                <div class="card-body text-center img__preview "><img class="mb-3 mt-4" src='{{product.picture._url}}' width="160"
+                        height="160" />
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label for="username"><strong>Nombre: </strong>{{product.name}}</label>
+                            </div>
+                            <div class="row preview__item">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="price"><strong>Precio: </strong>{{product.price}}</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="cost"><strong>UM: </strong>{{product.um}}</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group"><label for="amount"><strong>Cantidad:
+                                            </strong>{{product.amount}}</label>
+                                    </div>
+                                    <div class="btn-toolbar"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="preview__item"><label for="last_name"><strong>Provincia:
+                                        </strong>{{product.province}}</label>
+                                    <label for="last_name"><strong>Catergoría: </strong>{{product.category}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="last_name"><strong>Productos: </strong><br />
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>UM</th>
+                                                <th>Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of productTable">
+                                                <td>{{p.Nombre}}</td>
+                                                <td>{{p.UM}}</td>
+                                                <td>{{p.Cantidad}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </label>
+                            </div>
+                            <label for="first_name"><strong>Descripción: </strong><br /></label>
+                            <label>{{product.description}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="title-box text-center pt-5">
+            <h3 class="title-a">
+                Reportes
+            </h3>
+            <p class="subtitle-a">
+                Ordenes y precios por Provincia y Municipio
+            </p>
+            <div class="line-mf"></div>
+        </div>
+    </div>
+  </div>
+  <div class="container">
+    <div id="pivotgrid-demo">
+      <dx-chart id="sales-chart">
+        <dxo-common-series-settings type="bar"></dxo-common-series-settings>
+        <dxo-size [height]="200"></dxo-size>
+        <dxo-adaptive-layout [width]="450"></dxo-adaptive-layout>
+        <dxo-tooltip [enabled]="true" format="currency" ></dxo-tooltip>
+      </dx-chart>
+      <dx-pivot-grid id="pivotgrid" class="mt-5"
+        [allowSortingBySummary]="true"
+        [allowFiltering]="true"
+        [showBorders]="true"
+        [allowSortingBySummary]="true"
+        [showColumnGrandTotals]="false"
+        [showRowGrandTotals]="false"
+        [showRowTotals]="false"
+        [showColumnTotals]="false"
+        [dataSource]="pivotGridDataSource">
+        (onExporting)="onExporting($event)">
+      <dxo-field-chooser [enabled]="false"></dxo-field-chooser>
+      <dxo-export [enabled]="true"></dxo-export>
+        <dxo-field-chooser [enabled]="true" [height]="400"></dxo-field-chooser>
+        <dxo-scrolling mode="virtual"></dxo-scrolling>
+      </dx-pivot-grid>
+    </div>
+  </div>
