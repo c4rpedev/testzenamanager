@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/core/services/user.service';
 import { CategoryService } from './../../../core/services/category.service';
 import { TransportService } from './../../../core/services/transport.service';
 import { Component, OnInit } from '@angular/core';
@@ -29,6 +30,7 @@ export class EditProductComponent implements OnInit {
   agencys: Array<string> = [];
   provincesProduct: Array<string> = [];
   transporte: any [] = [];
+  agencias: any [] = [];
 
   name = 'Paste it';
   val:any;
@@ -45,7 +47,8 @@ export class EditProductComponent implements OnInit {
               private provinceService: GetProvincesService,
               private router: Router,
               private categoryService: CategoryService,
-              private transportService: TransportService) {
+              private transportService: TransportService,
+              private userService: UserService) {
                 this.selectedProvince = null;
               }
 
@@ -75,10 +78,16 @@ export class EditProductComponent implements OnInit {
     this.data(this.event);
     this.provinces = this.provinceService.getProvinces();
     //this.getProducts();
-    this.transportService.getTransport().then(res =>{
-      this.transporte = res;
-    });
+    // this.transportService.getTransport().then(res =>{
+    //   this.transporte = res;
+    // });
+    this.getAgencys();
+  }
 
+  getAgencys() {
+    this.userService.getAgencys().then(res => {
+      this.agencias = res;
+    })
   }
 
   data(event: ClipboardEvent) {

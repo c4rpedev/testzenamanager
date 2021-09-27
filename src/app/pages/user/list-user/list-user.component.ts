@@ -157,8 +157,13 @@ export class ListUserComponent implements OnInit {
 
   editUser(user: any, userId: String) {
     this.userService.selectedUser = user;
-    console.log(user)
     this.router.navigate(['/add-user']);
+  }
+
+  changePass(user: any) {
+    this.userService.selectedUser = user.attributes;
+    this.userService.editPass = true;
+    this.router.navigate(['/change-pass']);
   }
 
   deleteUser(user: any) {

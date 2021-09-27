@@ -74,6 +74,7 @@ export class AddUserComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
+      // this.userService.selectedUser.phoneNumber = this.userService.selectedUser.phoneNumber.toString();
       if (this.userService.selectedUser.createdAt) {
         // EDITAR USUARIO
         form.value.mayoreo = this.mayoreo;

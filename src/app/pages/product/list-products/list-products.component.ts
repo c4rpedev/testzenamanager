@@ -192,7 +192,7 @@ export class ListProductsComponent implements OnInit {
 
   getProductForProvince() {
     this.editProv = false;
-    if (this.auth.logedUser.userRole == 'Administrador') {
+    if (this.auth.Admin()) {
       this.loading = true;
       this.service.getProductsbyProvince(this.selectedProvince).then(res => {
         this.products = res;

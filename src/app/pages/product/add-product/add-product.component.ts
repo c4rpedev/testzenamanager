@@ -1,3 +1,4 @@
+import { UserService } from './../../../core/services/user.service';
 import { AuthServices } from 'src/app/core/services/auth.service';
 import { CategoryService } from './../../../core/services/category.service';
 import { DOCUMENT } from '@angular/common';
@@ -18,19 +19,20 @@ import Swal from 'sweetalert2';
 })
 export class AddProductComponent implements OnInit {
   product: Product = new Product();
-  provinces: any [] = [];
+  provinces: any[] = [];
   categories: Array<any>;
   agencys: Array<string> = [];
   provincesProduct: Array<string> = [];
   selectchange = true;
-  filePath:String;
+  filePath: String;
   img: string | ArrayBuffer =
-  "https://parsefiles.back4app.com/vH5Y2pQQTnE8odu7xeMKMzviCtFuPHQAvQogW4GI/7b7b788e29df265cb59d20c2682aba24_product.jpg";
+    "https://parsefiles.back4app.com/vH5Y2pQQTnE8odu7xeMKMzviCtFuPHQAvQogW4GI/7b7b788e29df265cb59d20c2682aba24_product.jpg";
   photosrc: String;
   selectedProvince: null;
   file: File;
   user: string;
-  transporte: any [] = [];
+  transporte: any[] = [];
+  agencias: any[] = [];
   editField: string;
   comboProducts: Product = new Product();
   productList: Array<any> = [
@@ -44,55 +46,63 @@ export class AddProductComponent implements OnInit {
   ];
 
   name = 'Paste it';
-  val:any;
-   displayedColumns: string[] ;
+  val: any;
+  displayedColumns: string[];
   dataSource: any[] = [];
 
-  data(event:ClipboardEvent) {
+  data(event: ClipboardEvent) {
     let clipboardData = event.clipboardData;
     let pastedText = clipboardData.getData('text');
     let row_data = pastedText.split('\n');
-    this.displayedColumns = [ "Nombre", "UM", "Cantidad" ];
+    this.displayedColumns = ["Nombre", "UM", "Cantidad"];
     //delete row_data[0];
     // Create table dataSource
-    let data:any=[];
-    row_data.forEach(row_data=>{
-        let row:any={};
-      this.displayedColumns.forEach((a, index)=>{row[a]= row_data.split('\t')[index]});
+    let data: any = [];
+    row_data.forEach(row_data => {
+      let row: any = {};
+      this.displayedColumns.forEach((a, index) => { row[a] = row_data.split('\t')[index] });
       data.push(row);
     })
     this.dataSource = data;
     console.log(this.dataSource);
-    }
+  }
 
   constructor(private service: ProductService,
-              private provinceService: GetProvincesService,
-              private router: Router,
-              private transportService: TransportService,
-              public categoryService: CategoryService,
-              public auth: AuthServices,
-                @Inject(DOCUMENT) public document: Document) {
-                this.selectedProvince = null;
-              }
+    private provinceService: GetProvincesService,
+    private router: Router,
+    private userService: UserService,
+    private transportService: TransportService,
+    public categoryService: CategoryService,
+    public auth: AuthServices,
+    @Inject(DOCUMENT) public document: Document) {
+    this.selectedProvince = null;
+  }
 
   ngOnInit(): void {
     this.getCategories();
+    this.getAgencys();
+
     this.provinces = this.provinceService.getProvinces();
-      this.user = this.auth.logedUser.userName;
-    this.transportService.getTransport().then(res =>{
-      this.transporte = res;
-    });
+    this.user = this.auth.logedUser.userName;
+    // this.transportService.getTransport().then(res =>{
+    //   this.transporte = res;
+    // });
   }
 
   getCategories() {
     this.categoryService.getCategories().then(res => {
       this.categories = res;
-      console.log(this.categories)
+    })
+  }
+
+  getAgencys() {
+    this.userService.getAgencys().then(res => {
+      this.agencias = res;
     })
   }
 
   //Para inhabilitar la primera opción dle select de categorías
-  ChangeSelect(){
+  ChangeSelect() {
     this.selectchange = false;
   }
 
@@ -103,20 +113,20 @@ export class AddProductComponent implements OnInit {
     console.log(this.filePath);
     this.file = event[0];
 
-      const reader = new FileReader();
+    const reader = new FileReader();
 
 
-      reader.readAsDataURL(event.target.files[0]);
+    reader.readAsDataURL(event.target.files[0]);
 
-      reader.onload = event => {
-        this.img = reader.result;
+    reader.onload = event => {
+      this.img = reader.result;
 
-      };
+    };
 
-}
+  }
 
-  saveProduct(form: NgForm){
-    if(form.valid){
+  saveProduct(form: NgForm) {
+    if (form.valid) {
       this.product.productAgency = "empty";
       this.product.productAgencys = this.agencys;
       this.product.productProvince = "empty";
@@ -131,7 +141,7 @@ export class AddProductComponent implements OnInit {
         timer: 1500
       })
       this.router.navigate(['/list-product']);
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -143,7 +153,7 @@ export class AddProductComponent implements OnInit {
 
 
   //Gestionando el arreglo de Agencias
-  selectAgency(item: string){
+  selectAgency(item: string) {
     let agencyNotIn = true;
     for (let index = 0; index < this.agencys.length; index++) {
       const element = this.agencys[index];
@@ -157,7 +167,7 @@ export class AddProductComponent implements OnInit {
     }
   }
 
-  verifyAgency(item: string){
+  verifyAgency(item: string) {
     for (let index = 0; index < this.agencys.length; index++) {
       const element = this.agencys[index];
       if (item == element) {
@@ -168,7 +178,7 @@ export class AddProductComponent implements OnInit {
   }
 
   //Gestionando el arreglo de Provincias
-  selecProvince(item: string){
+  selecProvince(item: string) {
     let provinceNotIn = true;
     for (let index = 0; index < this.provincesProduct.length; index++) {
       const element = this.provincesProduct[index];
@@ -182,7 +192,7 @@ export class AddProductComponent implements OnInit {
     }
   }
 
-  verifyProvince(item: string){
+  verifyProvince(item: string) {
     for (let index = 0; index < this.provincesProduct.length; index++) {
       const element = this.provincesProduct[index];
       if (item == element) {
@@ -195,26 +205,26 @@ export class AddProductComponent implements OnInit {
   //---Editable Table -- //
 
 
-    updateList(id: number, property: string, event: any) {
-      const editField = event.target.textContent;
-      this.productList[id][property] = editField;
-    }
+  updateList(id: number, property: string, event: any) {
+    const editField = event.target.textContent;
+    this.productList[id][property] = editField;
+  }
 
-    remove(id: any) {
-      this.awaitingPersonList.push(this.productList[id]);
-      this.productList.splice(id, 1);
-    }
+  remove(id: any) {
+    this.awaitingPersonList.push(this.productList[id]);
+    this.productList.splice(id, 1);
+  }
 
-    add() {
-        const person = this.awaitingPersonList[0];
-        this.productList.push(this.productList);
-        console.log(this.productList);
+  add() {
+    const person = this.awaitingPersonList[0];
+    this.productList.push(this.productList);
+    console.log(this.productList);
 
-        this.awaitingPersonList.splice(0, 1);
-    }
+    this.awaitingPersonList.splice(0, 1);
+  }
 
-    changeValue(id: number, property: string, event: any) {
-      this.editField = event.target.textContent;
-    }
+  changeValue(id: number, property: string, event: any) {
+    this.editField = event.target.textContent;
+  }
 
 }

@@ -78,12 +78,10 @@
           #emailId="ngModel">
 
         <label class="mt-2"> <strong>Teléfono *</strong> </label>
-        <input type="text" class="form-control" [(ngModel)]="userService.selectedUser.phoneNumber"
+        <input type="number" class="form-control" [(ngModel)]="userService.selectedUser.phoneNumber"
           [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" placeholder="Teléfono Móvil"
-          [pattern]="mobNumberPattern" [required]="!userService.selectedUser.phoneNumber" name="phoneNumber"
-          #phoneNumber="ngModel">
-        <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="form-text text-danger">No es un número de
-          teléfono válido. (Debe tener 8 caracteres)</small>
+          [required]="!userService.selectedUser.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
+        <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="form-text text-danger">Este campo es requerido!</small>
 
         <div class="col">
           <div class="form-group mt-2"><label for="last_name"><strong>Rol</strong><br /></label>

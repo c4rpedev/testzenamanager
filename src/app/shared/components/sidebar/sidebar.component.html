@@ -96,6 +96,12 @@
       </div>
       <span>Roles</span>
     </div>
+    <div class="links" [routerLink]="['/change-pass']" *ngIf="!admin" (click)="openMenu()">
+      <div class="icon">
+        <i class="fa fa-unlock-alt"></i>
+      </div>
+      <span>Cambiar Contraseña</span>
+    </div>
 
 
   </div>

@@ -13,6 +13,7 @@ export class UserService {
   user: string;
   selectedUser: User;
   clave = 'encryptClave';
+  editPass = false;
 
   constructor(private auth: AuthServices, private router: Router) {
     this.selectedUser = new User();
@@ -69,7 +70,7 @@ export class UserService {
             myNewObject.set('userName', user.userName);
             myNewObject.set('emailId', user.emailId);
             myNewObject.set('password', EncryptPassword);
-            myNewObject.set('phoneNumber', user.phoneNumber);
+            myNewObject.set('phoneNumber', user.phoneNumber.toString());
             myNewObject.set('userRole', user.userRole);
             myNewObject.set('active', true);
             myNewObject.set('mayoreo', user.mayoreo);
@@ -107,7 +108,7 @@ export class UserService {
         myNewObject.set('userId', User.userId);
         myNewObject.set('userName', User.userName);
         myNewObject.set('emailId', User.emailId);
-        myNewObject.set('phoneNumber', User.phoneNumber);
+        myNewObject.set('phoneNumber', User.phoneNumber.toString());
         myNewObject.set('userRole', User.userRole);
         myNewObject.set('active', true);
         myNewObject.set('mayoreo', User.mayoreo);
@@ -144,6 +145,45 @@ export class UserService {
     } catch (error) {
       console.error('Error while retrieving ParseObject', error);
     }
+  }
+
+  getAgencys() {
+    const user = Parse.Object.extend('users');
+    const query = new Parse.Query(user);
+    query.equalTo('userRole', 'Agencia');
+    return query.find();
+  }
+
+  async changePass(password: string) {
+    //Buscando el usuario por el ID
+    const user = Parse.Object.extend('users');
+    const query = new Parse.Query(user);
+    query.equalTo('userId', this.selectedUser.userId);
+    query.find().then(async res => {
+      //Verificando que existe el usuario
+      if (res[0]) {
+        const EncryptPassword = CryptoJS.AES.encrypt(password.trim(), this.clave.trim()).toString();
+
+        const myNewObject = res[0];
+        myNewObject.set('password', EncryptPassword);
+        await myNewObject.save();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Contraseña actualizada!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No se encontró el usuario.',
+        })
+      }
+      this.router.navigate(['/list-user']);
+    })
   }
 
 

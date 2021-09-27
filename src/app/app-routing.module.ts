@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
 import { AddRoleComponent } from './pages/user/add-role/add-role.component';
 import { ListRoleComponent } from './pages/user/list-role/list-role.component';
 import { LogedGuard } from './core/guards/loged.guard';
@@ -141,6 +142,10 @@ const routes: Routes = [
   },
   {
     path: 'add-user', component: AddUserComponent,
+    canActivate: [LogedGuard]
+  },
+  {
+    path: 'change-pass', component: ChangePasswordComponent,
     canActivate: [LogedGuard]
   },
   {

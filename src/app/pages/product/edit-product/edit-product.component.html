@@ -106,8 +106,8 @@
                         <option (click)="selectAgency('Todas')">
                           Todas <i *ngIf="verifyAgency('Todas')" class="fa fa-check"></i>
                         </option>
-                        <option *ngFor="let t of transporte" (click)="selectAgency(t.attributes.agencia)">
-                          {{t.attributes.agencia}} <i *ngIf="verifyAgency(t.attributes.agencia)" class="fa fa-check"></i>
+                        <option *ngFor="let t of agencias" (click)="selectAgency(t.attributes.userName)">
+                          {{t.attributes.userName}} <i *ngIf="verifyAgency(t.attributes.userName)" class="fa fa-check"></i>
                         </option>
                       </select>
                     </div>

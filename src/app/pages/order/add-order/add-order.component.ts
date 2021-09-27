@@ -22,15 +22,15 @@ export class AddOrderComponent implements OnInit {
   order: Order = new Order();
   products: Array<any> = [{}];
   subtotal: number;
-  total:number = 0;
-  totalAmount:number = 0;
-  provinces: any [] = [];
+  total: number = 0;
+  totalAmount: number = 0;
+  provinces: any[] = [];
   province: string;
-  municipios: any [] = [];
+  municipios: any[] = [];
   user: string;
   mobNumberPattern = "^5+[0-9]{7}$";
   fixNumberPattern = "^[0-9]{8}$";
-  transportCost : number;
+  transportCost: number;
   streetNumber: string;
   street: string;
   streetB: string;
@@ -45,60 +45,71 @@ export class AddOrderComponent implements OnInit {
     private municipioService: MunicipioService,
     private transportService: TransportService,
     public auth: AuthServices,
-                @Inject(DOCUMENT) public document: Document
+    @Inject(DOCUMENT) public document: Document
   ) { }
 
   ngOnInit(): void {
-     this.provinces = this.provinceService.getProvinces();
-     this.products = history.state.product;
+    this.provinces = this.provinceService.getProvinces();
+    this.products = history.state.product;
     //  this.province =  history.state.province;
-     this.order.orderProvince = history.state.province;
-     this.initProvince();
-      this.user = this.auth.logedUser.userName;
-      this.getTransportCost();
+    this.order.orderProvince = history.state.province;
+    this.initProvince();
+    this.user = this.auth.logedUser.userName;
+    this.getTranspCost();
+    // this.getTransportCost();
   }
 
-  initProvince(){
-    this.municipioService.getMunicipio(this.order.orderProvince).then(res=>{
+  initProvince() {
+    this.municipioService.getMunicipio(this.order.orderProvince).then(res => {
       this.municipios = res[0].attributes['municipios'];
       console.log(this.municipios);
     })
   }
 
-  changeProvince(){
-    this.municipioService.getMunicipio(this.order.orderProvince).then(res=>{
+  changeProvince() {
+    this.municipioService.getMunicipio(this.order.orderProvince).then(res => {
       this.municipios = res[0].attributes['municipios'];
       this.order.orderMunicipio = this.municipios[0]['municipio'];
-          })
-    this.transporteArrayM.transporte.forEach((element:any) => {
-      if(element.municipio == this.province){
+    })
+    this.transporteArrayM.transporte.forEach((element: any) => {
+      if (element.municipio == this.province) {
         this.transportCost = 0;
-       this.transportCost = +element.precio;
-       this.total = this.totalAmount + this.transportCost;
+        this.transportCost = +element.precio;
+        this.total = this.totalAmount + this.transportCost;
       }
     });
   }
 
-  getTransportCost(){
+
+  //New TransportCost
+
+  getTranspCost() {
+    this.transportService.getT().then(res => {
+      var cost = 0;
+      this.transporteArray = res[0].attributes;
+      this.transporteArray.costos.forEach((element: any) => {
+        if (element[0] == this.order.orderProvince) {
+          cost = element[1];
+          this.transportCost = element[1];
+          console.log('costotransp' + this.transportCost)
+        }
+      });
+
+      this.products.forEach(element => {
+        this.subtotal = +element.price;
+        this.total = this.total + this.subtotal
+      });
+      this.total = this.total + this.transportCost;
+      console.log('TOTAL');
+      console.log(this.total);
+    })
+  }
+
+  //old TransportCost
+  getTransportCost() {
     console.log(this.user);
-    this.transportService.getTransportForAgency(this.user).then(res=>{
-      this.transporteArray = res;
-      console.log('Transporte');
-
-      console.log(this.transporteArray[0].attributes);
-         console.log(this.order.orderProvince);
-
-      this.transporteArrayM=this.transporteArray[0].attributes;
-       this.transporteArrayM.transporte.forEach((element:any) => {
-         if(element.municipio == this.order.orderProvince){
-           this.transportCost = 0;
-          this.transportCost = +element.precio;
-          console.log(this.transportCost);
-
-         }
-       });
-
-       this.products.forEach(element => {
+    this.transportService.getTransportForAgency(this.user).then(res => {
+      this.products.forEach(element => {
         this.subtotal = +element.price;
         this.total = this.total + this.subtotal
         this.totalAmount = this.total;
@@ -113,27 +124,27 @@ export class AddOrderComponent implements OnInit {
     })
   }
 
-  sendSms(number: string){
-    if(this.order.orderClientName){
+  sendSms(number: string) {
+    if (this.order.orderClientName) {
       this.smsService.sendSMS(number, this.order.orderClientName, this.order.orderRecieverName, this.user);
-    }else{
+    } else {
       this.smsService.sendSMS(number, ' ', this.order.orderRecieverName, this.user);
     }
 
   }
 
-  onSubmit(form: NgForm){
+  onSubmit(form: NgForm) {
 
     console.log(form);
 
-    if(form.valid){
+    if (form.valid) {
       // if(!this.order.state && (this.order.orderAgency != 'esencialpack' && this.order.orderAgency != 'agenciaespaña')){
       //   this.sendSms(this.order.orderMobile);
       // }
-      if(this.streetB ){
-        this.order.orderAddress = (this.localidad || "")+' Calle '+this.street+' # '+this.streetNumber+' entre '+(this.streetB || "");
-      }else{
-        this.order.orderAddress = (this.localidad || "")+' Calle '+this.street+' # '+this.streetNumber;
+      if (this.streetB) {
+        this.order.orderAddress = (this.localidad || "") + ' Calle ' + this.street + ' # ' + this.streetNumber + ' entre ' + (this.streetB || "");
+      } else {
+        this.order.orderAddress = (this.localidad || "") + ' Calle ' + this.street + ' # ' + this.streetNumber;
       }
 
       this.order.orderPrice = this.total;
@@ -146,7 +157,7 @@ export class AddOrderComponent implements OnInit {
         timer: 1500
       })
       this.router.navigate(['/orders']);
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

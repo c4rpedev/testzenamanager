@@ -48,7 +48,8 @@ import { SucursalComponent } from './pages/sucursal/sucursal.component';
 import { AutocompleteOffDirective }  from './core/autocomplete';
 import { ListCompletedOrderComponent } from './pages/order/list-completed-order/list-completed-order.component';
 import { AddRoleComponent } from './pages/user/add-role/add-role.component';
-import { ListRoleComponent } from './pages/user/list-role/list-role.component'
+import { ListRoleComponent } from './pages/user/list-role/list-role.component';
+import { ChangePasswordComponent } from './pages/user/change-password/change-password.component'
 Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
 (Parse as any).serverURL = environment.serverURL;
 
@@ -78,6 +79,7 @@ Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
     AddUserComponent,
     AddRoleComponent,
     ListRoleComponent,
+    ChangePasswordComponent,
 
   ],
   imports: [
