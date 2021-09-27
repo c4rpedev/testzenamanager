@@ -192,7 +192,7 @@ export class ListProductsComponent implements OnInit {
 
   getProductForProvince() {
     this.editProv = false;
-    if (this.userService.isAdmin(this.user)) {
+    if (this.auth.logedUser.userRole == 'Administrador') {
       this.loading = true;
       this.service.getProductsbyProvince(this.selectedProvince).then(res => {
         this.products = res;
@@ -200,7 +200,7 @@ export class ListProductsComponent implements OnInit {
       })
     } else {
       this.loading = true;
-      this.service.getProductsbyProvinceAndAgency(this.selectedProvince, this.user).then(res => {
+      this.service.getProductsbyProvinceAndAgency(this.selectedProvince, this.auth.logedUser.userName).then(res => {
         this.products = res;
         this.loading = false;
       })
@@ -230,42 +230,5 @@ export class ListProductsComponent implements OnInit {
 
   }
 
-
-
-  //MIGRATE
-  // migrar() {
-  //   this.service.migrate().then(res => {
-  //     for (let index = 0; index < res.length; index++) {
-  //       let agency = [];
-  //       let province = [];
-  //       const element = res[index];
-  //       console.log(element.attributes.province);
-  //       console.log(index)
-  //       if (element.attributes.productAgency != null) {
-  //         agency.push(element.attributes.productAgency)
-  //       } else {
-  //         agency.push('Todas');
-  //       }
-  //       if (element.attributes.province == "Occidente") {
-  //         province.push('Matanzas');
-  //         province.push('Cienfuegos');
-  //         province.push('Villa Clara');
-  //         province.push('Mayabeque');
-  //         province.push('La Habana');
-  //         province.push('Artemisa');
-  //         province.push('Sancti Spíritus');
-  //       } else {
-  //         if (element.attributes.province == "Oriente") {
-  //           province.push('Las Tunas');
-  //           province.push('Granma');
-  //           province.push('Holguín');
-  //         } else {
-  //           province.push(element.attributes.province);
-  //         }
-  //       }
-  //       this.service.updateP(element.id, agency, province)
-  //     }
-  //   })
-  // }
 
 }

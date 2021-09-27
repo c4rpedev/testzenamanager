@@ -6,8 +6,6 @@ import { DOCUMENT } from '@angular/common';
 import { AuthServices } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { MatTableDataSource } from '@angular/material/table';
-
-
 import { Order } from 'src/app/core/models/order';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortable } from '@angular/material/sort';
@@ -21,6 +19,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { stringify } from '@angular/compiler/src/util';
 import { SucursalService } from 'src/app/core/services/sucursal.service';
+import { User } from 'src/app/core/models/user';
 
 export interface PeriodicElement {
   name: string;
@@ -66,7 +65,7 @@ export const CONDITIONS_FUNCTIONSES = {
 export class ListOrdersComponent implements OnInit {
   options: string[] = ['Delhi', 'Mumbai', 'Banglore'];
   orders: Array<any> = [];
-  user: string;
+  user: User;
   admin: boolean;
   sucursal: boolean;
   restaurante: boolean;
@@ -127,8 +126,8 @@ export class ListOrdersComponent implements OnInit {
   async ngOnInit() {
     //this.initEqualOption();
       this.loading = true;
-      this.user = this.auth.logedUser.userName;
-      this.restaurante = this.userService.isRestaurant(this.user);
+      this.user = this.auth.logedUser;
+      this.restaurante = this.userService.isRestaurant(this.user.userName);
       this.provinces = this.provinceService.getProvinces();
       this.transportService.getTransport().then(res => {
         this.transporte = res;
@@ -136,8 +135,8 @@ export class ListOrdersComponent implements OnInit {
       this.sucursalService.getSucursal().then(res => {
         this.sucursalArray = res;
       });
-      if (this.auth.Admin()) {
-        this.orderService.getOrderSucursal(this.user).then(res => {
+      if (this.auth.Sucursal()) {
+        this.orderService.getOrderSucursal(this.user.userName).then(res => {
           res.forEach((element: any) => {
             this.orders.push(element);
           });
@@ -383,13 +382,8 @@ export class ListOrdersComponent implements OnInit {
 
 
   addOrder() {
-    this.router.navigate(['/b']);
-    if (this.user == 'patugente') {
-      this.router.navigateByUrl('/add-order-sucursal')
-    } else {
-      this.router.navigateByUrl('/list-product', { state: { who: "order" } });
-    }
-
+    this.router.navigate(['/b']);  
+    this.router.navigateByUrl('/list-product', { state: { who: "order" } });   
   };
 
   deleteOrder(order: any) {

@@ -43,7 +43,7 @@
             <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search"></i> </span>
             <input type="text" class="form-control" placeholder="Busca por nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="term">
           </div>
-          <div class="province-select" *ngIf="selectedProvince && (admin || user=='franklin' || user=='tushoponline' ||user=='domiciliohabana' ||user=='zenatour')">
+          <div class="province-select" *ngIf="selectedProvince">
             <select [(ngModel)]="selectedCategory"  class="form-select" id="selectedCategory" >
               <option [ngValue]="null">Seleccione una categoria</option>
               <option *ngFor="let p of categorys" [ngValue]="p.attributes.name">
@@ -128,7 +128,7 @@
                           mdbTooltip="Add to Wishlist"
                           container="body"
                           (click)="editProduct(product, product.attributes)"
-                          *ngIf="user == 'buttymanager' || user == 'buttyekonomico'"
+                          *ngIf="admin"
                         >
                           <i class="fa fa-edit"></i>
                         </a>
@@ -141,7 +141,7 @@
                           <i class="fa fa-plus-circle"></i>
                         </a>
                         <div class="product__checkbox"
-                        *ngIf="user == 'buttymanager' || user == 'buttyekonomico'"
+                        *ngIf="admin"
                       >
                       <input type="checkbox" [value]="product.id" [checked]="!product.attributes.state"  (change)="changeState(product.id, product.attributes.state)" />
                       </div>

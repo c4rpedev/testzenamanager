@@ -81,12 +81,11 @@ export class SucursalComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, borralo!'
     }).then((result) => {
-      if (result.isConfirmed) {
-         
-    
+      if (result.isConfirmed) {         
+        console.log('SUCURSALID');
+        console.log(this.sucursalId);        
       this.sucursalService.deleteSucursal(this.sucursalId);
-      
-        Swal.fire(
+              Swal.fire(
           'Borrado!',
           'El producto ha sido eliminado.',
           'success'

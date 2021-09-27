@@ -124,7 +124,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="render__table mt-2" *ngIf="product.productCategory == 'Combo'">
+                <div class="render__table mt-2" *ngIf="product.productCategory == 'Combo' || product.productCategory == 'combos todo x 1 precio'">
                   <div class="paste__box" (paste)="data($event)">
                     <span>Pega los productos</span>
 

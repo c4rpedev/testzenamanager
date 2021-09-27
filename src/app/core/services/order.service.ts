@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Order } from '../models/order';
 import * as Parse from 'parse'
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class OrderService {
   values: any;
   conditions: any;
   methods: any;
-  user: string;
+  user: User;
   ordersCount: number = 0;
 
   constructor(public auth: AuthServices) { }
@@ -187,22 +188,12 @@ export class OrderService {
     })();
   }
 
-  getOrder(agency: string): Promise<any> {
+  getOrder(role: User): Promise<any> {
 
-    if (agency == 'comercial') {
+   if (role.userRole != 'Administrador') {
       const Orders = Parse.Object.extend('order');
       const query = new Parse.Query(Orders);
-      const query2 = new Parse.Query(Orders);
-      query.equalTo('orderAgency', 'patugente');
-      query2.equalTo('orderSucursal', 'patugente');
-      query.notEqualTo('state', 'Archivado');
-      const composedQuery = Parse.Query.or(query, query2);
-      query.limit(1000);
-      return composedQuery.find()
-    } else if (agency && agency != 'buttymanager' && agency != 'buttycomercial' && agency != 'buttyoperaciones' && agency != 'buttyekonomico') {
-      const Orders = Parse.Object.extend('order');
-      const query = new Parse.Query(Orders);
-      query.equalTo('orderAgency', agency);
+      query.equalTo('orderAgency', role.userName);
       query.notEqualTo('state', 'Archivado');
       query.limit(1000);
       return query.find()
@@ -283,7 +274,7 @@ export class OrderService {
   }
 
   orderCount() {
-      this.user = this.auth.logedUser.userName;
+      this.user = this.auth.logedUser;
       this.ordersCount = 0;
       this.getOrder(this.user).then(res => {
         for (const order of res) {

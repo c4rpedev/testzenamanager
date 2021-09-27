@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.checkToken();
+    console.log(this.auth.check);
+    
 
     // this.auth.user$.subscribe(user =>{
     //   this.user = user.nickname;
