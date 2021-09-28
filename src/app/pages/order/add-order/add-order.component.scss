@@ -1,3 +1,7 @@
+.checkbox{
+  width: 17px !important;
+  height: 17px !important;
+}
 
 .container{
   width: 100%;
@@ -42,20 +46,20 @@ a{
 }
 h2{
   margin: 0;
-  padding-left: 15px; 
+  padding-left: 15px;
 }
 .required{
   color: red;
 }
 label, table{
   display: block;
- 
+
 }
 label>span{
   float: left;
-  
+
   margin-top: 12px;
-  
+
 }
 input[type="text"], input[type="tel"], input[type="email"], select
 {
@@ -74,7 +78,7 @@ select{
 }
 .Yorder{
   margin-top: 15px;
-  
+
   padding: 20px;
   border: 1px solid #dadada;
 }
@@ -92,7 +96,7 @@ th{
 }
 tr>td:nth-child(2){
   text-align: left;
-  
+
   color: #2d2d2a;
 }
 tr>td:nth-child(3){
@@ -116,7 +120,7 @@ p{
   padding-left: 25px;
 }
 .Yorder>div{
-  padding: 15px 0; 
+  padding: 15px 0;
 }
 
 button{

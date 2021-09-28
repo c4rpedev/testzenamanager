@@ -4,6 +4,8 @@ export class Order {
     orderId: string;
     orderAgency: string;
     orderClientName: string;
+    orderFirstLastName: string;
+    orderSecondLastName: string;
     orderRecieverName: string;
     orderProvince: string;
     orderMunicipio: string;

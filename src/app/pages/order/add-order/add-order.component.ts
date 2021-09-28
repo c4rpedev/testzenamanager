@@ -1,12 +1,16 @@
+import { Client } from './../../../core/models/client';
+import { ClientService } from './../../../core/services/client.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { map } from 'rxjs/operators';
 import { Order } from 'src/app/core/models/order';
 import { GetProvincesService } from 'src/app/core/services/get-provinces.service';
 import { OrderService } from 'src/app/core/services/order.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import {FormControl} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 import { DOCUMENT } from '@angular/common';
 import { AuthServices } from 'src/app/core/services/auth.service';
@@ -37,6 +41,17 @@ export class AddOrderComponent implements OnInit {
   localidad: string;
   transporteArray: any;
   transporteArrayM: any;
+  clienteName: string;
+  firstLastName: string;
+  secondLastName: string;
+  saveClient: boolean;
+  alreadySavedClient = false;
+  client = new Client();
+  arrayClients: Client[] = [];
+  options: string[] = [];
+  lastName: [string[]] = [[]];
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
   constructor(
     private router: Router,
     private smsService: SmsService,
@@ -45,6 +60,7 @@ export class AddOrderComponent implements OnInit {
     private municipioService: MunicipioService,
     private transportService: TransportService,
     public auth: AuthServices,
+    private clientService: ClientService,
     @Inject(DOCUMENT) public document: Document
   ) { }
 
@@ -56,7 +72,36 @@ export class AddOrderComponent implements OnInit {
     this.initProvince();
     this.user = this.auth.logedUser.userName;
     this.getTranspCost();
+    this.getClients();
+
     // this.getTransportCost();
+  }
+
+  //Autocompletar Cliente
+  private _filter(value: string): string[] {
+    this.clienteName = value;
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  getClients(){
+    this.clientService.getClients().then(res=>{
+      res.forEach(element => {
+        this.arrayClients.push(element.attributes as Client);
+        this.options.push(element.attributes.name);
+        this.lastName.push([element.attributes.firstLastName, element.attributes.secondLastName])
+      });
+      //Ejecutar autocompletar
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+    })
+  }
+
+  SavedClient(){
+        this.alreadySavedClient = true;
+        this.saveClient = false;
   }
 
   initProvince() {
@@ -80,9 +125,6 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
-
-  //New TransportCost
-
   getTranspCost() {
     this.transportService.getT().then(res => {
       var cost = 0;
@@ -105,25 +147,6 @@ export class AddOrderComponent implements OnInit {
     })
   }
 
-  //old TransportCost
-  getTransportCost() {
-    console.log(this.user);
-    this.transportService.getTransportForAgency(this.user).then(res => {
-      this.products.forEach(element => {
-        this.subtotal = +element.price;
-        this.total = this.total + this.subtotal
-        this.totalAmount = this.total;
-        console.log(this.total);
-      });
-      this.total = this.total + this.transportCost;
-      console.log('TOTAL');
-      console.log(this.total);
-
-
-      this.changeProvince();
-    })
-  }
-
   sendSms(number: string) {
     if (this.order.orderClientName) {
       this.smsService.sendSMS(number, this.order.orderClientName, this.order.orderRecieverName, this.user);
@@ -134,10 +157,17 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-
-    console.log(form);
-
     if (form.valid) {
+      if(!this.alreadySavedClient){
+        this.order.orderClientName = this.clienteName + ' ' + form.value.firstLastName + ' ' +  form.value.secondLastName;
+        if(this.saveClient){
+          this.client.name = this.clienteName + ' ' + form.value.firstLastName + ' ' +  form.value.secondLastName;
+          this.clientService.addClient(this.client);
+        }
+      }else{
+        this.order.orderClientName = this.clienteName;
+      }
+
       // if(!this.order.state && (this.order.orderAgency != 'esencialpack' && this.order.orderAgency != 'agenciaespaña')){
       //   this.sendSms(this.order.orderMobile);
       // }
@@ -149,13 +179,23 @@ export class AddOrderComponent implements OnInit {
 
       this.order.orderPrice = this.total;
       this.orderService.createOrder(this.order, this.products, this.user);
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Pedido añadido',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      if(this.saveClient){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Pedido añadido, Cliente almacenado.',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }else{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Pedido añadido',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
       this.router.navigate(['/orders']);
     } else {
       Swal.fire({

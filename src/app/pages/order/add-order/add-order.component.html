@@ -14,65 +14,117 @@
 </div>
 <div class="d-flex card">
   <form (ngSubmit)="onSubmit( f )"  #f="ngForm">
-   
+
       <label class="fname"><strong>ID *</strong>  </label>
-      <input type="text" 
-      class="form-control" 
-      [(ngModel)]="order.orderId" 
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderId"
       [class.is-invalid]="orderId.invalid && orderId.touched"
-      required 
+      required
       placeholder="Identificador de Pedido"
       name="orderId"
       #orderId = "ngModel">
-    
- 
+
+<!--
       <label class="fname"><strong>Cliente</strong> </label>
-      <input type="text" 
-      class="form-control" 
-      [(ngModel)]="order.orderClientName"         
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderClientName"
       placeholder="Nombre del Cliente"
       name="orderClientName"
-      #orderClientName = "ngModel">
-    
-    
+      #orderClientName = "ngModel"> -->
+
+      <label><strong>Cliente *</strong>  </label>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="text"
+          class="form-control"
+          [(ngModel)]="clienteName"
+          placeholder="Nombre del Cliente"
+          [class.is-invalid]="clienteNamee.oninvalid"
+          name="clienteName"
+          required
+          [readonly]="alreadySavedClient"
+           [formControl]="myControl"
+           [matAutocomplete]="auto"
+          #clienteNamee>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option (click)="SavedClient()" *ngFor="let option of filteredOptions | async;" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+        </div>
+        <div class="col-md-4" *ngIf="!alreadySavedClient">
+          <input type="text"
+          class="form-control"
+          required
+          [(ngModel)]="firstLastName"
+          [class.is-invalid]="firstLastNamee.invalid && firstLastNamee.touched"
+          placeholder="Primer Apellido"
+          name="firstLastName"
+          #firstLastNamee = "ngModel">
+        </div>
+        <div class="col-md-4" *ngIf="!alreadySavedClient">
+          <input type="text"
+          class="form-control"
+          [(ngModel)]="secondLastName"
+          required
+          [class.is-invalid]="secondLastNamee.invalid && secondLastNamee.touched"
+          placeholder="Segundo Apellido"
+          name="secondLastName"
+          #secondLastNamee = "ngModel">
+        </div>
+
+        <div class="form-check mb-2 col-3" *ngIf="alreadySavedClient">
+          <label class="form-check-label pt-1" for="form2Example3">Datos del Cliente Almacenados!</label>
+        </div>
+      </div>
+
+      <!-- CHECKBOX SAVE CLIENT -->
+      <div class="form-check mb-2 col-3" *ngIf="!alreadySavedClient">
+        <input class="form-check-input me-2 checkbox" type="checkbox" value="" id="form2Example3" [(ngModel)]="saveClient" #saveClientt = "ngModel" />
+        <label class="form-check-label pt-1" for="form2Example3">Guardar datos del Cliente.</label>
+      </div>
+      <!-- END -->
+
       <label class="lname"> <strong>Recibe *</strong> </label>
-      <input type="text" 
-      class="form-control" 
-      [(ngModel)]="order.orderRecieverName" 
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderRecieverName"
       [class.is-invalid]="orderRecieverName.invalid && orderRecieverName.touched"
-      required 
+      required
       placeholder="Nombre del que Recibe"
       name="orderRecieverName"
       #orderRecieverName = "ngModel">
- 
-   
-    
+
+
+
       <label> <strong>Provincia</strong>  </label>
-      <input  [(ngModel)]="order.orderProvince"  
-      
-      class="form-select" 
+      <input  [(ngModel)]="order.orderProvince"
+
+      class="form-select"
       name="orderProvince"
       disabled
       [class.is-invalid]="orderProvince.invalid && orderProvince.touched"
       #orderProvince="ngModel"
-      
+
       >
 
-                        
-                       
-                    
-   
- 
+
+
+
+
+
       <label> <strong>Municipio</strong>  </label>
-      <select type="text" 
+      <select type="text"
       class="form-select"
-      [(ngModel)]="order.orderMunicipio"       
+      [(ngModel)]="order.orderMunicipio"
       [class.is-invalid]="orderMunicipio.invalid && orderMunicipio.touched"
-      required 
+      required
       placeholder="Municipio"
       name="orderMunicipio"
       #orderMunicipio = "ngModel">
-      
+
 <option *ngFor="let m of municipios">
   {{m.municipio}}
 </option>
@@ -80,84 +132,84 @@
 <label><strong>Localidad</strong>  </label>
 <div class="row">
   <div class="col-md-12">
-    <input type="text" 
-  class="form-control" 
-  [(ngModel)]="localidad" 
-  [class.is-invalid]="localidadV.invalid && localidadV.touched"  
+    <input type="text"
+  class="form-control"
+  [(ngModel)]="localidad"
+  [class.is-invalid]="localidadV.invalid && localidadV.touched"
   placeholder="Localidad"
   name="localidad"
   #localidadV = "ngModel">
   </div>
  </div>
 
-  
-  
+
+
       <label><strong>Dirección *</strong>  </label>
       <div class="row">
         <div class="col-md-4">
-          <input type="text" 
-        class="form-control" 
-        [(ngModel)]="streetNumber" 
+          <input type="text"
+        class="form-control"
+        [(ngModel)]="streetNumber"
         [class.is-invalid]="streetNumberV.invalid && streetNumberV.touched"
-        required 
+        required
         placeholder="Número de la casa"
         name="streetNumber"
         #streetNumberV = "ngModel">
         </div>
         <div class="col-md-4">
-          <input type="text" 
-        class="form-control" 
-        [(ngModel)]="street" 
+          <input type="text"
+        class="form-control"
+        [(ngModel)]="street"
         [class.is-invalid]="streetV.invalid && streetV.touched"
-        required 
+        required
         placeholder="Calle principal"
         name="street"
         #streetV = "ngModel">
         </div>
         <div class="col-md-4">
-          <input type="text" 
-        class="form-control" 
-        [(ngModel)]="streetB" 
-       
+          <input type="text"
+        class="form-control"
+        [(ngModel)]="streetB"
+
         placeholder="Entre calles"
         name="streetB"
         #streetBV = "ngModel">
-        </div>        
+        </div>
       </div>
-     
- 
-   
+
+
+
       <label> <strong>Referencia</strong> </label>
-      <input type="text" 
-      class="form-control" 
-      [(ngModel)]="order.orderReference" 
-    
+      <input type="text"
+      class="form-control"
+      [(ngModel)]="order.orderReference"
+
       placeholder="Ingrese un lugar de referencia"
       name="orderReference"
-      #orderReference = "ngModel">      
-  
-    
- 
+      #orderReference = "ngModel">
+
+
+
       <div class="col-md-12">
         <div class="row">
           <label> <strong>Teléfonos *(requerido uno de los dos)</strong>  </label>
-        <div class="col-md-6"> <input type="text" 
-          class="form-control" 
-          [(ngModel)]="order.orderMobile" 
-          [class.is-invalid]="orderMobile.invalid && orderMobile.touched"          
+        <div class="col-md-6"> <input type="text"
+          class="form-control"
+          [(ngModel)]="order.orderMobile"
+          [class.is-invalid]="orderMobile.invalid && orderMobile.touched"
           placeholder="Teléfono Móvil"
-          [pattern]="mobNumberPattern" 
+          [pattern]="mobNumberPattern"
           [required]="!order.orderPhone"
           name="orderMobile"
           #orderMobile = "ngModel">
           <small *ngIf="orderMobile.invalid && orderMobile.touched" class="form-text text-danger">No es un número de teléfono válido. (Debe comenzar con 5 y tener 8 caracteres)</small>
         </div>
-        <div class="col-md-6"> <input type="text" 
-          class="form-control" 
-          [(ngModel)]="order.orderPhone" 
-          [class.is-invalid]="orderPhone.invalid && orderPhone.touched"           
+        <div class="col-md-6"> <input type="text"
+          class="form-control"
+          [(ngModel)]="order.orderPhone"
+          [class.is-invalid]="orderPhone.invalid && orderPhone.touched"
           placeholder="Teléfono Fijo"
-          [pattern]="fixNumberPattern" 
+          [pattern]="fixNumberPattern"
           [required]="!order.orderMobile"
           name="orderPhone"
           #orderPhone = "ngModel">
@@ -166,13 +218,13 @@
         </div>
       </div>
       <div class="col-md-12">
-       
+
           <label> <strong>Nota del cliente</strong>  </label>
-          <textarea [(ngModel)]="order.orderNote" 
-          name="orderNote" 
+          <textarea [(ngModel)]="order.orderNote"
+          name="orderNote"
           placeholder="Escriba una nota ..."
           class="form-control"></textarea>
-        
+
       </div>
   <div class="Yorder">
     <table>
@@ -185,17 +237,17 @@
         <td><img class="border"   src="{{product.picture._url}}" alt=""></td>
         <td>{{product.name}}</td>
         <td>${{product.price}}</td>
-       
+
       </tr>
-     
+
       <tr>
         <td> <b>Coste de Transportación:</b> ${{transportCost}}</td>
         <td><b>Total: </b></td>
         <td>${{total}}</td>
       </tr>
-     
-      </table><br>    
-      <button type="submit" >Completar Pedido</button>  
+
+      </table><br>
+      <button type="submit" >Completar Pedido <span *ngIf="saveClient" style="font-size: 16px; color: white;"><strong> y guardar datos del Cliente.</strong></span></button>
     </div>
 </form>
  </div>

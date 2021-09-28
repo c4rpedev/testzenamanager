@@ -23,8 +23,7 @@
               placeholder="Contraseña" [(ngModel)]="user.password" #password="ngModel" />
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <!-- Checkbox -->
+          <!-- <div class="d-flex justify-content-between align-items-center">
             <div class="form-check mb-0">
               <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
               <label class="form-check-label" for="form2Example3">
@@ -33,7 +32,7 @@
             </div>
 
             <a href="#!" class="text-body">Olvidaste tu contraseña?</a>
-          </div>
+          </div> -->
 
           <!--Mostrar errores que devuelve la api -->
           <p *ngIf="this.authService.error" class="mt-2" style="color:red">{{this.authService.error}}</p>

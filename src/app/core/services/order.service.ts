@@ -66,28 +66,26 @@ export class OrderService {
 
   async createOrderPatugente(order: Order, url: string[], user: string) {
 
-      const myNewObject = new Parse.Object('order');
-      myNewObject.set('orderId', order.orderId);
-      myNewObject.set('orderClientName', order.orderClientName);
-      myNewObject.set('orderRecieverName', order.orderRecieverName);
-      myNewObject.set('orderProvince', order.orderProvince);
-      myNewObject.set('orderMobile', order.orderMobile);
-      myNewObject.set('orderAgency', user);
-      myNewObject.set('state', 'Nuevo');
-      myNewObject.set('orderInvoice', new Parse.File("factura.pdf", { uri: url[0].toString() }));
+    const myNewObject = new Parse.Object('order');
+    myNewObject.set('orderId', order.orderId);
+    myNewObject.set('orderClientName', order.orderClientName);
+    myNewObject.set('orderRecieverName', order.orderRecieverName);
+    myNewObject.set('orderProvince', order.orderProvince);
+    myNewObject.set('orderMobile', order.orderMobile);
+    myNewObject.set('orderAgency', user);
+    myNewObject.set('state', 'Nuevo');
+    myNewObject.set('orderInvoice', new Parse.File("factura.pdf", { uri: url[0].toString() }));
 
-      try {
-        const result = await myNewObject.save();
-        // Access the Parse Object attributes using the .GET method
-        console.log('order created', result);
-      } catch (error) {
-        console.error('Error while creating order: ', error);
-      }
+    try {
+      const result = await myNewObject.save();
+      // Access the Parse Object attributes using the .GET method
+      console.log('order created', result);
+    } catch (error) {
+      console.error('Error while creating order: ', error);
+    }
   }
   updateOrder(order: Order, orderId: string, img: string, hasAlbaran: boolean): Observable<boolean> {
     return new Observable(observer => {
-      console.log('In Service');
-
       (async () => {
         const query = new Parse.Query('order');
         try {
@@ -190,7 +188,7 @@ export class OrderService {
 
   getOrder(role: User): Promise<any> {
 
-   if (role.userRole != 'Administrador') {
+    if (role.userRole != 'Administrador') {
       const Orders = Parse.Object.extend('order');
       const query = new Parse.Query(Orders);
       query.equalTo('orderAgency', role.userName);
@@ -274,15 +272,15 @@ export class OrderService {
   }
 
   orderCount() {
-      this.user = this.auth.logedUser;
-      this.ordersCount = 0;
-      this.getOrder(this.user).then(res => {
-        for (const order of res) {
-          if (order.attributes.state != 'Finalizado' && order.attributes.orderAlbaran._name != '4a8c781e7ebd7179677e6ab110914579_3b4e631189ab7135ce9a88c6d0385dab_product.png') {
-            this.ordersCount++;
-          }
+    this.user = this.auth.logedUser;
+    this.ordersCount = 0;
+    this.getOrder(this.user).then(res => {
+      for (const order of res) {
+        if (order.attributes.state != 'Finalizado' && order.attributes.orderAlbaran._name != '4a8c781e7ebd7179677e6ab110914579_3b4e631189ab7135ce9a88c6d0385dab_product.png') {
+          this.ordersCount++;
         }
-      })
+      }
+    })
   };
 
 }
