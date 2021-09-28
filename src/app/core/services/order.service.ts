@@ -168,8 +168,7 @@ export class OrderService {
       }
     })();
   }
-  deleteOrder(id: string) {
-    (async () => {
+  async deleteOrder(id: string) {
       const query = new Parse.Query('order');
       try {
         // here you put the objectId that you want to delete
@@ -183,7 +182,6 @@ export class OrderService {
       } catch (error) {
         console.error('Error while retrieving ParseObject', error);
       }
-    })();
   }
 
   getOrder(role: User): Promise<any> {

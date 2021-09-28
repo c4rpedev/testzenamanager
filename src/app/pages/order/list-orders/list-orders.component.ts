@@ -382,8 +382,8 @@ export class ListOrdersComponent implements OnInit {
 
 
   addOrder() {
-    this.router.navigate(['/b']);  
-    this.router.navigateByUrl('/list-product', { state: { who: "order" } });   
+    this.router.navigate(['/b']);
+    this.router.navigateByUrl('/list-product', { state: { who: "order" } });
   };
 
   deleteOrder(order: any) {
@@ -399,14 +399,14 @@ export class ListOrdersComponent implements OnInit {
       if (result.isConfirmed) {
         console.log(order.id);
 
-        this.orderService.deleteOrder(order.id);
+        this.orderService.deleteOrder(order.id).then(res=>{
+          this.router.navigate(['/orders']);
+        });
         Swal.fire(
           'Borrado!',
           'La orden ha sido eliminado.',
           'success'
         )
-        this.router.navigate(['/b']);
-        this.router.navigateByUrl('/list-order');
       }
     })
   }
