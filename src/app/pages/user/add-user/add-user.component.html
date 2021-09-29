@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="card mb-3 shadow" *ngIf="selectedRole == 'Agencia'">
+      <div class="card mb-3 shadow" *ngIf="auth.Agencia()">
         <div class="card-body text-center">
           <label class="fname mt-2"><strong>Listado Mayoreo</strong> </label>
           <div *ngIf="!mayoreo || mayoreo[0][0] == '' || !mayoreo[0]">
@@ -51,7 +51,7 @@
                 <td>{{item[0]}}</td>
                 <td>{{item[1]}}</td>
                 <td>{{item[2]}}</td>
-                <td class="badge bg-danger" (click)="deleteMayoreo(item[0])" style="cursor: pointer;">Eliminar</td>
+                <td class="badge bg-danger mt-1" (click)="deleteMayoreo(item[0])" style="cursor: pointer;">Eliminar</td>
               </tr>
             </tbody>
           </table>
@@ -85,7 +85,7 @@
 
         <div class="col">
           <div class="form-group mt-2"><label for="last_name"><strong>Rol</strong><br /></label>
-            <select [(ngModel)]="userService.selectedUser.userRole" class="form-select" name="userRole"
+            <select [(ngModel)]="userService.selectedUser.userRole" [disabled]="!auth.Admin()" class="form-select" name="userRole"
               [class.is-invalid]="userRole.invalid && userRole.touched" #userRole="ngModel" required>
               <option (click)="selectRole(item.attributes.name)" [value]="item.attributes.name"
                 *ngFor="let item of roles">
@@ -96,7 +96,7 @@
         </div>
 
         <!-- MAYOREO!! -->
-        <div class="row mt-2" *ngIf="selectedRole == 'Agencia'">
+        <div class="row mt-2" *ngIf="auth.Agencia()">
           <label for="last_name mb-1"><strong>Mayoreo de productos</strong><br /></label>
           <div class="form-group col-3"><label for="last_name"><strong>Catergoría</strong><br /></label>
             <select [(ngModel)]="categoriaMayoreo" class="form-select" name="cateMayoreo"

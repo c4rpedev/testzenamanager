@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class UserService {
   user: string;
   selectedUser: User;
+  admin = false;
   clave = 'encryptClave';
   editPass = false;
 
@@ -128,7 +129,12 @@ export class UserService {
           showConfirmButton: false,
           timer: 1500
         })
-        this.router.navigate(['/list-user']);
+        if(this.admin){
+          this.admin = false;
+          this.router.navigate(['/list-user']);
+        }else{
+          this.router.navigate(['/orders']);
+        }
       } else {
         Swal.fire({
           icon: 'error',

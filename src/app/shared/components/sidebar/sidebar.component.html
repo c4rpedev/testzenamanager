@@ -96,6 +96,12 @@
       </div>
       <span>Roles</span>
     </div>
+    <div class="links" (click)="editUser(auth.logedUser)" *ngIf="!admin">
+      <div class="icon">
+        <i class="fa fa-address-book-o"></i>
+      </div>
+      <span>Datos del Usuario</span>
+    </div>
     <div class="links" [routerLink]="['/change-pass']" *ngIf="!admin" (click)="openMenu()">
       <div class="icon">
         <i class="fa fa-unlock-alt"></i>

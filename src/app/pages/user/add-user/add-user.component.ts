@@ -1,3 +1,4 @@
+import { AuthServices } from './../../../core/services/auth.service';
 import { CategoryService } from './../../../core/services/category.service';
 import { RoleService } from './../../../core/services/role.service';
 import { User } from './../../../core/models/user';
@@ -36,7 +37,8 @@ export class AddUserComponent implements OnInit {
   constructor(public userService: UserService,
     public router: Router,
     public roleService: RoleService,
-    public categoryService: CategoryService) { }
+    public categoryService: CategoryService,
+    public auth: AuthServices) { }
 
   ngOnInit(): void {
     this.getRoles();
@@ -78,6 +80,7 @@ export class AddUserComponent implements OnInit {
       if (this.userService.selectedUser.createdAt) {
         // EDITAR USUARIO
         form.value.mayoreo = this.mayoreo;
+        this.userService.admin = this.auth.Admin()
         this.userService.editUser(form.value, this.img.toString());
         Swal.fire({
           position: 'top-end',

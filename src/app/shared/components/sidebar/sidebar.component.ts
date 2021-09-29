@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthServices } from 'src/app/core/services/auth.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
@@ -29,6 +30,7 @@ export class SidebarComponent implements OnInit {
     public userService: UserService,
     public auth: AuthServices,
     public orderService: OrderService,
+    private router: Router,
     @Inject(DOCUMENT) public document: Document) {
 
   }
@@ -76,6 +78,11 @@ export class SidebarComponent implements OnInit {
     }else{
       return false;
     }
+  }
+
+  editUser(user: any) {
+    this.userService.selectedUser = user;
+    this.router.navigate(['/add-user']);
   }
 
 }
