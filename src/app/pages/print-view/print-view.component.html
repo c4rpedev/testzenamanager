@@ -1,8 +1,8 @@
 <div class="container" >
     <div class="print__header">
         <div class="header__left" >
-            <img src="assets/images/buttymasterlogo.png" alt="">
-            <h2>ButtyMaster</h2>
+            <img src="{{img}}" alt="">
+            <h2 *ngIf="agency">{{agency.userName | uppercase}}</h2>
         </div>
         <div class="header__right mt-3">
             <b>ENTREGA</b><br>
@@ -73,7 +73,7 @@
             De estar en desacuerdo usted puede exigir la entrega correcta o el reembolso del pago integro a la agencia, siempre argumentando y documentando las causas. Recuerde que una vez firmada la misma no tienen derecho a Reclamacion ni el receptor ni el emisor.
         </p>
     </div>
-    <div class="mt-5">
+    <div class="mt-5" *ngIf="!auth.Agencia()">
   __________________________________________________________ <br>
   Firma de Conformidad contra Declaración Jurada del Cliente
 

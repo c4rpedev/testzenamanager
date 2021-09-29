@@ -36,6 +36,7 @@ export class OrderService {
       myNewObject.set('orderPrice', order.orderPrice);
       myNewObject.set('orderReference', order.orderReference);
       myNewObject.set('orderNote', order.orderNote);
+      myNewObject.set('orderAgencyId', this.auth.logedUser.userId);
       myNewObject.set('state', 'Nuevo');
       if (order.orderProvince == "Pinar del Río" ||
         order.orderProvince == "Matanzas" ||

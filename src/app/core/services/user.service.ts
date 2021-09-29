@@ -37,6 +37,13 @@ export class UserService {
     return query.find();
   }
 
+  getUserbyId(id: string) {
+    const user = Parse.Object.extend('users');
+    const query = new Parse.Query(user);
+    query.equalTo('userId', id);
+    return query.find();
+  }
+
   addUser(user: User, img: string) {
     //VERIFICANDO SI YA EXISTE UN USUARIO CON ESE CORREO
     const userfind = Parse.Object.extend('users');
