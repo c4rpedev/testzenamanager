@@ -368,7 +368,7 @@ export class ListOrdersComponent implements OnInit {
       //Archivar las órdenes Finalizadas que tienen más de 15 días sin modificar
       var diffModif = Math.abs(order.attributes.updatedAt.getTime() - currentDate.getTime());
       var diffModDays = Math.ceil(diffModif / (1000 * 3600 * 24));
-      if (order.attributes.state == "Finalizado" && diffModDays > 15) {
+      if (order.attributes.state == "Finalizado" && order.attributes.orderPaid && diffModDays > 15) {
         this.orderService.updateOrderState(order.id, 'Archivado')
       }
 
@@ -405,6 +405,37 @@ export class ListOrdersComponent implements OnInit {
         Swal.fire(
           'Borrado!',
           'La orden ha sido eliminado.',
+          'success'
+        )
+      }
+    })
+  }
+
+  payOrder(order: any, paid: boolean) {
+    let text = "Va a cambiar el estado de la orden con Id: " + order.attributes.orderId +" a No Pagada";
+    let button = "Si, cambiar estado"
+    let success = "Estado de orden cambiada a No pagada.";
+    if(paid){
+      text = "La orden con Id: " + order.attributes.orderId +" está pagada??";
+      button = "Si, está pagada!";
+      success = "La orden ha sido pagada.";
+    }
+    Swal.fire({
+      title: 'Estás seguro?',
+      text: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: button
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.orderService.paidOrder(paid, order.id).then(res=>{
+          // this.router.navigate(['/orders']);
+        });
+        Swal.fire(
+          'Borrado!',
+          success,
           'success'
         )
       }

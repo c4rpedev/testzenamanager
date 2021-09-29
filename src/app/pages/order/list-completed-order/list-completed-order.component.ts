@@ -139,71 +139,7 @@ export class ListCompletedOrderComponent implements OnInit  {
         this.sucursalService.getSucursal().then(res =>{
           this.sucursalArray = res;
         });
-        if(this.auth.Admin()){
-          this.orderService.getOrderCompletedSucursal(this.user).then(res=>{
-            res.forEach((element:any) => {
-              this.orders.push(element);
-            });
-            this.dataSource = new MatTableDataSource<Order>(this.orders);
-
-            console.log(this.dataSource);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sortingDataAccessor = (item:any, property:any) => {
-              switch (property) {
-                case 'date':  return item.attributes.createdAt;
-                case 'id': return item.attributes.orderId;
-                default: return item[property];
-              }
-            }
-            this.sort.sort(({ id: 'date', start: 'desc'}) as MatSortable);
-            this.dataSource.sort = this.sort;
-            this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-            this.dataSource.filterPredicate = (p: any, filtre) => {
-              let result = true;
-              let keys = Object.keys(p.attributes); // k
-              for (const key of keys) {
-                let searchCondition = filtre.conditions[key]; // et search filter method
-                if (this.fromDate && this.toDate) {
-                  if(!(p.attributes.createdAt >= this.fromDate && p.attributes.createdAt <= this.toDate)){
-                    result = false; // if one of the filters method not succeed the row will be remove from the filter result
-                    break;
-                  }
-                }
-                if (searchCondition && searchCondition !== "none") {
-                  if (
-                    filtre.methods[searchCondition](p.attributes[key], filtre.values[key]) ===
-                    false
-                  ) {
-                    // invoke search filter
-                    result = false; // if one of the filters method not succeed the row will be remove from the filter result
-                    break;
-                  }
-                }
-              }
-              return result;
-            };
-
-            this.isAdmin();
-            this.loading = false;
-             this.sucursal = this.auth.Sucursal();
-
-             if(this.admin || this.sucursal){
-                  this.displayedColumns =  ['id', 'date', 'agency', 'client', 'products', 'reciver', 'province', 'municipio','mobile','phone', 'state', 'accions'];
-             }else{
-              this.displayedColumns =  ['id', 'date', 'client', 'products', 'reciver', 'province', 'municipio','mobile','phone', 'state', 'accions'];
-             }
-             if (this.orderService.edit) {
-              this.searchValue = this.orderService.values;
-              this.searchCondition = this.orderService.conditions;
-              this._filterMethods = this.orderService.methods;
-              this.orderService.edit = false;
-              this.applyFilter();
-            }else{
-              this.orderService.conditions = null;
-            }
-          })
-        }else{
-          this.orderService.getOrderCompleted(this.user).then(res=>{
+          this.orderService.getOrderCompleted().then(res=>{
             res.forEach((element:any) => {
               this.orders.push(element);
             });
@@ -267,7 +203,6 @@ export class ListCompletedOrderComponent implements OnInit  {
           this.orderService.conditions = null;
         }
           })
-        }
 
 
 
@@ -339,28 +274,9 @@ export class ListCompletedOrderComponent implements OnInit  {
     }
     checkState(){
       for (let order of this.orders) {
-        let d1 = new Date();
-        var diff = Math.abs(order.attributes.createdAt.getTime() - d1.getTime());
-        var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-
-        var deliveryTime = this.stateService.getDeliveryTime(order.attributes.orderProvince);
-        if(order.attributes.state == "En Proceso" || order.attributes.state.includes("En Tiempo") || order.attributes.state.includes("En Termino") || order.attributes.state.includes("Atrasado")){
-          if((diffDays - deliveryTime == 1) || diffDays == deliveryTime){
-            this.orderService.updateOrderState(order.id, 'En Termino')
-            console.log('En termino');
-          }else if(diffDays < deliveryTime){
-            //this.orderService.updateOrderState(order.id, 'En Tiempo')
-            this.orderService.updateOrderState(order.id, 'En Tiempo'+' '+(deliveryTime-diffDays+1))
-            console.log('En tiempo'+' '+(deliveryTime-diffDays+1));
-          }else if(diffDays > deliveryTime){
-            //this.orderService.updateOrderState(order.id, 'Atrasado')
-            this.orderService.updateOrderState(order.id, 'Atrasado'+' '+(diffDays-deliveryTime))
-            console.log('Atrasado'+' '+(diffDays-deliveryTime));
-
-          }
+        if (!order.attributes.orderPaid) {
+          this.orderService.updateOrderState(order.id, 'Finalizado')
         }
-
-
       }
     }
 
@@ -409,6 +325,40 @@ export class ListCompletedOrderComponent implements OnInit  {
       this.orderService.Archivados = true;
       this.router.navigate(['/b']);
       this.router.navigateByUrl('/edit-order', { state: {order: order, orderId: orderId, user: this.user, admin: this.admin, sucursal: this.sucursal}});
+    }
+
+    payOrder(order: any, paid: boolean) {
+      let text = "Va a cambiar el estado de la orden con Id: " + order.attributes.orderId +" a No Pagada";
+      let button = "Si, cambiar estado"
+      let success = "Estado de orden cambiada a No pagada.";
+      if(paid){
+        text = "La orden con Id: " + order.attributes.orderId +" está pagada??";
+        button = "Si, está pagada!";
+        success = "La orden ha sido pagada.";
+      }
+      Swal.fire({
+        title: 'Estás seguro?',
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: button
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.orderService.paidOrder(paid, order.id).then(res=>{
+            if(!paid){
+              this.orderService.updateOrderState(order.id, 'Finalizado')
+              this.router.navigate(['/orders-completed']);
+            }
+          });
+          Swal.fire(
+            'Borrado!',
+            success,
+            'success'
+          )
+        }
+      })
     }
 
   }

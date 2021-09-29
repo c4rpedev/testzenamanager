@@ -485,7 +485,8 @@
           </div>
           <div class="badge bg-danger text-wrap" style="width: 6rem;" *ngIf="element.attributes.state.includes('Atrasado')">
             {{element.attributes.state}}
-          </div> </td>
+          </div>
+        </td>
         </ng-container>
 
           <!-- accions Column -->
@@ -509,6 +510,13 @@
                 </div>
                 <div *ngIf="admin || element.attributes.state == 'Nuevo'">
                  <button matTooltip="Eliminar" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" (click)="deleteOrder(element)"><span class="fa fa-trash"></span></button>
+                </div>
+                <!-- PAGO -->
+                <div *ngIf="admin && !element.attributes.orderPaid">
+                  <button matTooltip="Pediente de pago" class="btn btn-dark btn-xs" data-title="Pediente de pago" data-toggle="modal" data-target="#Pediente de pago" (click)="payOrder(element, true)"><span class="fa fa-usd"></span></button>
+                </div>
+                <div *ngIf="admin && element.attributes.orderPaid">
+                  <button matTooltip="Pagado" class="btn btn-success btn-xs" data-title="Pagado" data-toggle="modal" data-target="#Pagado"><span class="fa fa-usd" (click)="payOrder(element, false)"></span></button>
                 </div>
               </div>
             </td>

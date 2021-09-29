@@ -5,6 +5,7 @@ export class Order {
     orderAgency: string;
     orderClientName: string;
     orderAgencyId: string;
+    orderPaid: boolean;
     orderFirstLastName: string;
     orderSecondLastName: string;
     orderRecieverName: string;
