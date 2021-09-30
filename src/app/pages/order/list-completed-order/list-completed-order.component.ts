@@ -90,6 +90,7 @@ export class ListCompletedOrderComponent implements OnInit  {
     enddate: string;
     albaranes: string = 'albaranes.jpg'
     public displayedColumns: string[];
+    public agencys: string[] = [];
 
 
     public conditionsList = CONDITIONS_LIST;
@@ -129,6 +130,7 @@ export class ListCompletedOrderComponent implements OnInit  {
 
     ngOnInit(): void {
       //this.initEqualOption();
+      this.getAgencys();
         this.loading = true;
         this.user = this.auth.logedUser.userName;
         this.restaurante = this.userService.isRestaurant(this.user);
@@ -203,11 +205,15 @@ export class ListCompletedOrderComponent implements OnInit  {
           this.orderService.conditions = null;
         }
           })
-
-
-
     }
 
+    getAgencys(){
+      this.userService.getAgencys().then(res=>{
+        res.forEach(element => {
+          this.agencys.push(element.attributes.userName);
+        });
+      })
+    }
 
     initEqualOption(){
       this.searchCondition.orderId = 'is-equal';

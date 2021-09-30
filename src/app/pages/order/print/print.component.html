@@ -1,0 +1,176 @@
+<div class="container" >
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="title-box text-center pt-5">
+            <h3 class="title-a">
+                Pedidos
+            </h3>
+            <p class="subtitle-a">
+                Listado de pedidos
+            </p>
+            <div class="line-mf"></div>
+        </div>
+    </div>
+  </div>
+
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Id
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <i *ngIf="element.attributes.state != 'Finalizado' && element.attributes.orderAlbaran && element.attributes.orderAlbaran._name.indexOf(albaranes, element.attributes.orderAlbaran._name.length - albaranes.length) !== -1" class="fa fa-check"></i> {{element.attributes.orderId}}  </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          <div class="header">
+            Fecha
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.attributes.createdAt | date}} </td>
+      </ng-container>
+
+      <!-- Agency Column -->
+      <ng-container matColumnDef="agency" >
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Agencia
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.attributes.orderAgency}} </td>
+      </ng-container>
+
+      <!-- Sucursal Column -->
+      <ng-container matColumnDef="sucursal" >
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Sucursal
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.attributes.orderSucursal}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Cliente
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.attributes.orderClientName }} </td>
+      </ng-container>
+
+        <!-- products -->
+        <ng-container matColumnDef="products">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header">
+              Productos
+            </div>
+         </th>
+          <td  mat-cell *matCellDef="let element">  <p *ngIf="element.attributes.productArray">{{element.attributes.productArray[0].name}}</p> <p class="see__more" *ngIf="element.attributes.productArray && element.attributes.productArray.length > 1">Ver más</p></td>
+        </ng-container>
+
+          <!-- reciver Column -->
+      <ng-container matColumnDef="reciver">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Recibe
+          </div>
+       </th>
+        <td mat-cell *matCellDef="let element">{{element.attributes.orderRecieverName}}</td>
+      </ng-container>
+
+        <!-- province Column -->
+        <ng-container matColumnDef="province">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header">
+              Provincia
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">{{element.attributes.orderProvince}} </td>
+        </ng-container>
+
+          <!-- municipio Column -->
+      <ng-container matColumnDef="municipio">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Municipio
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element">{{element.attributes.orderMunicipio}} </td>
+      </ng-container>
+
+        <!-- phone Column -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header">
+              Teléfono
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element">  {{element.attributes.orderPhone}} </td>
+        </ng-container>
+
+        <!-- mobile Column -->
+        <ng-container matColumnDef="mobile">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header">
+              Móvil
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.attributes.orderMobile}}  </td>
+        </ng-container>
+
+          <!-- state Column -->
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header">
+            Estado
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element">  <div class="badge bg-info text-wrap" style="width: 6rem;" *ngIf="element.attributes.state == 'Nuevo'">
+          {{element.attributes.state}}
+        </div>
+        <div class="badge bg-primary text-wrap" style="width: 6rem;" *ngIf="element.attributes.state == 'Revisado'">
+          {{element.attributes.state}}
+        </div>
+        <div class="badge bg-success text-wrap" style="width: 6rem;" *ngIf="element.attributes.state.includes('En Tiempo')">
+          {{element.attributes.state}}
+        </div>
+        <div class="badge bg-dark text-wrap" style="width: 6rem;" *ngIf="element.attributes.state == 'Finalizado'">
+          {{element.attributes.state}}
+        </div>
+        <div class="badge bg-secondary text-wrap" style="width: 6rem;" *ngIf="element.attributes.state == 'Cancelado'">
+          {{element.attributes.state}}
+        </div>
+        <div class="badge bg-warning text-wrap" style="width: 6rem;" *ngIf="element.attributes.state.includes('En Termino')">
+          {{element.attributes.state}}
+        </div>
+        <div class="badge bg-danger text-wrap" style="width: 6rem;" *ngIf="element.attributes.state.includes('Atrasado')">
+          {{element.attributes.state}}
+        </div>
+      </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="mt-5 doNotPrint">
+      <button (click)="print()">Imprimir</button>
+  </div>
+</div>
+<style type="text/css" media="print">
+  @page {
+      size: auto;   /* auto is the initial value */
+      margin: 0;  /* this affects the margin in the printer settings */
+  }
+  </style>

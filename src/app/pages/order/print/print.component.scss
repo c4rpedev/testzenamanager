@@ -1,0 +1,56 @@
+.actions__row{
+  display: flex;
+  button{
+      margin-left: 5px;
+      span{
+          color: white;
+      }
+  }
+}
+td.mat-cell{
+  padding-right:10px;
+
+}
+.order__spinner{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 50px;
+}
+.list__filter__group{
+  display: flex;
+  justify-content: space-between;
+}
+.header{
+  cursor: pointer;
+
+}
+
+.mat-menu-item{
+  button{
+      padding: 0px;
+
+      color: wheat;
+      margin-left: 5px;
+      border-radius: 10px !important;
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+}
+
+table{
+  width: 100%;
+}
+.disable-block {
+  pointer-events: none;
+  opacity: .7;
+}
+
+.see__more{
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+.fa-check{
+  color: green;
+}

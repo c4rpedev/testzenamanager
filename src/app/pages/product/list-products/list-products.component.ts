@@ -115,7 +115,7 @@ export class ListProductsComponent implements OnInit {
           if(element[0] == category){
             find = true;
             if(element[1] == '%'){
-              pri = (parseInt(element[2].toString()) * price / 100);
+              pri = ((parseInt(element[2].toString()) * price / 100) + price);
             }else{
               pri = (parseInt(element[2].toString()) + price);
             }

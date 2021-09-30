@@ -19,6 +19,10 @@ export class OrderService {
   methods: any;
   user: User;
   ordersCount: number = 0;
+  //Print
+  dataSource: any;
+  displayedColumns: any[] = [];
+  albaranes: any;
 
   constructor(public auth: AuthServices) { }
 

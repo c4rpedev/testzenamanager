@@ -16,40 +16,38 @@
     <div class="col-md-2"></div>
     <div class="col-md-8 ml-2">
       <div class="d-flex card ">
-      
+
           <form (ngSubmit)="onSubmit( f )"  #f="ngForm">
             <label>
-              <span class="fname">Id <span class="required">*</span></span>
-              <input type="text" 
-                      class="form-control" 
-                      [(ngModel)]="complain.complainId" 
-                      [class.is-invalid]="complainId.invalid && complainId.touched"
-                      required 
+              <span class="fname">Id</span>
+              <input type="text"
+                      class="form-control"
+                      [(ngModel)]="complain.complainId"
                       placeholder="Id de queja"
                       name="complainId"
                       #complainId = "ngModel">
             </label>
             <label>
               <span class="fname">Cliente <span class="required">*</span></span>
-              <input type="text" 
-                      class="form-control" 
-                      [(ngModel)]="complain.complainClient" 
+              <input type="text"
+                      class="form-control"
+                      [(ngModel)]="complain.complainClient"
                       [class.is-invalid]="complainClient.invalid && complainClient.touched"
-                      required 
+                      required
                       disabled
                       placeholder="Nombre del Cliente"
                       name="complainClient"
                       #complainClient = "ngModel">
             </label>
-           
-           
+
+
             <label>
               <span class="fname">Id de Pedido <span class="required">*</span></span>
-              <input type="text" 
-                      class="form-control" 
-                      [(ngModel)]="complain.complainOrder" 
+              <input type="text"
+                      class="form-control"
+                      [(ngModel)]="complain.complainOrder"
                       [class.is-invalid]="complainOrder.invalid && complainOrder.touched"
-                      required 
+                      required
                       disabled
                       placeholder="Id del Pedido"
                       name="complainOrder"
@@ -57,10 +55,10 @@
             </label>
             <label>
               <span>Motivo <span class="required">*</span></span>
-              <textarea  [(ngModel)]="complain.complainMotive" 
+              <textarea  [(ngModel)]="complain.complainMotive"
               [class.is-invalid]="complainMotive.invalid && complainMotive.touched"
-              required 
-              
+              required
+
               name="complainMotive"
               #complainMotive = "ngModel">
 
@@ -77,21 +75,21 @@
                   <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
                 </div>
                 <input type="file" multiple (change)="detectFiles($event)">
-                
-               
+
+
             </div>
             </div>
             <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Añadir</button></div>
-          
-            
-            
-            
-           
+
+
+
+
+
           </form>
-      
+
          </div>
     </div>
-   
+
   </div>
- 
+
   </div>

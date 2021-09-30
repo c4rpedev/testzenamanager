@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
 
       this.orderService.orderCount();
 
-      this.complainService.getComplain(this.user).then(res=>{
+      this.complainService.getComplain(this.user, this.admin).then(res=>{
        for (const complain of res) {
          if(complain.attributes.complainState == 'Nuevo'){
            this.complains = true;

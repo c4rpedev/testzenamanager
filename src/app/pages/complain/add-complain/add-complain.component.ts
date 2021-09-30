@@ -1,3 +1,4 @@
+import { AuthServices } from './../../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Complain } from 'src/app/core/models/complain';
 import { ComplainService } from 'src/app/core/services/complain.service';
@@ -23,16 +24,17 @@ export class AddComplainComponent implements OnInit {
   constructor(
     private userService: UserService,
     private complainService: ComplainService,
-    private router: Router) { }
+    private router: Router,
+    private auth: AuthServices) { }
 
   ngOnInit(): void {
     this.order = history.state.order;
-    
+
     this.complain.complainClient = this.order.orderClientName;
     this.complain.complainOrder = this.order.orderId;
-    this.user = this.userService.getUser;
+    this.user = this.auth.logedUser.userName;
     console.log(this.user);
-    
+
   }
 
   detectFiles(event: any) {
@@ -44,16 +46,18 @@ export class AddComplainComponent implements OnInit {
         reader.onload = (e: any) => {
           this.urls.push(e.target.result);
         }
-        reader.readAsDataURL(file);        
+        reader.readAsDataURL(file);
       }
-    } 
+    }
   }
 
   onSubmit(form: NgForm){
     console.log(this.user);
-    
+
     if(form.valid){
-      this.complainService.createComplain(this.complain, this.user, this.urls)
+      this.complainService.createComplain(this.complain, this.user, this.urls).then(res=>{
+        this.router.navigate(['/list-complain']);
+      })
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -61,14 +65,13 @@ export class AddComplainComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-      this.router.navigate(['/list-complain']);
     }else{
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Complete todos los campos obligatorios!',        
+        text: 'Complete todos los campos obligatorios!',
       })
-    } 
+    }
   }
 
 }

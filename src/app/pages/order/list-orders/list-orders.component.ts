@@ -86,6 +86,7 @@ export class ListOrdersComponent implements OnInit {
   enddate: string;
   albaranes: string = 'albaranes.jpg'
   public displayedColumns: string[];
+  public agencys: string[] = [];
 
 
   public conditionsList = CONDITIONS_LIST;
@@ -125,6 +126,7 @@ export class ListOrdersComponent implements OnInit {
 
   async ngOnInit() {
     //this.initEqualOption();
+      this.getAgencys();
       this.loading = true;
       this.user = this.auth.logedUser;
       this.restaurante = this.userService.isRestaurant(this.user.userName);
@@ -276,6 +278,23 @@ export class ListOrdersComponent implements OnInit {
 
   }
 
+
+  getAgencys(){
+    this.userService.getAgencys().then(res=>{
+      res.forEach(element => {
+        this.agencys.push(element.attributes.userName);
+      });
+    })
+  }
+
+  print() {
+    this.orderService.dataSource = this.dataSource
+    this.orderService.displayedColumns = this.displayedColumns
+    this.orderService.albaranes = this.albaranes;
+    // this.orderService.printOrders = this.dataSource._renderData._value;
+    this.router.navigate(['/print']);
+    // window.print();
+  }
 
   initEqualOption() {
     this.searchCondition.orderId = 'is-equal';

@@ -1,3 +1,4 @@
+import { AuthServices } from './../../../core/services/auth.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Product } from 'src/app/core/models/product';
@@ -13,7 +14,10 @@ export class PreviewProductComponent implements OnInit {
   photosrc: String;
   img: string | ArrayBuffer =
   "https://bulma.io/images/placeholders/480x480.png";
-  constructor(public dialogRef: MatDialogRef<PreviewProductComponent>,
+
+  constructor(
+    public auth: AuthServices,
+    public dialogRef: MatDialogRef<PreviewProductComponent>,
     @Inject(MAT_DIALOG_DATA) public products: any) { }
 
   ngOnInit(): void {
@@ -21,6 +25,32 @@ export class PreviewProductComponent implements OnInit {
     this.productTable = this.product.products;
     console.log(this.products['products']);
     console.log(this.product);
+  }
+
+  price(price: any, category: string): number{
+    var find = false;
+    var pri = 0;
+    if(this.auth.logedUser.userRole != 'Agencia'){
+      return price;
+    }else{
+      if(this.auth.logedUser.mayoreo){
+        this.auth.logedUser.mayoreo.forEach(element => {
+          if(element[0] == category){
+            find = true;
+            if(element[1] == '%'){
+              pri = ((parseInt(element[2].toString()) * price / 100) + price);
+            }else{
+              pri = (parseInt(element[2].toString()) + price);
+            }
+          }
+        });
+      }
+    }
+    if(find){
+      return pri;
+    }else{
+      return price;
+    }
   }
 
 }

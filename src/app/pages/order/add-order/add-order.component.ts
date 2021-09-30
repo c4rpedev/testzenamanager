@@ -73,7 +73,7 @@ export class AddOrderComponent implements OnInit {
     this.user = this.auth.logedUser.userName;
     this.getTranspCost();
     this.getClients();
-
+    this.prices();
     // this.getTransportCost();
   }
 
@@ -154,6 +154,38 @@ export class AddOrderComponent implements OnInit {
       this.smsService.sendSMS(number, ' ', this.order.orderRecieverName, this.user);
     }
 
+  }
+
+  prices(){
+    this.products.forEach(element => {
+      element.price = this.price(element.price, element.category);
+    });
+  }
+
+  price(price: any, category: string): number{
+    var find = false;
+    var pri = 0;
+    if(this.auth.logedUser.userRole != 'Agencia'){
+      return price;
+    }else{
+      if(this.auth.logedUser.mayoreo){
+        this.auth.logedUser.mayoreo.forEach(element => {
+          if(element[0] == category){
+            find = true;
+            if(element[1] == '%'){
+              pri = ((parseInt(element[2].toString()) * price / 100) + price);
+            }else{
+              pri = (parseInt(element[2].toString()) + price);
+            }
+          }
+        });
+      }
+    }
+    if(find){
+      return pri;
+    }else{
+      return price;
+    }
   }
 
   onSubmit(form: NgForm) {

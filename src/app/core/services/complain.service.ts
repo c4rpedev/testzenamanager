@@ -12,20 +12,19 @@ export class ComplainService {
   numR: number=0;
   constructor() { }
 
-  createComplain(complain: Complain, user: string, files: string []){   
-    (async () => {
+  async createComplain(complain: Complain, user: string, files: string []){
       const myNewObject = new Parse.Object('complains');
       myNewObject.set('complainAgency', user);
       myNewObject.set('complainClient', complain.complainClient);
       myNewObject.set('complainOrder', complain.complainOrder);
       myNewObject.set('complainMotive', complain.complainMotive);
-      myNewObject.set('complainId', complain.complainId);    
-      for (let file of files) {    
-        console.log(this.num+'sdgfd'+file);                 
-        myNewObject.set('complainPicture'+this.num, new Parse.File("evidence"+this.num+".jpg", { uri: file.toString() })); 
+      myNewObject.set('complainId', complain.complainId);
+      for (let file of files) {
+        console.log(this.num+'sdgfd'+file);
+        myNewObject.set('complainPicture'+this.num, new Parse.File("evidence"+this.num+".jpg", { uri: file.toString() }));
         this.num++
-      }  
-      myNewObject.set('complainPicNum', this.num); 
+      }
+      myNewObject.set('complainPicNum', this.num);
       myNewObject.set('complainState', 'Nuevo');
       try {
         const result = await myNewObject.save();
@@ -34,20 +33,19 @@ export class ComplainService {
       } catch (error) {
         console.error('Error while creating complains: ', error);
       }
-    })();
   }
 
-  getComplain(agency: string): Promise <any> {  
-    if(agency && agency != 'buttymanager' && agency != 'buttycomercial' && agency != 'buttyoperaciones' && agency != 'buttyekonomico'){   
+  getComplain(agency: string, admin: boolean): Promise <any> {
+    if(!admin){
       const Complains = Parse.Object.extend('complains');
-      const query = new Parse.Query(Complains);    
+      const query = new Parse.Query(Complains);
       query.equalTo('complainAgency', agency);
-      return query.find() 
+      return query.find()
     }else{
       const Complains = Parse.Object.extend('complains');
-      const query = new Parse.Query(Complains); 
+      const query = new Parse.Query(Complains);
       return query.find()
-    }       
+    }
   }
 
   updateComplain(complain: Complain, complainId: string, files: string []){
@@ -56,19 +54,19 @@ export class ComplainService {
       try {
         // here you put the objectId that you want to update
         const object = await query.get(complainId);
-        
+
         object.set('complainClient', complain.complainClient);
         object.set('complainOrder', complain.complainOrder);
         object.set('complainMotive', complain.complainMotive);
         object.set('complainState', complain.complainState);
         object.set('complainAnalisis', complain.complainAnalisis);
         object.set('complainSolution', complain.complainSolution);
-        for (let file of files) {    
-          console.log(this.numR+'sdgfd'+file);                 
-          object.set('resultPicture'+this.numR, new Parse.File("evidence"+this.numR+".jpg", { uri: file.toString() })); 
+        for (let file of files) {
+          console.log(this.numR+'sdgfd'+file);
+          object.set('resultPicture'+this.numR, new Parse.File("evidence"+this.numR+".jpg", { uri: file.toString() }));
           this.numR++
-        }  
-        object.set('resultPicNum', this.numR); 
+        }
+        object.set('resultPicNum', this.numR);
         object.set('complainId', complain.complainId);
         try {
           const response = await object.save();

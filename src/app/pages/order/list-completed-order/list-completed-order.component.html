@@ -135,7 +135,7 @@
                 <mat-form-field>
                   <!-- <input matInput placeholder="Atributos" [(ngModel)]="searchValue.orderAgency"> -->
                   <mat-select [panelClass]="'mat-elevation-z10'" placeholder='Atributos' [(value)]="searchValue.orderAgency">
-                    <mat-option *ngFor="let t of transporte" [value]="t.attributes.agencia">{{t.attributes.agencia}}</mat-option>
+                    <mat-option *ngFor="let t of agencys" [value]="t">{{t}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>

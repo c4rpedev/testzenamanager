@@ -23,14 +23,15 @@ export class ListComplainComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isAdmin();
       this.loading = true;
       this.user = this.auth.logedUser.userName;
-      this.complainService.getComplain(this.user).then(res=>{
+      this.complainService.getComplain(this.user, this.admin).then(res=>{
         this.complains = res;
         console.log(this.complains);
         this.loading = false;
       })
-      this.isAdmin();
+
   }
   isAdmin(){
     this.admin = this.auth.Admin();

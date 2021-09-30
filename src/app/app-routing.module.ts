@@ -1,3 +1,4 @@
+import { PrintComponent } from './pages/order/print/print.component';
 import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
 import { AddRoleComponent } from './pages/user/add-role/add-role.component';
 import { ListRoleComponent } from './pages/user/list-role/list-role.component';
@@ -90,6 +91,10 @@ const routes: Routes = [
   //-- Print --//
   {
     path: 'print-view', component: PrintViewComponent,
+    canActivate: [LogedGuard]
+  },
+  {
+    path: 'print', component: PrintComponent,
     canActivate: [LogedGuard]
   },
 

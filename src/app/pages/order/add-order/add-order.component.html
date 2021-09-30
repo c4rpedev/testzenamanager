@@ -15,12 +15,10 @@
 <div class="d-flex card">
   <form (ngSubmit)="onSubmit( f )"  #f="ngForm">
 
-      <label class="fname"><strong>ID *</strong>  </label>
+      <label class="fname"><strong>ID</strong>  </label>
       <input type="text"
       class="form-control"
       [(ngModel)]="order.orderId"
-      [class.is-invalid]="orderId.invalid && orderId.touched"
-      required
       placeholder="Identificador de Pedido"
       name="orderId"
       #orderId = "ngModel">
