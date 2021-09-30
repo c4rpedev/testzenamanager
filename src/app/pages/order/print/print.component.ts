@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { OrderService } from 'src/app/core/services/order.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,20 +17,14 @@ export class PrintComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator
 
-  constructor(public orderService: OrderService) { }
+  constructor(public orderService: OrderService, private router: Router) { }
 
 
 
-  ngOnInit(): void {
-    this.dataSource = this.orderService.dataSource;
-    this.albaranes = this.orderService.albaranes;
-    this.orderService.displayedColumns.forEach(element => {
-      if(element != 'accions'){
-        this.displayedColumns.push(element);
-      }
-    });
-    this.dataSource.paginator = this.paginator;
-    console.log(this.dataSource);
+  async ngOnInit() {
+    await this.init();
+    this.print();
+
 
     // this.displayedColumns = this.orderService.displayedColumns;
     // console.log(this.dataSource);
@@ -37,8 +32,21 @@ export class PrintComponent implements OnInit {
     // console.log(this.orderService.printOrders[0].attributes.orderClientName)
   }
 
+  async init(){
+    this.dataSource = this.orderService.dataSource;
+    this.dataSource.paginator = this.paginator;
+    this.albaranes = this.orderService.albaranes;
+    await this.orderService.displayedColumns.forEach(element => {
+      if(element != 'accions'){
+        this.displayedColumns.push(element);
+      }
+    });
+
+  }
+
   print() {
     window.print();
+    this.router.navigate(['/orders']);
   }
 
 }

@@ -121,7 +121,7 @@ sendEmail(){
         // }
        }
 
-      this.orderService.updateOrder(this.order, this.orderId, this.img.toString(), hasAlbaran).subscribe(
+      this.orderService.updateOrder(this.order, this.orderId, this.img.toString(), hasAlbaran).then(
         success =>{
           console.log('Show MSG');
           this.orderService.orderCount();
@@ -144,10 +144,13 @@ sendEmail(){
            }else{
             this.router.navigate(['/orders']);
            }
-
         }
       );
-
+      Swal.fire({
+        icon: 'warning',
+        title: 'Información',
+        text: 'Actualizando pedido, por favor espere.',
+      })
     }else{
       Swal.fire({
         icon: 'error',

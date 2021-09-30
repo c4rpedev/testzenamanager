@@ -88,7 +88,6 @@ export class ListOrdersComponent implements OnInit {
   public displayedColumns: string[];
   public agencys: string[] = [];
 
-
   public conditionsList = CONDITIONS_LIST;
   public searchValue: any = {};
   public searchCondition: any = {};
@@ -291,6 +290,7 @@ export class ListOrdersComponent implements OnInit {
     this.orderService.dataSource = this.dataSource
     this.orderService.displayedColumns = this.displayedColumns
     this.orderService.albaranes = this.albaranes;
+    // this.pageSize = [1000];
     // this.orderService.printOrders = this.dataSource._renderData._value;
     this.router.navigate(['/print']);
     // window.print();

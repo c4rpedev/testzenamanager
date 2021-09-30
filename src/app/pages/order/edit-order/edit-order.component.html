@@ -25,7 +25,7 @@
       <label>
         <span class="fname">ID </span>
         <input type="text" class="form-control" [(ngModel)]="order.orderId"
-          [disabled]="!admin && !(order.state == 'Nuevo')" placeholder="Identificador de Pedido" name="orderId"
+          [disabled]="true" placeholder="Identificador de Pedido" name="orderId"
           #orderId="ngModel">
       </label>
       <label>

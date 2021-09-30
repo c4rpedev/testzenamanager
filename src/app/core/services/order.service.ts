@@ -28,8 +28,15 @@ export class OrderService {
 
   createOrder(order: Order, products: any[], user: string) {
     (async () => {
+      // const Orders = Parse.Object.extend('order');
+      // const query = new Parse.Query(Orders);
+
+      // query.limit(1);
+      // const ord = query.find()
+
+
       const myNewObject = new Parse.Object('order');
-      myNewObject.set('orderId', order.orderId);
+      // myNewObject.set('orderId', myNewObject.id);
       myNewObject.set('orderClientName', order.orderClientName);
       myNewObject.set('orderRecieverName', order.orderRecieverName);
       myNewObject.set('orderProvince', order.orderProvince);
@@ -62,6 +69,8 @@ export class OrderService {
       myNewObject.set('orderAgency', user);
       try {
         const result = await myNewObject.save();
+        result.set('orderId', result.id);
+        result.save();
         // Access the Parse Object attributes using the .GET method
         console.log('order created', result);
       } catch (error) {
@@ -91,9 +100,7 @@ export class OrderService {
     }
   }
 
-  updateOrder(order: Order, orderId: string, img: string, hasAlbaran: boolean): Observable<boolean> {
-    return new Observable(observer => {
-      (async () => {
+  async updateOrder(order: Order, orderId: string, img: string, hasAlbaran: boolean){
         const query = new Parse.Query('order');
         try {
           // here you put the objectId that you want to update
@@ -116,8 +123,6 @@ export class OrderService {
             console.log("Poniendo albaran");
 
           }
-          observer.next(true);
-          observer.complete();
 
           try {
             const response = await myNewObject.save();
@@ -134,21 +139,12 @@ export class OrderService {
             console.log(response.get('orderClientName'));
             console.log(response.get('orderRecieverName'));
             console.log('order updated', response);
-            observer.next(true);
-            observer.complete();
           } catch (error) {
             console.error('Error while updating order', error);
-            observer.error(error);
-            observer.complete();
           }
         } catch (error) {
           console.error('Error while retrieving object order', error);
-          observer.error(error);
-          observer.complete();
         }
-      })();
-
-    });
   }
 
   async paidOrder(paid: Boolean, orderId: string) {

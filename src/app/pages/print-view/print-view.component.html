@@ -16,7 +16,7 @@
     </div>
 
 
-    <div class="print__middle mt-5">
+    <div class="print__middle mt-3">
         <div>
             <b>Agencia: </b> {{orders.orderAgency  | uppercase}}
         </div>
@@ -44,13 +44,14 @@
        </div>
     </div>
 
-    <div class="print__p mt-3">
+    <div class="print__p mt-3" *ngIf="!auth.Agencia()">
         <p>
             Yo <b>{{orders.orderRecieverName}}</b> he recibido de manos del mensajero todos los productos que lista la Factura, estando de acuerdo con su calidad y cantidad ( pesaje), y ante la duda el mensajero me facilita una pesa digital para su comprobación sin apuro y siendo explicativo y amable, pareciéndome adecuado el actuar, porte, aspecto y presentación del mensajero y los productos entregados. Por ello entiendo que una vez firmada esta, pierdo todo derecho a reclamar tanto yo como el emisor de la misma. Ante apuros, mal actuar del mensajero o dudas, contacte con nuestro teléfono de atención a Clientes: <b>59769857</b>. Gracias.
         </p>
     </div>
     <div class="product__name">
-     <h3><b>Productos</b> </h3>
+     <h3 *ngIf="!auth.Agencia()"><b>Productos</b> </h3>
+     <h3 *ngIf="auth.Agencia()"><b>Detalles del Pedido</b> </h3>
     </div>
     <div>
         <table mat-table [dataSource]="dataSource" >
@@ -62,13 +63,13 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
     </div>
-    <div >
+    <div *ngIf="orders.orderNote">
         <b>Nota:</b>
         <p>
             {{orders.orderNote}}
         </p>
     </div>
-    <div class="mt-5">
+    <div class="mt-5" *ngIf="!auth.Agencia()">
         <p>
             De estar en desacuerdo usted puede exigir la entrega correcta o el reembolso del pago integro a la agencia, siempre argumentando y documentando las causas. Recuerde que una vez firmada la misma no tienen derecho a Reclamacion ni el receptor ni el emisor.
         </p>
@@ -77,7 +78,10 @@
   __________________________________________________________ <br>
   Firma de Conformidad contra Declaración Jurada del Cliente
 
+    </div>
 
+    <div class="mt-5" *ngIf="auth.Agencia()">
+      Gracias por contar con nuestros servicios.
     </div>
 
     <div class="mt-5 doNotPrint">
