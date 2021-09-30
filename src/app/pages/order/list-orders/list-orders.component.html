@@ -491,7 +491,7 @@
         </ng-container>
 
           <!-- accions Column -->
-          <ng-container matColumnDef="accions">
+          <ng-container *ngIf="auth.Admin()" matColumnDef="accions">
             <th mat-header-cell *matHeaderCellDef>
               <div class="header"[matMenuTriggerFor]="menu">
                 Acciones <i class="fa fa-filter"></i>
@@ -520,6 +520,38 @@
 
                 </div>
               </mat-menu>
+
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="actions__row">
+                <div *ngIf="!admin && !sucursal && element.attributes.state != 'Nuevo'">
+                 <button  matTooltip="Listar" class="btn btn-primary btn-xs" data-title="List" data-toggle="modal" data-target="#list" (click)="editOrder(element.attributes, element.id)"><span class="fa fa-list"></span></button>
+                </div>
+                <div *ngIf="!admin && !sucursal && element.attributes.state != 'Nuevo'">
+                  <button matTooltip="Añadir Queja" class="btn btn-warning btn-xs" data-title="Complain" data-toggle="modal" data-target="#list" (click)="addComplain(element.attributes, element.id)"><span class="fa fa-exclamation-circle"></span></button>
+                 </div>
+                <div *ngIf="admin || sucursal || element.attributes.state == 'Nuevo'">
+                  <button matTooltip="Editar" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" (click)="editOrder(element.attributes, element.id)"><span class="fa fa-edit"></span></button>
+                </div>
+                <div *ngIf="admin || element.attributes.state == 'Nuevo'">
+                 <button matTooltip="Eliminar" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" (click)="deleteOrder(element)"><span class="fa fa-trash"></span></button>
+                </div>
+                <!-- PAGO -->
+                <div *ngIf="admin && !element.attributes.orderPaid">
+                  <button matTooltip="Pediente de pago" class="btn btn-dark btn-xs" data-title="Pediente de pago" data-toggle="modal" data-target="#Pediente de pago" (click)="payOrder(element, true)"><span class="fa fa-usd"></span></button>
+                </div>
+                <div *ngIf="admin && element.attributes.orderPaid">
+                  <button matTooltip="Pagado" class="btn btn-success btn-xs" data-title="Pagado" data-toggle="modal" data-target="#Pagado"><span class="fa fa-usd" (click)="payOrder(element, false)"></span></button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container *ngIf="!auth.Admin()" matColumnDef="accions">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header">
+                Acciones
+              </div>
 
             </th>
             <td mat-cell *matCellDef="let element">

@@ -18,7 +18,7 @@ export class ComplainService {
       myNewObject.set('complainClient', complain.complainClient);
       myNewObject.set('complainOrder', complain.complainOrder);
       myNewObject.set('complainMotive', complain.complainMotive);
-      myNewObject.set('complainId', complain.complainId);
+      // myNewObject.set('complainId', complain.complainId);
       for (let file of files) {
         console.log(this.num+'sdgfd'+file);
         myNewObject.set('complainPicture'+this.num, new Parse.File("evidence"+this.num+".jpg", { uri: file.toString() }));
@@ -28,6 +28,8 @@ export class ComplainService {
       myNewObject.set('complainState', 'Nuevo');
       try {
         const result = await myNewObject.save();
+        result.set('complainId', result.id);
+        result.save();
         // Access the Parse Object attributes using the .GET method
         console.log('complains created', result);
       } catch (error) {
