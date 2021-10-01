@@ -8,9 +8,9 @@ import { GetProvincesService } from 'src/app/core/services/get-provinces.service
 import { OrderService } from 'src/app/core/services/order.service';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
-import {FormControl} from '@angular/forms';
-import {map, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { DOCUMENT } from '@angular/common';
 import { AuthServices } from 'src/app/core/services/auth.service';
@@ -84,8 +84,8 @@ export class AddOrderComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  getClients(){
-    this.clientService.getClients().then(res=>{
+  getClients() {
+    this.clientService.getClients().then(res => {
       res.forEach(element => {
         this.arrayClients.push(element.attributes as Client);
         this.options.push(element.attributes.name);
@@ -99,9 +99,16 @@ export class AddOrderComponent implements OnInit {
     })
   }
 
-  SavedClient(){
-        this.alreadySavedClient = true;
-        this.saveClient = false;
+  SavedClient(name: string) {
+    this.alreadySavedClient = true;
+    this.saveClient = false;
+    this.arrayClients.forEach(element => {
+      if (element.name == name) {
+        // this.clienteName = name;
+        this.client.email = element.email;
+        this.client.phoneNumber = element.phoneNumber;
+      }
+    });
   }
 
   initProvince() {
@@ -156,62 +163,86 @@ export class AddOrderComponent implements OnInit {
 
   }
 
-  prices(){
+  prices() {
     this.products.forEach(element => {
       element.price = this.price(element.price, element.category);
     });
   }
 
-  price(price: any, category: string): number{
+  price(price: any, category: string): number {
     var find = false;
     var pri = 0;
-    if(this.auth.logedUser.userRole != 'Agencia'){
+    if (this.auth.logedUser.userRole != 'Agencia') {
       return price;
-    }else{
-      if(this.auth.logedUser.mayoreo){
+    } else {
+      if (this.auth.logedUser.mayoreo) {
         this.auth.logedUser.mayoreo.forEach(element => {
-          if(element[0] == category){
+          if (element[0] == category) {
             find = true;
-            if(element[1] == '%'){
+            if (element[1] == '%') {
               pri = ((parseInt(element[2].toString()) * price / 100) + price);
-            }else{
+            } else {
               pri = (parseInt(element[2].toString()) + price);
             }
           }
         });
       }
     }
-    if(find){
+    if (find) {
       return pri;
-    }else{
+    } else {
       return price;
     }
   }
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     if (form.valid) {
-      if(!this.alreadySavedClient){
-        this.order.orderClientName = this.clienteName + ' ' + form.value.firstLastName + ' ' +  form.value.secondLastName;
-        if(this.saveClient){
-          this.client.name = this.clienteName + ' ' + form.value.firstLastName + ' ' +  form.value.secondLastName;
-          this.clientService.addClient(this.client);
+      this.order.orderClientEmail = this.client.email;
+      this.order.orderClientPhone = this.client.phoneNumber;
+      //Guardar Cliente
+      if (!this.alreadySavedClient) {
+        this.order.orderClientName = this.clienteName + ' ' + form.value.firstLastName + ' ' + form.value.secondLastName;
+        if (this.saveClient) {
+          this.client.name = this.clienteName + ' ' + form.value.firstLastName + ' ' + form.value.secondLastName;
+          await this.clientService.addClient(this.client).then(res => {
+            if (this.clientService.emailExist) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ya existe un cliente con este nombre y apellidos.',
+              })
+            } else {
+              this.SaveOrder();
+            }
+          });
+        } else {
+          this.SaveOrder();
         }
-      }else{
-        this.order.orderClientName = this.clienteName;
-      }
-
-      // if(!this.order.state && (this.order.orderAgency != 'esencialpack' && this.order.orderAgency != 'agenciaespaña')){
-      //   this.sendSms(this.order.orderMobile);
-      // }
-      if (this.streetB) {
-        this.order.orderAddress = (this.localidad || "") + ' Calle ' + this.street + ' # ' + this.streetNumber + ' entre ' + (this.streetB || "");
       } else {
-        this.order.orderAddress = (this.localidad || "") + ' Calle ' + this.street + ' # ' + this.streetNumber;
+        this.order.orderClientName = this.clienteName;
+        this.SaveOrder();
       }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Complete todos los campos obligatorios!',
+      })
+    }
 
-      this.order.orderPrice = this.total;
-      this.orderService.createOrder(this.order, this.products, this.user);
-      if(this.saveClient){
+  }
+
+  //Guardar Pedido
+  SaveOrder() {
+    if (this.streetB) {
+      this.order.orderAddress = (this.localidad || "") + ' Calle ' + this.street + ' # ' + this.streetNumber + ' entre ' + (this.streetB || "");
+    } else {
+      this.order.orderAddress = (this.localidad || "") + ' Calle ' + this.street + ' # ' + this.streetNumber;
+    }
+
+    this.order.orderPrice = this.total;
+    this.orderService.createOrder(this.order, this.products, this.user).then(res => {
+      if (this.saveClient) {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -219,7 +250,7 @@ export class AddOrderComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-      }else{
+      } else {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -229,12 +260,15 @@ export class AddOrderComponent implements OnInit {
         })
       }
       this.router.navigate(['/orders']);
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Complete todos los campos obligatorios!',
-      })
-    }
+    });
+    Swal.fire({
+      position: 'top-end',
+      icon: 'warning',
+      title: 'Guardando pedido. Por favor espere.',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
+
+
 }

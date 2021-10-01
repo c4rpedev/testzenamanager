@@ -1,3 +1,5 @@
+import { ListClientComponent } from './pages/client/list-client/list-client.component';
+import { AddClientComponent } from './pages/client/add-client/add-client.component';
 import { PrintComponent } from './pages/order/print/print.component';
 import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
 import { AddRoleComponent } from './pages/user/add-role/add-role.component';
@@ -95,6 +97,16 @@ const routes: Routes = [
   },
   {
     path: 'print', component: PrintComponent,
+    canActivate: [LogedGuard]
+  },
+
+  //-- Clients --//
+  {
+    path: 'add-client', component: AddClientComponent,
+    canActivate: [LogedGuard]
+  },
+  {
+    path: 'list-client', component: ListClientComponent,
     canActivate: [LogedGuard]
   },
 

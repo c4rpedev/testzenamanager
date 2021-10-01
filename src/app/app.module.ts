@@ -50,7 +50,9 @@ import { ListCompletedOrderComponent } from './pages/order/list-completed-order/
 import { AddRoleComponent } from './pages/user/add-role/add-role.component';
 import { ListRoleComponent } from './pages/user/list-role/list-role.component';
 import { ChangePasswordComponent } from './pages/user/change-password/change-password.component';
-import { PrintComponent } from './pages/order/print/print.component'
+import { PrintComponent } from './pages/order/print/print.component';
+import { ListClientComponent } from './pages/client/list-client/list-client.component';
+import { AddClientComponent } from './pages/client/add-client/add-client.component'
 Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
 (Parse as any).serverURL = environment.serverURL;
 
@@ -82,6 +84,8 @@ Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
     ListRoleComponent,
     ChangePasswordComponent,
     PrintComponent,
+    ListClientComponent,
+    AddClientComponent,
 
   ],
   imports: [

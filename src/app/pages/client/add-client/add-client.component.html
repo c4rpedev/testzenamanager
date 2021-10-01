@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="title-box text-center pt-5">
+        <h3 class="title-a" *ngIf="!editar">
+          Crear Cliente
+        </h3>
+        <h3 class="title-a" *ngIf="editar">
+          Editar Cliente
+        </h3>
+        <p class="subtitle-a" *ngIf="!editar">
+          Complete todos los datos para crear el nuevo Cliente (los campos con * son requeridos)
+        </p>
+        <p class="subtitle-a" *ngIf="editar">
+          Complete todos los datos para editar el Cliente (los campos con * son requeridos)
+        </p>
+        <div class="line-mf"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-3 shadow">
+        <div class="card-body text-center ">
+          <img class="mb-3 mt-4" src='{{img}}' width="160" height="160" />
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex card col-lg-8">
+      <form (ngSubmit)="onSubmit( f )" #f="ngForm">
+
+        <label class="fname" *ngIf="editar"><strong>Id</strong> </label>
+        <input *ngIf="editar" type="text" class="form-control" required
+          [(ngModel)]="clientService.selectedClient.clientId" [disabled]="true" placeholder="Id de Cliente"
+          name="clientId" #clientIdd="ngModel" [class.is-invalid]="clientIdd.invalid && clientIdd.touched">
+
+        <label class="fname mt-2"><strong>Nombre</strong> </label>
+        <input *ngIf="editar" type="text" class="form-control" required [(ngModel)]="clientService.selectedClient.name"
+          placeholder="Nombre de Cliente" name="name" #namee="ngModel"
+          [class.is-invalid]="namee.invalid && namee.touched">
+        <div class="row" *ngIf="!editar">
+          <div class="col-4">
+            <input type="text" class="form-control" required [(ngModel)]="clientService.selectedClient.name"
+              placeholder="Nombre de Cliente" name="name" #namee="ngModel"
+              [class.is-invalid]="namee.invalid && namee.touched">
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" required [(ngModel)]="firstlastName" placeholder="Primer Apellido"
+              name="firstlastName" #firstlastNamee="ngModel"
+              [class.is-invalid]="firstlastNamee.invalid && firstlastNamee.touched">
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" required [(ngModel)]="secondlastName" placeholder="Segundo Apellido"
+              name="secondlastName" #secondlastNamee="ngModel"
+              [class.is-invalid]="secondlastNamee.invalid && secondlastNamee.touched">
+          </div>
+        </div>
+
+        <label class="mt-2"><strong>Correo *</strong> </label>
+        <input type="email" class="form-control" required [(ngModel)]="clientService.selectedClient.email"
+          [class.is-invalid]="emaill.invalid && emaill.touched" required placeholder="Correo" name="email"
+          #emaill="ngModel">
+
+        <label class="mt-2"> <strong>Teléfono *</strong> </label>
+        <input type="number" class="form-control" [(ngModel)]="clientService.selectedClient.phoneNumber"
+          [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" placeholder="Teléfono Móvil" required
+          name="phoneNumber" #phoneNumber="ngModel">
+
+        <button class="mt-2" type="submit" *ngIf="!clientService.selectedClient.clientId">Crear Cliente</button>
+        <button class="mt-2" type="submit" *ngIf="clientService.selectedClient.clientId">Editar Cliente</button>
+      </form>
+    </div>
+  </div>
+</div>

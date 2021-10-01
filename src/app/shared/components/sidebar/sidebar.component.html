@@ -96,9 +96,15 @@
       </div>
       <span>Roles</span>
     </div>
-    <div class="links" (click)="editUser(auth.logedUser)" *ngIf="!admin">
+    <div class="links" [routerLink]="['/list-client']" *ngIf="!admin">
       <div class="icon">
         <i class="fa fa-address-book-o"></i>
+      </div>
+      <span>Clientes</span>
+    </div>
+    <div class="links" (click)="editUser(auth.logedUser)" *ngIf="!admin">
+      <div class="icon">
+        <i class="fa fa-user-circle"></i>
       </div>
       <span>Datos del Usuario</span>
     </div>

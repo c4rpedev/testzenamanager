@@ -13,12 +13,22 @@ export class ComplainService {
   constructor() { }
 
   async createComplain(complain: Complain, user: string, files: string []){
+    const Complain = Parse.Object.extend('complains');
+      const query = new Parse.Query(Complain);
+      query.descending('createdAt');
+      query.limit(1);
+      await query.find().then( async res=>{
+        console.log(res);
+        let id = 1;
+        if(res[0]){
+          id = parseInt(res[0].attributes.complainId) + 1;
+        }
       const myNewObject = new Parse.Object('complains');
       myNewObject.set('complainAgency', user);
       myNewObject.set('complainClient', complain.complainClient);
       myNewObject.set('complainOrder', complain.complainOrder);
       myNewObject.set('complainMotive', complain.complainMotive);
-      // myNewObject.set('complainId', complain.complainId);
+      myNewObject.set('complainId', id.toString());
       for (let file of files) {
         console.log(this.num+'sdgfd'+file);
         myNewObject.set('complainPicture'+this.num, new Parse.File("evidence"+this.num+".jpg", { uri: file.toString() }));
@@ -28,13 +38,12 @@ export class ComplainService {
       myNewObject.set('complainState', 'Nuevo');
       try {
         const result = await myNewObject.save();
-        result.set('complainId', result.id);
-        result.save();
         // Access the Parse Object attributes using the .GET method
         console.log('complains created', result);
       } catch (error) {
         console.error('Error while creating complains: ', error);
       }
+    });
   }
 
   getComplain(agency: string, admin: boolean): Promise <any> {

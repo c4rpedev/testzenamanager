@@ -26,17 +26,19 @@ export class OrderService {
 
   constructor(public auth: AuthServices) { }
 
-  createOrder(order: Order, products: any[], user: string) {
-    (async () => {
-      // const Orders = Parse.Object.extend('order');
-      // const query = new Parse.Query(Orders);
-
-      // query.limit(1);
-      // const ord = query.find()
-
-
+  async createOrder(order: Order, products: any[], user: string) {
+    const Orders = Parse.Object.extend('order');
+    const query = new Parse.Query(Orders);
+    query.descending('createdAt');
+    query.limit(1);
+    await query.find().then(async res => {
+      console.log(res);
+      let id = 1;
+      if (res[0]) {
+        id = parseInt(res[0].attributes.orderId) + 1;
+      }
       const myNewObject = new Parse.Object('order');
-      // myNewObject.set('orderId', myNewObject.id);
+      myNewObject.set('orderId', id.toString());
       myNewObject.set('orderClientName', order.orderClientName);
       myNewObject.set('orderRecieverName', order.orderRecieverName);
       myNewObject.set('orderProvince', order.orderProvince);
@@ -45,6 +47,8 @@ export class OrderService {
       myNewObject.set('orderPhone', order.orderPhone);
       myNewObject.set('orderMobile', order.orderMobile);
       myNewObject.set('orderPrice', order.orderPrice);
+      myNewObject.set('orderClientEmail', order.orderClientEmail);
+      myNewObject.set('orderClientPhone', order.orderClientPhone);
       myNewObject.set('orderReference', order.orderReference);
       myNewObject.set('orderNote', order.orderNote);
       myNewObject.set('orderAgencyId', this.auth.logedUser.userId);
@@ -69,14 +73,12 @@ export class OrderService {
       myNewObject.set('orderAgency', user);
       try {
         const result = await myNewObject.save();
-        result.set('orderId', result.id);
-        result.save();
         // Access the Parse Object attributes using the .GET method
         console.log('order created', result);
       } catch (error) {
         console.error('Error while creating order: ', error);
       }
-    })();
+    })
   }
 
   async createOrderPatugente(order: Order, url: string[], user: string) {
@@ -100,67 +102,69 @@ export class OrderService {
     }
   }
 
-  async updateOrder(order: Order, orderId: string, img: string, hasAlbaran: boolean){
-        const query = new Parse.Query('order');
-        try {
-          // here you put the objectId that you want to update
-          const myNewObject = await query.get(orderId);
-          myNewObject.set('orderId', order.orderId);
-          myNewObject.set('orderClientName', order.orderClientName);
-          myNewObject.set('orderRecieverName', order.orderRecieverName);
-          myNewObject.set('orderProvince', order.orderProvince);
-          myNewObject.set('orderMunicipio', order.orderMunicipio);
-          myNewObject.set('orderAddress', order.orderAddress);
-          myNewObject.set('orderReference', order.orderReference);
-          myNewObject.set('orderPhone', order.orderPhone);
-          myNewObject.set('orderMobile', order.orderMobile);
-          myNewObject.set('orderSucursal', order.orderSucursal);
-          myNewObject.set('orderNote', order.orderNote);
-          myNewObject.set('orderCancelMotive', order.orderCancelMotive);
-          myNewObject.set('state', order.state);
-          if (hasAlbaran && order.state != 'Finalizado') {
-            myNewObject.set('orderAlbaran', new Parse.File("albaranes.jpg", { uri: img }));
-            console.log("Poniendo albaran");
+  async updateOrder(order: Order, orderId: string, img: string, hasAlbaran: boolean) {
+    const query = new Parse.Query('order');
+    try {
+      // here you put the objectId that you want to update
+      const myNewObject = await query.get(orderId);
+      myNewObject.set('orderId', order.orderId);
+      myNewObject.set('orderClientName', order.orderClientName);
+      myNewObject.set('orderRecieverName', order.orderRecieverName);
+      myNewObject.set('orderProvince', order.orderProvince);
+      myNewObject.set('orderMunicipio', order.orderMunicipio);
+      myNewObject.set('orderAddress', order.orderAddress);
+      myNewObject.set('orderClientEmail', order.orderClientEmail);
+      myNewObject.set('orderClientPhone', order.orderClientPhone);
+      myNewObject.set('orderReference', order.orderReference);
+      myNewObject.set('orderPhone', order.orderPhone);
+      myNewObject.set('orderMobile', order.orderMobile);
+      myNewObject.set('orderSucursal', order.orderSucursal);
+      myNewObject.set('orderNote', order.orderNote);
+      myNewObject.set('orderCancelMotive', order.orderCancelMotive);
+      myNewObject.set('state', order.state);
+      if (hasAlbaran && order.state != 'Finalizado') {
+        myNewObject.set('orderAlbaran', new Parse.File("albaranes.jpg", { uri: img }));
+        console.log("Poniendo albaran");
 
-          }
+      }
 
-          try {
-            const response = await myNewObject.save();
-            // You can use the "get" method to get the value of an attribute
-            // Ex: response.get("<ATTRIBUTE_NAME>")
-            // Access the Parse Object attributes using the .GET method
-            console.log(response.get('orderProvince'));
-            console.log(response.get('orderMunicipio'));
-            console.log(response.get('orderAddress'));
-            console.log(response.get('orderPhone'));
-            console.log(response.get('productArray'));
-            console.log(response.get('orderId'));
-            console.log(response.get('state'));
-            console.log(response.get('orderClientName'));
-            console.log(response.get('orderRecieverName'));
-            console.log('order updated', response);
-          } catch (error) {
-            console.error('Error while updating order', error);
-          }
-        } catch (error) {
-          console.error('Error while retrieving object order', error);
-        }
+      try {
+        const response = await myNewObject.save();
+        // You can use the "get" method to get the value of an attribute
+        // Ex: response.get("<ATTRIBUTE_NAME>")
+        // Access the Parse Object attributes using the .GET method
+        console.log(response.get('orderProvince'));
+        console.log(response.get('orderMunicipio'));
+        console.log(response.get('orderAddress'));
+        console.log(response.get('orderPhone'));
+        console.log(response.get('productArray'));
+        console.log(response.get('orderId'));
+        console.log(response.get('state'));
+        console.log(response.get('orderClientName'));
+        console.log(response.get('orderRecieverName'));
+        console.log('order updated', response);
+      } catch (error) {
+        console.error('Error while updating order', error);
+      }
+    } catch (error) {
+      console.error('Error while retrieving object order', error);
+    }
   }
 
   async paidOrder(paid: Boolean, orderId: string) {
-        const query = new Parse.Query('order');
-        try {
-          // here you put the objectId that you want to update
-          const myNewObject = await query.get(orderId);
-          myNewObject.set('orderPaid', paid);
-          try {
-            return await myNewObject.save();
-          } catch (error) {
-            console.error('Error while updating order', error);
-          }
-        } catch (error) {
-          console.error('Error while retrieving object order', error);
-        }
+    const query = new Parse.Query('order');
+    try {
+      // here you put the objectId that you want to update
+      const myNewObject = await query.get(orderId);
+      myNewObject.set('orderPaid', paid);
+      try {
+        return await myNewObject.save();
+      } catch (error) {
+        console.error('Error while updating order', error);
+      }
+    } catch (error) {
+      console.error('Error while retrieving object order', error);
+    }
   }
 
   updateOrderState(orderId: string, state: string) {
@@ -188,19 +192,19 @@ export class OrderService {
     })();
   }
   async deleteOrder(id: string) {
-      const query = new Parse.Query('order');
+    const query = new Parse.Query('order');
+    try {
+      // here you put the objectId that you want to delete
+      const object = await query.get(id);
       try {
-        // here you put the objectId that you want to delete
-        const object = await query.get(id);
-        try {
-          const response = await object.destroy();
-          console.log('Deleted ParseObject', response);
-        } catch (error) {
-          console.error('Error while deleting ParseObject', error);
-        }
+        const response = await object.destroy();
+        console.log('Deleted ParseObject', response);
       } catch (error) {
-        console.error('Error while retrieving ParseObject', error);
+        console.error('Error while deleting ParseObject', error);
       }
+    } catch (error) {
+      console.error('Error while retrieving ParseObject', error);
+    }
   }
 
   getOrder(role: User): Promise<any> {

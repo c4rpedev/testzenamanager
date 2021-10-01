@@ -35,11 +35,27 @@
           name="orderAgency" #orderAgency="ngModel">
       </label>
       <label>
-        <span class="fname">Cliente </span>
+        <span class="fname">Nombre del Cliente </span>
         <input type="text" class="form-control" [(ngModel)]="order.orderClientName"
           [class.is-invalid]="orderClientName.invalid && orderClientName.touched"
           [disabled]="!admin && !(order.state == 'Nuevo')" placeholder="Nombre del Cliente" name="orderClientName"
           #orderClientName="ngModel">
+      </label>
+
+      <label>
+        <span class="fname">Correo del Cliente </span>
+        <input type="text" class="form-control" [(ngModel)]="order.orderClientEmail"
+          [class.is-invalid]="orderClientEmaile.invalid && orderClientEmaile.touched"
+          [disabled]="!admin && !(order.state == 'Nuevo')" placeholder="Correo del Cliente" name="orderClientEmail"
+          #orderClientEmaile="ngModel">
+      </label>
+
+      <label>
+        <span class="fname">Teléfono del Cliente </span>
+        <input type="text" class="form-control" [(ngModel)]="order.orderClientPhone"
+          [class.is-invalid]="orderClientPhonee.invalid && orderClientPhonee.touched"
+          [disabled]="!admin && !(order.state == 'Nuevo')" placeholder="Teléfono del Cliente" name="orderClientPhone"
+          #orderClientPhonee="ngModel">
       </label>
 
       <label>
