@@ -70,34 +70,45 @@ export class UserService {
               text: 'Ya existe un usuario con ese ID.',
             })
           } else {
+            //Creando ID
+            const usss = Parse.Object.extend('users');
+            const query5 = new Parse.Query(usss);
+            query5.descending('createdAt');
+            query5.limit(1);
+            await query5.find().then(async res => {
+              let id = 1;
+              if (res[0]) {
+                id = parseInt(res[0].attributes.userId) + 1;
+              }
 
-            const EncryptPassword = CryptoJS.AES.encrypt(user.password.trim(), this.clave.trim()).toString();
+              const EncryptPassword = CryptoJS.AES.encrypt(user.password.trim(), this.clave.trim()).toString();
 
-            const myNewObject = new Parse.Object('users');
-            myNewObject.set('userId', user.userId);
-            myNewObject.set('userName', user.userName);
-            myNewObject.set('emailId', user.emailId);
-            myNewObject.set('password', EncryptPassword);
-            myNewObject.set('phoneNumber', user.phoneNumber.toString());
-            myNewObject.set('userRole', user.userRole);
-            myNewObject.set('active', true);
-            myNewObject.set('mayoreo', user.mayoreo);
-            myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
+              const myNewObject = new Parse.Object('users');
+              myNewObject.set('userId', id.toString());
+              myNewObject.set('userName', user.userName);
+              myNewObject.set('emailId', user.emailId);
+              myNewObject.set('password', EncryptPassword);
+              myNewObject.set('phoneNumber', user.phoneNumber.toString());
+              myNewObject.set('userRole', user.userRole);
+              myNewObject.set('active', true);
+              myNewObject.set('mayoreo', user.mayoreo);
+              myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
 
-            try {
-              await myNewObject.save().then(res => {
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'Usuario añadido!',
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-                this.router.navigate(['/list-user']);
-              });
-            } catch (error) {
-              console.log(error);
-            }
+              try {
+                await myNewObject.save().then(res => {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Usuario añadido!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                  this.router.navigate(['/list-user']);
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            })
           }
         });
       }
@@ -129,10 +140,10 @@ export class UserService {
           showConfirmButton: false,
           timer: 1500
         })
-        if(this.admin){
+        if (this.admin) {
           this.admin = false;
           this.router.navigate(['/list-user']);
-        }else{
+        } else {
           this.router.navigate(['/orders']);
         }
       } else {

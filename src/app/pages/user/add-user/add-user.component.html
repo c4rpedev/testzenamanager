@@ -62,8 +62,8 @@
     <div class="d-flex card col-lg-8">
       <form (ngSubmit)="onSubmit( f )" #f="ngForm">
 
-        <label class="fname"><strong>Id</strong> </label>
-        <input type="text" class="form-control" required [(ngModel)]="userService.selectedUser.userId"
+        <label class="fname" *ngIf="editar"><strong>Id</strong> </label>
+        <input type="text" *ngIf="editar" class="form-control" required [(ngModel)]="userService.selectedUser.userId"
           [disabled]="editar" placeholder="Id de Usuario" name="userId" #userId="ngModel"
           [class.is-invalid]="userId.invalid && userId.touched">
 
