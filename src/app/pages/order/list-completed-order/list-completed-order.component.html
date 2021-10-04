@@ -453,9 +453,9 @@
                 <div *ngIf="!admin && !sucursal && element.attributes.state != 'Nuevo'">
                  <button  matTooltip="Listar" class="btn btn-primary btn-xs" data-title="List" data-toggle="modal" data-target="#list" (click)="editOrder(element.attributes, element.id)"><span class="fa fa-list"></span></button>
                 </div>
-                <div *ngIf="!admin && !sucursal && element.attributes.state != 'Nuevo'">
+                <!-- <div *ngIf="!admin && !sucursal && element.attributes.state != 'Nuevo'">
                   <button matTooltip="Añadir Queja" class="btn btn-warning btn-xs" data-title="Complain" data-toggle="modal" data-target="#list" (click)="addComplain(element.attributes, element.id)"><span class="fa fa-exclamation-circle"></span></button>
-                 </div>
+                 </div> -->
                 <div *ngIf="admin || sucursal || element.attributes.state == 'Nuevo'">
                   <button matTooltip="Editar" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" (click)="editOrder(element.attributes, element.id)"><span class="fa fa-edit"></span></button>
                 </div>

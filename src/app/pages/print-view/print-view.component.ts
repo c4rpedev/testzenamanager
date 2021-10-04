@@ -41,7 +41,7 @@ export class PrintViewComponent implements OnInit {
 
   dataAgency() {
     if (this.orders.orderAgencyId) {
-      console.log(this.orders.orderAgencyId)
+      console.log('orderagencyID--> ' + this.orders.orderAgencyId)
       this.userService.getUserbyId(this.orders.orderAgencyId).then(res => {
         if (res[0]) {
           this.agency = res[0].attributes as User;

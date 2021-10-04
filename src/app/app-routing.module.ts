@@ -1,3 +1,5 @@
+import { AgencyGuard } from './core/guards/agency.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 import { ListClientComponent } from './pages/client/list-client/list-client.component';
 import { AddClientComponent } from './pages/client/add-client/add-client.component';
 import { PrintComponent } from './pages/order/print/print.component';
@@ -50,11 +52,11 @@ const routes: Routes = [
   },
   {
     path: 'add-product', component: AddProductComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'edit-product', component: EditProductComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'create-combo', component: CreateComboComponent,
@@ -62,11 +64,11 @@ const routes: Routes = [
   },
   {
     path: 'list-category', component: ListCategoryComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'add-category', component: AddCategoryComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
   //-- Order --//
   {
@@ -103,25 +105,25 @@ const routes: Routes = [
   //-- Clients --//
   {
     path: 'add-client', component: AddClientComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AgencyGuard]
   },
   {
     path: 'list-client', component: ListClientComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AgencyGuard],
   },
 
   //-- Complains --//
   {
     path: 'add-complain', component: AddComplainComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AgencyGuard]
   },
   {
     path: 'edit-complain', component: EditComplainComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AgencyGuard]
   },
   {
     path: 'list-complain', component: ListComplainComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AgencyGuard]
   },
 
   //-- User Related --//
@@ -131,19 +133,19 @@ const routes: Routes = [
   //-- Reports --//
   {
     path: 'reports', component: ReportComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
 
   //-- Province --//
   {
     path: 'edit-province', component: EditProvinceComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
 
   //-- Transport --//
   {
     path: 'edit-transport', component: EditTransportComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
 
   //-- Sucursal --//
@@ -155,7 +157,7 @@ const routes: Routes = [
   //-- User --//
   {
     path: 'list-user', component: ListUserComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'add-user', component: AddUserComponent,
@@ -167,11 +169,11 @@ const routes: Routes = [
   },
   {
     path: 'list-role', component: ListRoleComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'add-role', component: AddRoleComponent,
-    canActivate: [LogedGuard]
+    canActivate: [AdminGuard]
   }
 
 ];

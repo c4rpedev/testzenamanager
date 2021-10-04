@@ -36,9 +36,9 @@
             <i class="fa fa-shopping-cart shopping__cart"> <span class="badge rounded-pill bg-secondary" >{{productsCart.length}} </span> </i>
           </div>
 
-          <div class="btn-group " role="group" >
+          <!-- <div class="btn-group " role="group" >
             <button type="button"  (click)="createCombo()" *ngIf="who!='order'">Crear combo</button>
-          </div>
+          </div> -->
           <div class="input-group" *ngIf="selectedProvince">
             <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search"></i> </span>
             <input type="text" class="form-control" placeholder="Busca por nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="term">
@@ -111,9 +111,9 @@
                     <!--Description-->
                     <p class="card-text">{{ product.attributes.category }}</p>
                     <!--Card footer-->
-                    <div class="card-footer">
-                      <span class="left">$ {{ price(product.attributes.price, product.attributes.category) }}</span>
-                      <span class="right">
+                    <div class="card-footer row">
+                      <span class="left col-4" style="font-size: 15px; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">$ {{ price(product.attributes.price, product.attributes.category) | number : '1.2-2' }}</span>
+                      <span class="right col-8">
                         <a class="add__product"
                           placement="top"
                           mdbTooltip="Add to Wishlist"

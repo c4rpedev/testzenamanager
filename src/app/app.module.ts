@@ -1,3 +1,4 @@
+import { InterceptorService } from './core/services/interceptor.service';
 import { AddUserComponent } from './pages/user/add-user/add-user.component';
 import { ListUserComponent } from './pages/user/list-user/list-user.component';
 import { NgModule } from '@angular/core';
@@ -20,7 +21,7 @@ import { DxPivotGridModule, DxChartModule } from 'devextreme-angular';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductModule } from './pages/product/product.module';
 import { AuthModuleLogin } from './pages/auth/auth.module';
@@ -34,6 +35,10 @@ import { RegistroComponent } from './pages/registro/registro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import * as Parse from 'parse'
+import {
+  WoocommerceProductsService,
+  WoocommerceHelperService
+} from 'ngx-wooapi';
 // import { AuthModule } from '@auth0/auth0-angular';
 import { PrintViewComponent } from './pages/print-view/print-view.component';
 import { EditComplainComponent } from './pages/complain/edit-complain/edit-complain.component';
@@ -45,7 +50,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SendSmsComponent } from './pages/order/send-sms/send-sms.component';
 import { FilterItemDirective } from "./filter-item.directive";
 import { SucursalComponent } from './pages/sucursal/sucursal.component';
-import { AutocompleteOffDirective }  from './core/autocomplete';
+import { AutocompleteOffDirective } from './core/autocomplete';
 import { ListCompletedOrderComponent } from './pages/order/list-completed-order/list-completed-order.component';
 import { AddRoleComponent } from './pages/user/add-role/add-role.component';
 import { ListRoleComponent } from './pages/user/list-role/list-role.component';
@@ -53,7 +58,7 @@ import { ChangePasswordComponent } from './pages/user/change-password/change-pas
 import { PrintComponent } from './pages/order/print/print.component';
 import { ListClientComponent } from './pages/client/list-client/list-client.component';
 import { AddClientComponent } from './pages/client/add-client/add-client.component'
-Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
+Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY,);
 (Parse as any).serverURL = environment.serverURL;
 
 @NgModule({
@@ -107,7 +112,7 @@ Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
     HttpClientModule,
     BrowserAnimationsModule,
     ProductModule,
-    FormsModule,   
+    FormsModule,
     ReactiveFormsModule,
     DxPivotGridModule,
     DxChartModule,
@@ -120,7 +125,14 @@ Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY, );
   ],
   providers: [
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    WoocommerceProductsService,
+    WoocommerceHelperService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: InterceptorService,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })

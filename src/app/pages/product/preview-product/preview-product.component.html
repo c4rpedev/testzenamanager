@@ -18,7 +18,7 @@
                             <div class="row preview__item">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="price"><strong>Precio: </strong>{{price(product.price, product.category)}}</label>
+                                        <label for="price"><strong>Precio: </strong>{{price(product.price, product.category) | number : '1.2-2' }}</label>
                                     </div>
                                 </div>
                                 <div class="col">

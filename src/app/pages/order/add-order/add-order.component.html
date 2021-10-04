@@ -159,7 +159,7 @@
           <tr *ngFor="let product of products">
             <td><img class="border" src="{{product.picture._url}}" alt=""></td>
             <td>{{product.name}}</td>
-            <td>${{product.price}}</td>
+            <td>${{product.price | number : '1.2-2' }}</td>
 
           </tr>
 

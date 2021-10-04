@@ -68,7 +68,7 @@
           [class.is-invalid]="userId.invalid && userId.touched">
 
         <label class="fname mt-2"><strong>Nombre</strong> </label>
-        <input type="text" class="form-control" required [(ngModel)]="userService.selectedUser.userName"
+        <input [disabled]="editar" type="text" class="form-control" required [(ngModel)]="userService.selectedUser.userName"
           placeholder="Nombre de Usuario" name="userName" #userName="ngModel"
           [class.is-invalid]="userName.invalid && userName.touched">
 

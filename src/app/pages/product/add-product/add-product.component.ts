@@ -12,6 +12,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { TransportService } from 'src/app/core/services/transport.service';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -26,7 +27,7 @@ export class AddProductComponent implements OnInit {
   selectchange = true;
   filePath: String;
   img: string | ArrayBuffer =
-    "https://parsefiles.back4app.com/vH5Y2pQQTnE8odu7xeMKMzviCtFuPHQAvQogW4GI/7b7b788e29df265cb59d20c2682aba24_product.jpg";
+    "https://previews.123rf.com/images/yupiramos/yupiramos1709/yupiramos170919603/86275114-supermercado-carrito-de-compras-con-productos-de-dise%C3%B1o-de-ilustraci%C3%B3n-vectorial.jpg";
   photosrc: String;
   selectedProvince: null;
   file: File;

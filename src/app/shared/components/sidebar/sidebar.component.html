@@ -1,121 +1,159 @@
 <div class="sidebar__container doNotPrint">
   <div class="title__container">
-    <div class="sidebar__logo" >
+    <div class="sidebar__logo">
       <img class="rounded-circle" src="{{img}}">
       <div>
-          <div class="user__name mt-2">
-            <h1>{{ auth.logedUser.userName }}</h1>
-          </div>
-          <div class="user__role">
-          <h4 style="color: white;">{{ auth.logedUser.userRole }}</h4>
-          </div>
+        <div class="user__name mt-2">
+          <h1>{{ auth.logedUser.userName }}</h1>
         </div>
+        <div class="user__role">
+          <h4 style="color: white;">{{ auth.logedUser.userRole }}</h4>
+        </div>
+      </div>
     </div>
 
-    <button type="button" class="btn btn-outline-light open__sidebar" (click)="openMenu()"><i class="fa fa-list"></i></button>
+    <button type="button" class="btn btn-outline-light open__sidebar" (click)="openMenu()"><i
+        class="fa fa-list"></i></button>
   </div>
 
-    <div class="links__container" [ngStyle]="{'display': isOpened}" *ngIf="auth.check as user">
-    <div class="links" [routerLink]="['/orders']" (click)="openMenu()" >
+  <div class="links__container" [ngStyle]="{'display': isOpened}" *ngIf="auth.check as user">
+    <div class="links" [routerLink]="['/orders']" (click)="openMenu()">
       <div class="icon">
         <i class="fa fa-table"></i>
       </div>
-      <span>Pedidos</span><span class="badge rounded-pill bg-secondary alert__color" *ngIf="admin">{{orderService.ordersCount}}</span>
+      <div style="margin-right: 20%;">
+        <span>Pedidos</span><span class="badge rounded-pill bg-secondary alert__color"
+          *ngIf="admin">{{orderService.ordersCount}}</span>
+      </div>
     </div>
 
 
-      <div class="links" [routerLink]="['/list-product']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
-        <div class="icon">
-          <i class="fa fa-shopping-cart"></i>
-        </div>
+    <div class="links" [routerLink]="['/list-product']" (click)="openMenu()"
+      *ngIf="admin && !sucursal && !isComercial()">
+      <div class="icon">
+        <i class="fa fa-shopping-cart"></i>
+      </div>
+      <div style="margin-right: 20%;">
         <span>Productos</span>
       </div>
-      <div class="links" [routerLink]="['/list-product-sucursal']" (click)="openMenu()" *ngIf="restaurant">
-        <div class="icon">
-          <i class="fa fa-shopping-cart"></i>
-        </div>
+    </div>
+    <div class="links" [routerLink]="['/list-product-sucursal']" (click)="openMenu()" *ngIf="restaurant">
+      <div class="icon">
+        <i class="fa fa-shopping-cart"></i>
+      </div>
+      <div style="margin-right: 20%;">
         <span>Productos</span>
       </div>
-      <div class="links" [routerLink]="['/add-product']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
-        <div class="icon">
-          <i class="fa fa-plus-square"></i>
-        </div>
+    </div>
+    <div class="links" [routerLink]="['/add-product']" (click)="openMenu()"
+      *ngIf="admin && !sucursal && !isComercial()">
+      <div class="icon">
+        <i class="fa fa-plus-square"></i>
+      </div>
+      <div style="margin-right: 20%;">
         <span>Añadir Productos</span>
       </div>
-      <div class="links" [routerLink]="['/list-category']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
-        <div class="icon">
-          <i class="fa fa-sliders"></i>
-        </div>
+    </div>
+    <div class="links" [routerLink]="['/list-category']" (click)="openMenu()"
+      *ngIf="admin && !sucursal && !isComercial()">
+      <div class="icon">
+        <i class="fa fa-sliders"></i>
+      </div>
+      <div style="margin-right: 20%;">
         <span>Categorías de Productos</span>
       </div>
-     <div class="links" [routerLink]="['/reports']"  (click)="openMenu()" *ngIf="admin && !isComercial()">
+    </div>
+    <div class="links" [routerLink]="['/reports']" (click)="openMenu()" *ngIf="admin && !isComercial()">
       <div class="icon">
         <i class="fa fa-bar-chart"></i>
       </div>
-      <span>Reportes</span>
+      <div style="margin-right: 20%;">
+        <span>Reportes</span>
+      </div>
     </div>
     <div class="links" [routerLink]="['/list-complain']" (click)="openMenu()" *ngIf="!sucursal && !restaurant">
       <div class="icon">
         <i class="fa fa-archive"></i>
       </div>
-       <span>Quejas</span><span class="badge rounded-pill bg-secondary alert__color" *ngIf="complains">{{complainsCount}}</span>
+      <div style="margin-right: 20%;">
+        <span>Quejas</span><span class="badge rounded-pill bg-secondary alert__color"
+          *ngIf="complains">{{complainsCount}}</span>
+      </div>
     </div>
-    <div class="links" [routerLink]="['/orders-completed']" (click)="openMenu()" >
+    <div class="links" [routerLink]="['/orders-completed']" (click)="openMenu()">
       <div class="icon">
         <i class="fa fa-bank"></i>
       </div>
-      <span>Archivo</span>
+      <div style="margin-right: 20%;">
+        <span>Archivo</span>
+      </div>
     </div>
-    <div class="links" [routerLink]="['/edit-province']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
+    <div class="links" [routerLink]="['/edit-province']" (click)="openMenu()"
+      *ngIf="admin && !sucursal && !isComercial()">
       <div class="icon">
         <i class="fa fa-globe"></i>
       </div>
-      <span>Municipios</span>
+      <div style="margin-right: 20%;">
+        <span>Municipios</span>
+      </div>
     </div>
-    <div class="links" [routerLink]="['/edit-transport']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
+    <div class="links" [routerLink]="['/edit-transport']" (click)="openMenu()"
+      *ngIf="admin && !sucursal && !isComercial()">
       <div class="icon">
         <i class="fa fa-truck"></i>
       </div>
-      <span>Transporte</span>
+      <div style="margin-right: 20%;">
+        <span>Transporte</span>
+      </div>
     </div>
-    <div class="links" [routerLink]="['/edit-sucursal']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
+    <!-- <div class="links" [routerLink]="['/edit-sucursal']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
       <div class="icon">
         <i class="fa fa-dot-circle-o"></i>
       </div>
       <span>Sucursales</span>
-    </div>
+    </div> -->
     <div class="links" [routerLink]="['/list-user']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
       <div class="icon">
         <i class="fa fa-user-circle"></i>
       </div>
-      <span>Usuarios</span>
+      <div style="margin-right: 20%;">
+        <span>Usuarios</span>
+      </div>
     </div>
     <div class="links" [routerLink]="['/list-role']" (click)="openMenu()" *ngIf="admin && !sucursal && !isComercial()">
       <div class="icon">
         <i class="fa fa-address-book-o"></i>
       </div>
-      <span>Roles</span>
+      <div style="margin-right: 20%;">
+        <span>Roles</span>
+      </div>
     </div>
-    <div class="links" [routerLink]="['/list-client']" *ngIf="!admin">
+    <div class="links" [routerLink]="['/list-client']" *ngIf="auth.Agencia()">
       <div class="icon">
         <i class="fa fa-address-book-o"></i>
       </div>
-      <span>Clientes</span>
+      <div style="margin-right: 20%;">
+        <span>Clientes</span>
+      </div>
     </div>
     <div class="links" (click)="editUser(auth.logedUser)" *ngIf="!admin">
       <div class="icon">
         <i class="fa fa-user-circle"></i>
       </div>
-      <span>Datos del Usuario</span>
+      <div style="margin-right: 20%;">
+        <span>Datos del Usuario</span>
+      </div>
     </div>
     <div class="links" [routerLink]="['/change-pass']" *ngIf="!admin" (click)="openMenu()">
       <div class="icon">
         <i class="fa fa-unlock-alt"></i>
       </div>
-      <span>Cambiar Contraseña</span>
+      <div style="margin-right: 20%;">
+        <span>Cambiar Contraseña</span>
+      </div>
     </div>
 
 
   </div>
 
- </div>
+</div>
