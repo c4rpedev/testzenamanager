@@ -19,6 +19,7 @@ export class OrderService {
   methods: any;
   user: User;
   ordersCount: number = 0;
+  orderMunicipio: any;
   //Print
   dataSource: any;
   displayedColumns: any[] = [];

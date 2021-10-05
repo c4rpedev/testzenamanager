@@ -45,14 +45,14 @@
 
       <div class="row">
         <div class="col-md-4">
-          <input type="text" class="form-control" required [(ngModel)]="this.client.email" [readonly]="alreadySavedClient"
-            [class.is-invalid]="emaill.invalid && emaill.touched" placeholder="Correo del cliente"
-            name="email" #emaill="ngModel">
+          <input type="text" class="form-control" required [(ngModel)]="this.client.email"
+            [readonly]="alreadySavedClient" [class.is-invalid]="emaill.invalid && emaill.touched"
+            placeholder="Correo del cliente" name="email" #emaill="ngModel">
         </div>
         <div class="col-md-4">
-          <input type="number" style="height: 30px;" class="form-control" required [(ngModel)]="this.client.phoneNumber" [readonly]="alreadySavedClient"
-            [class.is-invalid]="phoneNumberr.invalid && phoneNumberr.touched" placeholder="Teléfono del cliente"
-            name="phoneNumber" #phoneNumberr="ngModel">
+          <input type="number" style="height: 30px;" class="form-control" required [(ngModel)]="this.client.phoneNumber"
+            [readonly]="alreadySavedClient" [class.is-invalid]="phoneNumberr.invalid && phoneNumberr.touched"
+            placeholder="Teléfono del cliente" name="phoneNumber" #phoneNumberr="ngModel">
         </div>
       </div>
       <!-- CHECKBOX SAVE CLIENT -->
@@ -80,9 +80,12 @@
 
 
       <label> <strong>Municipio</strong> </label>
-      <select type="text" class="form-select" [(ngModel)]="order.orderMunicipio"
-        [class.is-invalid]="orderMunicipio.invalid && orderMunicipio.touched" required placeholder="Municipio"
+      <input type="text" class="form-control" *ngIf="municipiolist" [(ngModel)]="order.orderMunicipio" disabled
         name="orderMunicipio" #orderMunicipio="ngModel">
+
+      <select type="text" class="form-select" *ngIf="!municipiolist" [(ngModel)]="order.orderMunicipio"
+        [class.is-invalid]="orderMunicipio.invalid && orderMunicipio.touched" required placeholder="Municipio"
+        style="height: 35px;" name="orderMunicipio" #orderMunicipio="ngModel">
 
         <option *ngFor="let m of municipios">
           {{m.municipio}}

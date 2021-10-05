@@ -1,3 +1,4 @@
+import { OrderService } from 'src/app/core/services/order.service';
 import { AuthServices } from 'src/app/core/services/auth.service';
 import { Product } from 'src/app/core/models/product';
 import { CategoryService } from './../../../core/services/category.service';
@@ -32,12 +33,14 @@ export class ListProductsComponent implements OnInit {
   provinces: any = [];
   provincesP: any;
   selectedProvince: null;
+  selectedMunicipio: null;
   selectedCategory: null;
   img: String;
   user: string;
   term: string;
   loading: boolean;
   categorys: any = [];
+  municipios: any[] = [];
 
   //variable para mostrar otro valor por defecto en los select cuando se edita un product
   editProv = false;
@@ -54,6 +57,7 @@ export class ListProductsComponent implements OnInit {
     private userService: UserService,
     private municipioService: MunicipioService,
     private categoryService: CategoryService,
+    private orderService: OrderService,
     public auth: AuthServices,
     public dialog: MatDialog,
     @Inject(DOCUMENT) public document: Document
@@ -72,6 +76,7 @@ export class ListProductsComponent implements OnInit {
       this.getProvinces();
      // this.getProductForProvince();
      this.getCategories();
+     this.initProvince('La Habana');
 
      //En caso de editar un producto, inicializar los filtros para mostrar la vista de dicho producto
      if(this.service.edit){
@@ -102,6 +107,13 @@ export class ListProductsComponent implements OnInit {
       console.log('The dialog was closed');
 
     });
+  }
+
+  initProvince(province: string) {
+    this.municipioService.getMunicipio(province).then(res => {
+      this.municipios = res[0].attributes['municipios'];
+    })
+
   }
 
   price(price: any, category: string): number{
@@ -190,6 +202,10 @@ export class ListProductsComponent implements OnInit {
 
   }
 
+  saveMunicipio(){
+    this.orderService.orderMunicipio = this.selectedMunicipio;
+  }
+
   getProductForProvince() {
     this.editProv = false;
     if (this.auth.Admin()) {
@@ -205,6 +221,7 @@ export class ListProductsComponent implements OnInit {
         this.loading = false;
       })
     }
+    this.initProvince(this.selectedProvince);
   }
   isAdmin() {
     this.admin = this.auth.Admin();

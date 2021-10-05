@@ -52,6 +52,7 @@ export class AddOrderComponent implements OnInit {
   lastName: [string[]] = [[]];
   myControl = new FormControl();
   filteredOptions: Observable<string[]>;
+  municipiolist = false;
   constructor(
     private router: Router,
     private smsService: SmsService,
@@ -69,6 +70,10 @@ export class AddOrderComponent implements OnInit {
     this.products = history.state.product;
     //  this.province =  history.state.province;
     this.order.orderProvince = history.state.province;
+    if(this.orderService.orderMunicipio){
+      this.order.orderMunicipio = this.orderService.orderMunicipio;
+      this.municipiolist = true;
+    }
     this.initProvince();
     this.user = this.auth.logedUser.userName;
     this.getTranspCost();

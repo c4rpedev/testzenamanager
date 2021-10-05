@@ -61,11 +61,21 @@
           </div>
         </div>
         <div class="row">
+          <div class="province-select">
+            <select [(ngModel)]="selectedMunicipio" *ngIf="selectedProvince" (ngModelChange)="saveMunicipio()" style="width: 230px; float: right;"  class="form-select" id="selectProvince" >
+              <option [ngValue]="null">Seleccione un municipio</option>
+              <option *ngFor="let m of municipios" [ngValue]="m.municipio">
+                {{m.municipio}}
+             </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
            <div *ngIf="!products && !loading" class="container text-center mt-5">
                 <i class="fa fa-shopping-bag fa-3x"></i>
                 <br>
                 <br>
-                <h3>Por favor seleccione una Provincia o una Región</h3>
+                <h3>Por favor seleccione una Provincia</h3>
             </div>
             <div class="order__spinner" *ngIf="loading">
               <mat-spinner  ></mat-spinner>
