@@ -30,6 +30,8 @@ export class AddUserComponent implements OnInit {
   mayoreo: [[string, string, number]] = [['', '', 0]];
   cleancategories = true;
   editar = false;
+  caracterInvalid = false;
+  passInvalid = false;
   img: string | ArrayBuffer =
     "https://parsefiles.back4app.com/vH5Y2pQQTnE8odu7xeMKMzviCtFuPHQAvQogW4GI/7b7b788e29df265cb59d20c2682aba24_product.jpg";
 
@@ -74,8 +76,16 @@ export class AddUserComponent implements OnInit {
     })
   }
 
+  checkRepeatPassword(){
+    if(this.userService.selectedUser.password != this.repeatpassword){
+      this.passInvalid = true;
+    }else{
+      this.passInvalid = false;
+    }
+  }
+
   onSubmit(form: NgForm) {
-    if (form.valid) {
+    if (form.valid && this.passInvalid == false) {
       // this.userService.selectedUser.phoneNumber = this.userService.selectedUser.phoneNumber.toString();
       if (this.userService.selectedUser.createdAt) {
         // EDITAR USUARIO

@@ -24,13 +24,15 @@ export class DashboardComponent implements OnInit {
     this.auth.checkToken();
     console.log(this.auth.check);
     console.log('viene')
-    this.wooProducs.retrieveProducts().subscribe(response => {
-      console.log('response')
-      console.log(response);
-    }, err => {
-      console.log('error')
-      console.log(err);
-    });
+
+
+    // this.wooProducs.retrieveProducts().subscribe(response => {
+    //   console.log('response')
+    //   console.log(response);
+    // }, err => {
+    //   console.log('error')
+    //   console.log(err);
+    // });
 
     // console.log('ya')
 

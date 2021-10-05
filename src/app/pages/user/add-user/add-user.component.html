@@ -68,9 +68,9 @@
           [class.is-invalid]="userId.invalid && userId.touched">
 
         <label class="fname mt-2"><strong>Nombre</strong> </label>
-        <input [disabled]="editar" type="text" class="form-control" required [(ngModel)]="userService.selectedUser.userName"
-          placeholder="Nombre de Usuario" name="userName" #userName="ngModel"
-          [class.is-invalid]="userName.invalid && userName.touched">
+        <input [disabled]="editar" type="text" class="form-control" required
+          [(ngModel)]="userService.selectedUser.userName" placeholder="Nombre de Usuario" name="userName"
+          #userName="ngModel" [class.is-invalid]="userName.invalid && userName.touched">
 
         <label class="mt-2"><strong>Correo *</strong> </label>
         <input type="email" class="form-control" [(ngModel)]="userService.selectedUser.emailId"
@@ -81,12 +81,13 @@
         <input type="number" class="form-control" [(ngModel)]="userService.selectedUser.phoneNumber"
           [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" placeholder="Teléfono Móvil"
           [required]="!userService.selectedUser.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
-        <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="form-text text-danger">Este campo es requerido!</small>
+        <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="form-text text-danger">Este campo es
+          requerido!</small>
 
         <div class="col">
           <div class="form-group mt-2"><label for="last_name"><strong>Rol</strong><br /></label>
-            <select [(ngModel)]="userService.selectedUser.userRole" [disabled]="!auth.Admin()" class="form-select" name="userRole"
-              [class.is-invalid]="userRole.invalid && userRole.touched" #userRole="ngModel" required>
+            <select [(ngModel)]="userService.selectedUser.userRole" [disabled]="!auth.Admin()" class="form-select"
+              name="userRole" [class.is-invalid]="userRole.invalid && userRole.touched" #userRole="ngModel" required>
               <option (click)="selectRole(item.attributes.name)" [value]="item.attributes.name"
                 *ngFor="let item of roles">
                 {{item.attributes.name}}
@@ -131,16 +132,16 @@
         <label class="mt-2" *ngIf="!editar"><strong>Contraseña *</strong> </label>
         <div class="row" *ngIf="!editar">
           <div class="col-6">
-            <input type="password" class="form-control" [(ngModel)]="userService.selectedUser.password" minlength="8"
+            <input type="password" class="form-control" (keyup)="checkRepeatPassword()" [(ngModel)]="userService.selectedUser.password" minlength="8"
               [class.is-invalid]="pass.invalid && pass.touched" required placeholder="Contraseña" name="pass"
               #pass="ngModel">
           </div>
           <div class="col-6">
-            <input type="password" class="form-control" [(ngModel)]="repeatpassword" minlength="8"
-              pattern="{{userService.selectedUser.password}}" [class.is-invalid]="passR.invalid && passR.touched"
-              required placeholder="Repetir Contraseña" name="passR" #passR="ngModel">
+            <input type="password" class="form-control" (keyup)="checkRepeatPassword()" [(ngModel)]="repeatpassword"
+              minlength="8" [class.is-invalid]="passR.invalid && passR.touched" required
+              placeholder="Repetir Contraseña" name="passR" #passR="ngModel">
           </div>
-          <small *ngIf="passR.invalid  && passR.touched && pass.touched" style="color: red;">Las contraseñas no
+          <small *ngIf="passInvalid  && passR.touched && pass.touched" style="color: red;">Las contraseñas no
             coinciden. (Debe tener mínimo 8 caracteres)</small>
         </div>
 

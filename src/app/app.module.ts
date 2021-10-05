@@ -128,11 +128,11 @@ Parse.initialize(environment.PARSE_APP_ID, environment.PARSE_JS_KEY,);
     MatNativeDateModule,
     WoocommerceProductsService,
     WoocommerceHelperService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InterceptorService,
-      multi: true
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: InterceptorService,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })
