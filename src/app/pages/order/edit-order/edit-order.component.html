@@ -162,12 +162,12 @@
 
 
       <label
-        *ngIf="admin && (user!='buttycomercial' && user!='comercial') &&  !(order.state == 'Revisado' || order.state == 'Cancelado')">
+        *ngIf="admin &&  !(order.state == 'Revisado' || order.state == 'Cancelado')">
         <span>Sucursal</span>
         <select [(ngModel)]="order.orderSucursal" class="form-select" name="orderSucursal" #orderSucursal="ngModel">
 
-          <option *ngFor="let s of sucursalName" value={{s.attributes.user}}>
-            {{s.attributes.name}}
+          <option *ngFor="let s of sucursalName" value={{s.attributes.userName}}>
+            {{s.attributes.userName}}
           </option>
         </select>
       </label>

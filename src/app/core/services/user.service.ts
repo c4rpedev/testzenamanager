@@ -178,6 +178,13 @@ export class UserService {
     return query.find();
   }
 
+  getSucursals() {
+    const user = Parse.Object.extend('users');
+    const query = new Parse.Query(user);
+    query.equalTo('userRole', 'Sucursal');
+    return query.find();
+  }
+
   async changePass(password: string) {
     //Buscando el usuario por el ID
     const user = Parse.Object.extend('users');

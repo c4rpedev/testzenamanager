@@ -69,10 +69,8 @@ export class EditOrderComponent implements OnInit {
        console.log(this.total);
 
      });
-     this.sucursalService.getSucursal().then(res =>{
+     this.userService.getSucursals().then(res =>{
       this.sucursalName = res;
-      console.log('tests');
-      console.log(this.sucursalName);
     });
 
   }
