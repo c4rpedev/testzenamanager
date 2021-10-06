@@ -86,6 +86,9 @@ export class AddUserComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (form.valid && this.passInvalid == false) {
+      if(this.img != 'https://parsefiles.back4app.com/vH5Y2pQQTnE8odu7xeMKMzviCtFuPHQAvQogW4GI/7b7b788e29df265cb59d20c2682aba24_product.jpg'){
+        this.userService.userImg = true;
+      }
       // this.userService.selectedUser.phoneNumber = this.userService.selectedUser.phoneNumber.toString();
       if (this.userService.selectedUser.createdAt) {
         // EDITAR USUARIO

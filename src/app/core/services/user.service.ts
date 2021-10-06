@@ -15,6 +15,7 @@ export class UserService {
   admin = false;
   clave = 'encryptClave';
   editPass = false;
+  userImg = false;
 
   constructor(private auth: AuthServices, private router: Router) {
     this.selectedUser = new User();
@@ -92,7 +93,10 @@ export class UserService {
               myNewObject.set('userRole', user.userRole);
               myNewObject.set('active', true);
               myNewObject.set('mayoreo', user.mayoreo);
-              myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
+              if(this.userImg){
+                myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
+                this.userImg = false;
+              }
 
               try {
                 await myNewObject.save().then(res => {
