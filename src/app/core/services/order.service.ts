@@ -52,6 +52,7 @@ export class OrderService {
       myNewObject.set('orderClientPhone', order.orderClientPhone);
       myNewObject.set('orderReference', order.orderReference);
       myNewObject.set('orderNote', order.orderNote);
+      myNewObject.set('ordercost', order.ordercost);
       myNewObject.set('orderAgencyId', this.auth.logedUser.userId);
       myNewObject.set('state', 'Nuevo');
       myNewObject.set('orderPaid', false);

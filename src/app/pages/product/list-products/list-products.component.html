@@ -1,161 +1,154 @@
 <!-- ======= Portfolio Section ======= -->
-<section id="work" class="container portfolio-mf sect-pt4 pb-5 route" >
+<section id="work" class="container portfolio-mf sect-pt4 pb-5 route">
 
-        <div class="row" *ngIf="who!='order'">
-            <div class="col-sm-12">
-                <div class="title-box text-center pt-5">
-                    <h3 class="title-a">
-                        Productos
-                    </h3>
-                    <p class="subtitle-a">
-                        Seleccione varios productos o combos para conformar su propio combo.
-                    </p>
-                    <div class="line-mf"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row" *ngIf="who=='order'">
-          <div class="col-sm-12">
-              <div class="title-box text-center pt-5">
-                  <h3 class="title-a">
-                      Realizar pedido
-                  </h3>
-                  <p class="subtitle-a">
-                      Seleccione productos para realizar su pedido.
-                  </p>
-                  <div class="line-mf"></div>
-              </div>
-          </div>
+  <div class="row" *ngIf="who!='order'">
+    <div class="col-sm-12">
+      <div class="title-box text-center pt-5">
+        <h3 class="title-a">
+          Productos
+        </h3>
+        <p class="subtitle-a">
+          Seleccione varios productos o combos para conformar su propio combo.
+        </p>
+        <div class="line-mf"></div>
       </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="who=='order'">
+    <div class="col-sm-12">
+      <div class="title-box text-center pt-5">
+        <h3 class="title-a">
+          Realizar pedido
+        </h3>
+        <p class="subtitle-a">
+          Seleccione productos para realizar su pedido.
+        </p>
+        <div class="line-mf"></div>
+      </div>
+    </div>
+  </div>
 
-        <div class="btn-toolbar product__toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-toolbar product__toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
 
-          <div class="btn-group add__order" role="group" *ngIf="who=='order'">
-            <button type="button"  (click)="addOrder()">Realizar Pedido</button>
-            <i class="fa fa-shopping-cart shopping__cart"> <span class="badge rounded-pill bg-secondary" >{{productsCart.length}} </span> </i>
-          </div>
+    <div class="btn-group add__order" role="group" *ngIf="who=='order'">
+      <button type="button" (click)="addOrder()">Realizar Pedido</button>
+      <i class="fa fa-shopping-cart shopping__cart"> <span
+          class="badge rounded-pill bg-secondary">{{productsCart.length}} </span> </i>
+    </div>
 
-          <!-- <div class="btn-group " role="group" >
+    <!-- <div class="btn-group " role="group" >
             <button type="button"  (click)="createCombo()" *ngIf="who!='order'">Crear combo</button>
           </div> -->
-          <div class="input-group" *ngIf="selectedProvince">
-            <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search"></i> </span>
-            <input type="text" class="form-control" placeholder="Busca por nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="term">
-          </div>
-          <div class="province-select" *ngIf="selectedProvince">
-            <select [(ngModel)]="selectedCategory"  class="form-select" id="selectedCategory" >
-              <option [ngValue]="null">Seleccione una categoria</option>
-              <option *ngFor="let p of categorys" [ngValue]="p.attributes.name">
-                {{p.attributes.name}}
-             </option>
-            </select>
-          </div>
-          <div class="province-select">
-            <select [(ngModel)]="selectedProvince"  (ngModelChange)="getProductForProvince()" class="form-select" id="selectProvince" >
-              <option [ngValue]="null">Seleccione una provincia</option>
-              <option *ngFor="let p of provinces" [ngValue]="p.name">
-                {{p.name}}
-             </option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="province-select">
-            <select [(ngModel)]="selectedMunicipio" *ngIf="selectedProvince" (ngModelChange)="saveMunicipio()" style="width: 230px; float: right;"  class="form-select" id="selectProvince" >
-              <option [ngValue]="null">Seleccione un municipio</option>
-              <option *ngFor="let m of municipios" [ngValue]="m.municipio">
-                {{m.municipio}}
-             </option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-           <div *ngIf="!products && !loading" class="container text-center mt-5">
-                <i class="fa fa-shopping-bag fa-3x"></i>
-                <br>
-                <br>
-                <h3>Por favor seleccione una Provincia</h3>
-            </div>
-            <div class="order__spinner" *ngIf="loading">
-              <mat-spinner  ></mat-spinner>
-            </div>
-            <div *ngIf="selectedCategory == 'Restaurante 1' && selectedProvince == 'Matanzas'" class="container text-center mt-5">
-              <h3><b>ALCANCE:</b> CARDENAS -STA MARTA-GUASIMAS-BOCA-CANTEL-LA CONCHITA-MATANZAS CIUDAD-GUANABANA</h3>
-              <h3><b>HORARIO DE ENTREGAS:</b> 11AM - 7PM</h3>
-          </div>
-            <div
-            class="col-sm-3 mb-2"
-            *ngFor="let product of products | myFilter:term:selectedCategory:['name']:['category']; let i = index">
+    <div class="input-group" *ngIf="selectedProvince">
+      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search"></i> </span>
+      <input type="text" class="form-control" placeholder="Busca por nombre" aria-label="Username"
+        aria-describedby="basic-addon1" [(ngModel)]="term">
+    </div>
+    <div class="province-select" *ngIf="selectedProvince">
+      <select [(ngModel)]="selectedCategory" class="form-select" id="selectedCategory">
+        <option [ngValue]="null">Seleccione una categoria</option>
+        <option *ngFor="let p of categorys" [ngValue]="p.attributes.name">
+          {{p.attributes.name}}
+        </option>
+      </select>
+    </div>
+    <div class="province-select">
+      <select [(ngModel)]="selectedProvince" (ngModelChange)="getProductForProvince()" class="form-select"
+        id="selectProvince">
+        <option [ngValue]="null">Seleccione una provincia</option>
+        <option *ngFor="let p of provinces" [ngValue]="p.name">
+          {{p.name}}
+        </option>
+      </select>
+    </div>
+  </div>
 
-            <div class="item" >
-              <div class="mb-r">
-                <!--Card-->
-                <div class="card card-cascade wider shadow" [class.active]='!product.attributes.state'>
-                  <!--Card image-->
-                  <a >
-                    <div >
-                      <img
-                      src={{product.attributes.picture._url}}
-                        class="img-fluid"
-                        alt=""
 
-                      />
-                      <a>
-                        <div
-                          class="mask waves-effect waves-light"
-                          mdbRippleRadius
-                        ></div>
-                      </a>
-                    </div>
+  <div *ngIf="selectedProvince && !admin" class="btn-toolbar product__toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="province-select">
+      <select class="form-select" id="selectedCategoryy">
+        <option [ngValue]="null" (click)="getProductForProvince()">Ordenar por precio</option>
+        <option (click)="getProductsOrderedByPrice('ascendente')">De menor a mayor</option>
+        <option (click)="getProductsOrderedByPrice('desc')">De mayor a menor</option>
+      </select>
+    </div>
+    <div class="province-select">
+      <select [(ngModel)]="selectedMunicipio" (ngModelChange)="saveMunicipio()" style="width: 230px; float: right;"
+        class="form-select" id="selectProvince">
+        <option [ngValue]="null">Seleccione un municipio</option>
+        <option *ngFor="let m of municipios" [ngValue]="m.municipio">
+          {{m.municipio}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="!products && !loading" class="container text-center mt-5">
+      <i class="fa fa-shopping-bag fa-3x"></i>
+      <br>
+      <br>
+      <h3>Por favor seleccione una Provincia</h3>
+    </div>
+    <div class="order__spinner" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="selectedCategory == 'Restaurante 1' && selectedProvince == 'Matanzas'"
+      class="container text-center mt-5">
+      <h3><b>ALCANCE:</b> CARDENAS -STA MARTA-GUASIMAS-BOCA-CANTEL-LA CONCHITA-MATANZAS CIUDAD-GUANABANA</h3>
+      <h3><b>HORARIO DE ENTREGAS:</b> 11AM - 7PM</h3>
+    </div>
+    <div class="col-sm-3 mb-2"
+      *ngFor="let product of products | myFilter:term:selectedCategory:['name']:['category']; let i = index">
+
+      <div class="item">
+        <div class="mb-r">
+          <!--Card-->
+          <div class="card card-cascade wider shadow" [class.active]='!product.attributes.state'>
+            <!--Card image-->
+            <a>
+              <div>
+                <img src={{product.attributes.picture._url}} class="img-fluid" alt="" />
+                <a>
+                  <div class="mask waves-effect waves-light" mdbRippleRadius></div>
+                </a>
+              </div>
+            </a>
+            <!--/.Card image-->
+            <!--Card content-->
+            <div class="card-body text-center no-padding">
+              <!--Category & Title-->
+
+              <h4><b>{{ product.attributes.description}}</b></h4>
+              <h5 *ngIf="product.attributes.name">{{ product.attributes.name}}</h5>
+
+
+              <!--Description-->
+              <p class="card-text">{{ product.attributes.category }}</p>
+              <!--Card footer-->
+              <div class="card-footer row">
+                <span class="left col-4"
+                  style="font-size: 15px; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">$ {{
+                  price(product.attributes.price, product.attributes.category) | number : '1.2-2' }}</span>
+                <span class="right col-8">
+                  <a class="add__product" placement="top" mdbTooltip="Add to Wishlist" container="body"
+                    (click)="openDialog(product.attributes)">
+                    <i class="fa fa-list"></i>
                   </a>
-                  <!--/.Card image-->
-                  <!--Card content-->
-                  <div class="card-body text-center no-padding">
-                    <!--Category & Title-->
-
-                      <h4><b>{{ product.attributes.description}}</b></h4>
-                      <h5 *ngIf="product.attributes.name">{{ product.attributes.name}}</h5>
-
-
-                    <!--Description-->
-                    <p class="card-text">{{ product.attributes.category }}</p>
-                    <!--Card footer-->
-                    <div class="card-footer row">
-                      <span class="left col-4" style="font-size: 15px; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;">$ {{ price(product.attributes.price, product.attributes.category) | number : '1.2-2' }}</span>
-                      <span class="right col-8">
-                        <a class="add__product"
-                          placement="top"
-                          mdbTooltip="Add to Wishlist"
-                          container="body"
-                          (click)="openDialog(product.attributes)"
-
-                        >
-                          <i class="fa fa-list"></i>
-                        </a>
-                        <a class="add__product"
-                          placement="top"
-                          mdbTooltip="Add to Wishlist"
-                          container="body"
-                          (click)="editProduct(product, product.attributes)"
-                          *ngIf="admin"
-                        >
-                          <i class="fa fa-edit"></i>
-                        </a>
-                        <a *ngIf="product.attributes.state" class="add__product"
-                          placement="top"
-                          mdbTooltip="Add to Wishlist"
-                          container="body"
-                          (click)="addToCart(product.attributes)"
-                        >
-                          <i class="fa fa-plus-circle"></i>
-                        </a>
-                        <div class="product__checkbox"
-                        *ngIf="admin"
-                      >
-                      <input type="checkbox" [value]="product.id" [checked]="!product.attributes.state"  (change)="changeState(product.id, product.attributes.state)" />
-                      </div>
-                        <!-- <a
+                  <a class="add__product" placement="top" mdbTooltip="Add to Wishlist" container="body"
+                    (click)="editProduct(product, product.attributes)" *ngIf="admin">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a *ngIf="product.attributes.state" class="add__product" placement="top" mdbTooltip="Add to Wishlist"
+                    container="body" (click)="addToCart(product.attributes)">
+                    <i class="fa fa-plus-circle"></i>
+                  </a>
+                  <div class="product__checkbox" *ngIf="admin">
+                    <input type="checkbox" [value]="product.id" [checked]="!product.attributes.state"
+                      (change)="changeState(product.id, product.attributes.state)" />
+                  </div>
+                  <!-- <a
                           placement="top"
                           mdbTooltip="Remove Product"
                           container="body"
@@ -164,17 +157,17 @@
                         >
                           <i class="fa fa-trash"></i>
                         </a> -->
-                      </span>
-                    </div>
-                  </div>
-                  <!--/.Card content-->
-                </div>
-                <!--/.Card-->
+                </span>
               </div>
             </div>
+            <!--/.Card content-->
           </div>
-
-
+          <!--/.Card-->
         </div>
+      </div>
+    </div>
+
+
+  </div>
 
 </section><!-- End Portfolio Section -->

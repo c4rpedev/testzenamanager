@@ -28,6 +28,7 @@ export class AddOrderComponent implements OnInit {
   subtotal: number;
   total: number = 0;
   totalAmount: number = 0;
+  orderCost: number = 0;
   provinces: any[] = [];
   province: string;
   municipios: any[] = [];
@@ -145,17 +146,16 @@ export class AddOrderComponent implements OnInit {
         if (element[0] == this.order.orderProvince) {
           cost = element[1];
           this.transportCost = element[1];
-          console.log('costotransp' + this.transportCost)
+          // console.log('costotransp' + this.transportCost)
         }
       });
 
       this.products.forEach(element => {
         this.subtotal = +element.price;
         this.total = this.total + this.subtotal
+        this.orderCost += parseInt(element.cost);
       });
       this.total = this.total + this.transportCost;
-      console.log('TOTAL');
-      console.log(this.total);
     })
   }
 
@@ -246,6 +246,7 @@ export class AddOrderComponent implements OnInit {
     }
 
     this.order.orderPrice = this.total;
+    this.order.ordercost = this.orderCost;
     this.orderService.createOrder(this.order, this.products, this.user).then(res => {
       if (this.saveClient) {
         Swal.fire({

@@ -8,6 +8,7 @@ export class Order {
     orderClientPhone: string;
     orderAgencyId: string;
     orderPaid: boolean;
+    ordercost: number;
     orderFirstLastName: string;
     orderSecondLastName: string;
     orderRecieverName: string;

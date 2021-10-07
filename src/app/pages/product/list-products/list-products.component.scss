@@ -39,7 +39,7 @@
   }
   .card:not([class*="card-outline-"]) {
     border: 0;
-  }  
+  }
   .card.card-cascade.narrower .view {
     margin-left: 4%;
     margin-right: 4%;
@@ -68,10 +68,10 @@
   .btn .fa,
   .card .card-body {
     position: relative;
-  }  
+  }
   .card .card-body .card-title a {
     color: var(--navBackground) !important;
-  }  
+  }
   .card .rating {
     color: #ffa000;
   }
@@ -88,24 +88,24 @@
   .no-padding .fa,
   .rating {
     padding: 0;
-  }  
+  }
   .card-text {
-    line-height: 20px;    
+    line-height: 20px;
     overflow: hidden;
-  }  
+  }
   .card .card-footer {
     background-color: transparent;
-  }  
+  }
   .card .card-footer .left {
     float: left;
-  }  
+  }
   .card .card-footer .right {
     float: right;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-  }  
+  }
   .card .card-footer .right a.active {
     color: #d50000;
   }
@@ -114,7 +114,7 @@
     margin-left: 1rem;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-  }  
+  }
   .card .card-footer .right a .fa-heart {
     color: var(--navBackground) !important;
   }
@@ -124,7 +124,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
   }
-  button{    
+  button{
     padding: 10px;
     border: none;
     border-radius: 30px;
@@ -145,7 +145,7 @@
       border-top-right-radius: 15px;
       border-bottom-right-radius: 15px;
       border-radius: 15px;
-    }    
+    }
     span{
       margin-right: 10px;
     }
@@ -165,7 +165,7 @@
   }
   .mat-dialog-container{
     padding: 0 !important;
-    border: black;   
+    border: black;
     border-style: solid;
 }
 .card-footer{
@@ -177,7 +177,7 @@
 }
 .order__spinner{
   display: flex;
-  width: 100%;    
+  width: 100%;
   justify-content: center;
   margin-top: 50px;
 }
@@ -196,7 +196,7 @@
   display: flex;
   align-items: center;
 }
-  
+
 .product__checkbox{
   display: flex;
 align-self: center;
@@ -205,3 +205,4 @@ margin-left: 10px;
 .active{
   background-color: #d7d7d7 !important;
 }
+

@@ -19,6 +19,8 @@ export class ProductService {
   productProvince: any;
   productCategory: any;
   productName: any;
+  queryAscendingPrice = false;
+  queryDescendingPrice = false;
 
   constructor(private http:HttpClient,
               private router: Router,
@@ -149,7 +151,15 @@ export class ProductService {
       const query = new Parse.Query(Products);
       query.containedIn("productAgencys", [agency, 'Todas']);
       query.contains('productProvinces', province);
-
+      if(this.queryDescendingPrice){
+        query.descending('price');
+        this.queryDescendingPrice = false;
+      }else{
+        if(this.queryAscendingPrice){
+          query.ascending('price');
+          this.queryAscendingPrice = false;
+        }
+      }
       // const query2 = new Parse.Query(Products);
       // query.contains("productAgencys", 'Todas');
       // query.contains('productProvinces', province);
@@ -162,6 +172,15 @@ export class ProductService {
     const Products = Parse.Object.extend('products');
       const query = new Parse.Query(Products);
       query.contains('productProvinces', province);
+      if(this.queryDescendingPrice){
+        query.descending('price');
+        this.queryDescendingPrice = false;
+      }else{
+        if(this.queryAscendingPrice){
+          query.ascending('price');
+          this.queryAscendingPrice = false;
+        }
+      }
       query.limit(1000)
       return query.find();
   }

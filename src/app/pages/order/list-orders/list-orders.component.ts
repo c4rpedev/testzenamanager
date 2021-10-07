@@ -185,7 +185,7 @@ export class ListOrdersComponent implements OnInit {
           this.sucursal = this.auth.Sucursal();
 
           if (this.admin || this.sucursal) {
-            this.displayedColumns = ['id', 'date', 'agency', 'client', 'products', 'reciver', 'province', 'municipio', 'mobile', 'phone', 'state', 'accions'];
+            this.displayedColumns = ['id', 'date', 'agency', 'client', 'products', 'ordercost', 'reciver', 'province', 'municipio', 'mobile', 'phone', 'state', 'accions'];
           } else {
             this.displayedColumns = ['id', 'date', 'client', 'products', 'reciver', 'province', 'municipio', 'mobile', 'phone', 'state', 'accions'];
           }
@@ -255,7 +255,7 @@ export class ListOrdersComponent implements OnInit {
           this.loading = false;
 
           if (this.admin || this.sucursal || this.restaurante) {
-            this.displayedColumns = ['id', 'date', 'agency', 'sucursal', 'client', 'products', 'reciver', 'province', 'municipio', 'mobile', 'phone', 'state', 'accions'];
+            this.displayedColumns = ['id', 'date', 'agency', 'sucursal', 'client', 'products', 'ordercost', 'reciver', 'province', 'municipio', 'mobile', 'phone', 'state', 'accions'];
           } else {
             this.displayedColumns = ['id', 'date', 'client', 'products', 'reciver', 'province', 'municipio', 'mobile', 'phone', 'state', 'accions'];
           }

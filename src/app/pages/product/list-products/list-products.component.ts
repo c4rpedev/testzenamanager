@@ -206,6 +206,17 @@ export class ListProductsComponent implements OnInit {
     this.orderService.orderMunicipio = this.selectedMunicipio;
   }
 
+  getProductsOrderedByPrice(sentido: string){
+    if(sentido == 'ascendente'){
+      this.service.queryAscendingPrice = true;
+    }else{
+      if(sentido == 'desc'){
+        this.service.queryDescendingPrice = true;
+      }
+    }
+    this.getProductForProvince();
+  }
+
   getProductForProvince() {
     this.editProv = false;
     if (this.auth.Admin()) {
