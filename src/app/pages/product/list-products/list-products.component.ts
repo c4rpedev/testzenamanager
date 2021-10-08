@@ -116,12 +116,25 @@ export class ListProductsComponent implements OnInit {
 
   }
 
-  price(price: any, category: string): number{
+  price(product: any): number{
+    var price = product.price;
+    var category = product.category
+    var cost = parseInt(product.cost);
     var find = false;
     var pri = 0;
+    //Verificando si es Agencia para Calcular Precio
     if(this.auth.logedUser.userRole != 'Agencia'){
       return price;
     }else{
+      //VERIFICANDO SI TIENE PRICECATEGORIES PARA AÑADIRLO AL CÁLCULO
+      if(this.auth.logedUser.priceCategories){
+        this.auth.logedUser.priceCategories.forEach(element => {
+          if(element[0] == category){
+            price = ((parseInt(element[2].toString()) * cost / 100) + cost);
+          }
+        });
+      }
+      //VERIFICANDO Y APLICANCO MAYOREO
       if(this.auth.logedUser.mayoreo){
         this.auth.logedUser.mayoreo.forEach(element => {
           if(element[0] == category){

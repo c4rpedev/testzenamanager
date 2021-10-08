@@ -170,32 +170,45 @@ export class AddOrderComponent implements OnInit {
 
   prices() {
     this.products.forEach(element => {
-      element.price = this.price(element.price, element.category);
+      element.price = this.price(element);
     });
   }
 
-  price(price: any, category: string): number {
+  price(product: any): number{
+    var price = product.price;
+    var category = product.category
+    var cost = parseInt(product.cost);
     var find = false;
     var pri = 0;
-    if (this.auth.logedUser.userRole != 'Agencia') {
+    //Verificando si es Agencia para Calcular Precio
+    if(this.auth.logedUser.userRole != 'Agencia'){
       return price;
-    } else {
-      if (this.auth.logedUser.mayoreo) {
+    }else{
+      //VERIFICANDO SI TIENE PRICECATEGORIES PARA AÑADIRLO AL CÁLCULO
+      if(this.auth.logedUser.priceCategories){
+        this.auth.logedUser.priceCategories.forEach(element => {
+          if(element[0] == category){
+            price = ((parseInt(element[2].toString()) * cost / 100) + cost);
+          }
+        });
+      }
+      //VERIFICANDO Y APLICANCO MAYOREO
+      if(this.auth.logedUser.mayoreo){
         this.auth.logedUser.mayoreo.forEach(element => {
-          if (element[0] == category) {
+          if(element[0] == category){
             find = true;
-            if (element[1] == '%') {
+            if(element[1] == '%'){
               pri = ((parseInt(element[2].toString()) * price / 100) + price);
-            } else {
+            }else{
               pri = (parseInt(element[2].toString()) + price);
             }
           }
         });
       }
     }
-    if (find) {
+    if(find){
       return pri;
-    } else {
+    }else{
       return price;
     }
   }

@@ -16,6 +16,7 @@ export class User {
   userCategories: string[];
   logo: File;
   mayoreo: [[string, string, number]]
+  priceCategories: [[string, string, number]]
 }
 
 export class UserDetail {

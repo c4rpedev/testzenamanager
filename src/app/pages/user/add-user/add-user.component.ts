@@ -92,7 +92,14 @@ export class AddUserComponent implements OnInit {
       // this.userService.selectedUser.phoneNumber = this.userService.selectedUser.phoneNumber.toString();
       if (this.userService.selectedUser.createdAt) {
         // EDITAR USUARIO
-        form.value.mayoreo = this.mayoreo;
+        if(this.auth.Agencia()){
+          form.value.mayoreo = this.mayoreo;
+        }else{
+          if(this.auth.Admin()){
+            form.value.priceCategories = this.mayoreo;
+            console.log('ADMIN-> ' + form.value.priceCategories);
+          }
+        }
         this.userService.admin = this.auth.Admin()
         this.userService.editUser(form.value, this.img.toString());
         Swal.fire({
@@ -104,7 +111,7 @@ export class AddUserComponent implements OnInit {
         })
       } else {
         // CREAR NUEVO USUARIO
-        this.userService.selectedUser.mayoreo = this.mayoreo;
+        this.userService.selectedUser.priceCategories = this.mayoreo;
         this.userService.addUser(this.userService.selectedUser, this.img.toString());
         Swal.fire({
           position: 'top-end',
@@ -139,6 +146,9 @@ export class AddUserComponent implements OnInit {
   //Gestionando el arreglo de Mayoreo
   addMayoreo() {
     var success = true;
+    if(this.auth.Admin()){
+      this.tipoMayoreo = '%';
+    }
     if (this.categoriaMayoreo != '--Seleccione una categoría--' && this.categoriaMayoreo != null && this.tipoMayoreo != null && this.cantMayoreo != null) {
       this.mayoreo.forEach(element => {
         if (element[0] == this.categoriaMayoreo) {
@@ -175,6 +185,7 @@ export class AddUserComponent implements OnInit {
   }
 
   deleteMayoreo(categoria: string) {
+    this.actualizarCategories();
     if (this.mayoreo.length == 1) {
       this.mayoreo.push(['', '', 0])
     };
@@ -189,8 +200,12 @@ export class AddUserComponent implements OnInit {
   }
 
   initMayoreo() {
-    if (this.userService.selectedUser.mayoreo) {
+    if (this.auth.Agencia() && this.userService.selectedUser.mayoreo) {
       this.mayoreo = this.userService.selectedUser.mayoreo;
+    }else{
+      if(this.auth.Admin() && this.userService.selectedUser.priceCategories){
+        this.mayoreo = this.userService.selectedUser.priceCategories;
+      }
     }
   }
 
@@ -209,5 +224,7 @@ export class AddUserComponent implements OnInit {
       });
     }
   }
+
+
 
 }

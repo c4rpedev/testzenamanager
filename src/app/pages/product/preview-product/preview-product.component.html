@@ -6,6 +6,7 @@
                         height="160" />
                 </div>
             </div>
+            <button (click)="print()" type="button">Imprimir</button>
         </div>
         <div class="col-lg-8">
             <div class="row">
@@ -18,7 +19,7 @@
                             <div class="row preview__item">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="price"><strong>Precio: </strong>{{price(product.price, product.category) | number : '1.2-2' }}</label>
+                                        <label for="price"><strong>Precio: </strong>{{price(product) | number : '1.2-2' }}</label>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -35,10 +36,10 @@
                             </div>
                             <div class="row">
                                 <div class="preview__item"><label for="last_name"><strong>Provincia:
-                                        </strong>{{product.province}}</label>
-                                    <label for="last_name"><strong>Catergoría: </strong>{{product.category}}</label>
+                                        </strong>{{ShowProvices(product.productProvinces)}}</label>
                                 </div>
                             </div>
+                            <label for="last_name"><strong>Catergoría: </strong>{{product.category}}</label>
                             <div class="row">
                                 <label for="last_name"><strong>Productos: </strong><br />
                                     <table class="table">

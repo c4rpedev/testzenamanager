@@ -30,11 +30,14 @@
         </div>
       </div>
 
-      <div class="card mb-3 shadow" *ngIf="auth.Agencia()">
+      <div class="card mb-3 shadow" *ngIf="auth.Agencia() || (auth.Admin() && userService.selectedUser.userRole == 'Agencia')">
         <div class="card-body text-center">
-          <label class="fname mt-2"><strong>Listado Mayoreo</strong> </label>
+          <label class="fname mt-2">
+            <strong *ngIf="auth.Agencia()">Listado Mayoreo</strong>
+            <strong *ngIf="auth.Admin()">Listado Precios por Categoría</strong>
+          </label>
           <div *ngIf="!mayoreo || mayoreo[0][0] == '' || !mayoreo[0]">
-            No hay Mayoreos que mostrar.
+            No hay elementos que mostrar.
           </div>
           <table id="example1" class="table table-bordered table-striped"
             *ngIf="mayoreo && mayoreo[0][0] != '' && mayoreo[0]">
@@ -97,8 +100,11 @@
         </div>
 
         <!-- MAYOREO!! -->
-        <div class="row mt-2" *ngIf="auth.Agencia()">
-          <label for="last_name mb-1"><strong>Mayoreo de productos</strong><br /></label>
+        <div class="row mt-2" *ngIf="auth.Agencia() || (auth.Admin() && userService.selectedUser.userRole == 'Agencia')">
+          <label for="last_name mb-1">
+            <strong *ngIf="auth.Agencia()">Mayoreo de productos</strong><br />
+            <strong *ngIf="auth.Admin()">Añadir precio diferenciado de productos</strong><br />
+          </label>
           <div class="form-group col-3"><label for="last_name"><strong>Catergoría</strong><br /></label>
             <select [(ngModel)]="categoriaMayoreo" class="form-select" name="cateMayoreo"
               [class.is-invalid]="cateMayoreo.invalid && cateMayoreo.touched" #cateMayoreo="ngModel"
@@ -109,7 +115,7 @@
               </option>
             </select>
           </div>
-          <div class="col-3">
+          <div class="col-3" *ngIf="auth.Agencia()">
             <div class="form-group"><label for="last_name"><strong>Tipo</strong><br /></label>
               <select [(ngModel)]="tipoMayoreo" class="form-select" name="tipoMayoreo"
                 [class.is-invalid]="tipoMayoreoo.invalid && tipoMayoreoo.touched" #tipoMayoreoo="ngModel">
@@ -125,9 +131,33 @@
               #cantMayoreoo="ngModel">
           </div>
           <div class="col-3 mt-3">
-            <button (click)="addMayoreo()" type="button">Añadir mayoreo</button>
+            <button (click)="addMayoreo()" type="button">Añadir</button>
           </div>
         </div>
+
+        <!-- DEFINIR PRECIO POR CATEGORÍAS A UNA AGENCIA -->
+        <!-- <div class="row mt-2" *ngIf="auth.Admin() && userService.selectedUser.userRole == 'Agencia'">
+          <label for="last_name mb-1"><strong>Definir precio de productos</strong><br /></label>
+          <div class="form-group col-3"><label for="last_name"><strong>Catergoría</strong><br /></label>
+            <select [(ngModel)]="categoriaMayoreo" class="form-select" name="cateMayoreo"
+              [class.is-invalid]="cateMayoreo.invalid && cateMayoreo.touched" #cateMayoreo="ngModel"
+              (click)="actualizarCategories()">
+              <option>--Seleccione una categoría--</option>
+              <option *ngFor="let item of categories">
+                {{item}}
+              </option>
+            </select>
+          </div>
+          <div class="col-3">
+            <label> <strong>Cantidad</strong> </label>
+            <input type="number" class="form-control" [(ngModel)]="cantMayoreo"
+              [class.is-invalid]="cantMayoreoo.invalid && cantMayoreoo.touched" name="cantMayoreo"
+              #cantMayoreoo="ngModel">
+          </div>
+          <div class="col-3 mt-3">
+            <button (click)="addMayoreo()" type="button">Añadir</button>
+          </div>
+        </div> -->
 
         <label class="mt-2" *ngIf="!editar"><strong>Contraseña *</strong> </label>
         <div class="row" *ngIf="!editar">

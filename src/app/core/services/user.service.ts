@@ -93,6 +93,7 @@ export class UserService {
               myNewObject.set('userRole', user.userRole);
               myNewObject.set('active', true);
               myNewObject.set('mayoreo', user.mayoreo);
+              myNewObject.set('priceCategories', user.priceCategories);
               if(this.userImg){
                 myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
                 this.userImg = false;
@@ -135,7 +136,11 @@ export class UserService {
         myNewObject.set('userRole', User.userRole);
         myNewObject.set('active', true);
         myNewObject.set('mayoreo', User.mayoreo);
-        myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
+        myNewObject.set('priceCategories', User.priceCategories);
+        if(this.userImg){
+          myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
+          this.userImg = false;
+        }
         await myNewObject.save();
         Swal.fire({
           position: 'top-end',

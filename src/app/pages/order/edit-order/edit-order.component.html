@@ -42,7 +42,7 @@
           #orderClientName="ngModel">
       </label>
 
-      <label>
+      <label *ngIf="auth.Agencia()">
         <span class="fname">Correo del Cliente </span>
         <input type="text" class="form-control" [(ngModel)]="order.orderClientEmail"
           [class.is-invalid]="orderClientEmaile.invalid && orderClientEmaile.touched"
@@ -50,7 +50,7 @@
           #orderClientEmaile="ngModel">
       </label>
 
-      <label>
+      <label *ngIf="auth.Agencia()">
         <span class="fname">Teléfono del Cliente </span>
         <input type="text" class="form-control" [(ngModel)]="order.orderClientPhone"
           [class.is-invalid]="orderClientPhonee.invalid && orderClientPhonee.touched"
