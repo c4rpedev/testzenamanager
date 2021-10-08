@@ -17,37 +17,37 @@ button {
   grid-template-columns: 1fr;
   grid-template-rows: 0.3fr 1fr;
   grid-template-areas:
-    "nav"           
+    "nav"
     "first__column";
 }
 .row{
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
 }
 .column{
   display: flex;
   flex-direction: column;
 }
 nav {
-    grid-area: nav;  
+    grid-area: nav;
 }
 main {
   grid-area: main;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
 }
-#sidebar {  
+#sidebar {
   grid-area: sidebar;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
 }
-#first__column {  
+#first__column {
   grid-area: first__column;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
 }
 
-#second__column { 
+#second__column {
   grid-area: second__column;
   border-radius: var(--main-radius);
   padding-top: var(--main-padding);
@@ -61,13 +61,13 @@ a {
   margin: 5px;
 }
 .card{
-  display: flex;    
-  flex-direction: column;       
-  width: 100%; 
-  background-color: white;    
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
   -webkit-column-break-inside: avoid;
   padding: 10px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   margin: 10px 0px 29px 0px;
 }
 .border__shadow{
@@ -77,7 +77,7 @@ a {
 .card__inner{
   display: grid;
   grid-template-columns: 1.5fr 0.5fr;
-  
+
 }
 .card__title{
   font-size: 19px;
@@ -88,18 +88,18 @@ a {
 
 #progressbar {
   background-color: #F1F1F1;
-  border-radius: 13px;    
+  border-radius: 13px;
   margin: 0px 17px 5px 10px;
 }
-#progressbar>div {      
+#progressbar>div {
   height: 9px;
   border-radius: 10px;
 }
 .progressbar__group{
   width: 100%;
-  
+
 }
-span{  
+span{
   font-weight: lighter;
   font-size: 13px;
   color: gray;
@@ -107,18 +107,18 @@ span{
 
 
 @media only screen and (min-width: 768px) {
-  .dashboard__main {    
+  .dashboard__main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0.3fr 1fr;
-    grid-template-areas:  
-      "nav nav"    
-      "first__column second__column";     
+    grid-template-areas:
+      "nav nav"
+      "first__column second__column";
   }
-  
+
   #sidebar{
     display: none;
-  }  
+  }
 
 }
 
@@ -130,13 +130,13 @@ span{
   }
   .dashboard__main{
     display: grid;
-    height: 100vh;
+    height: 120%;
     grid-template-columns: 17% 83%;
     grid-template-rows: 0.2fr 1.5fr;
     grid-template-areas:
-      "sidebar nav"    
+      "sidebar nav"
       "sidebar first__column";
-    grid-gap: 0.2rem;     
+    grid-gap: 0.2rem;
   }
   #sidebar{
     display: grid;
