@@ -24,6 +24,7 @@ export class AddUserComponent implements OnInit {
   file: File;
   photosrc: String;
   selectedRole: String;
+  listcatMayoreo: string[] = [];
   categoriaMayoreo: string;
   tipoMayoreo: string;
   cantMayoreo: number;
@@ -32,6 +33,7 @@ export class AddUserComponent implements OnInit {
   editar = false;
   caracterInvalid = false;
   passInvalid = false;
+  categorias: any[] = [];
   img: string | ArrayBuffer =
     "https://parsefiles.back4app.com/vH5Y2pQQTnE8odu7xeMKMzviCtFuPHQAvQogW4GI/7b7b788e29df265cb59d20c2682aba24_product.jpg";
 
@@ -50,10 +52,22 @@ export class AddUserComponent implements OnInit {
     if (this.userService.selectedUser.logo) {
       this.img = this.userService.selectedUser.logo['_url'];
     }
+    this.initCategories();
     if(this.userService.selectedUser.createdAt){
       this.editar = true;
     }
 
+  }
+
+  initCategories(){
+    if(this.userService.selectedUser.userCategories){
+      this.categorias = this.userService.selectedUser.userCategories;
+      this.userService.selectedUser.userCategories.forEach(element => {
+        if(element != 'Todas'){
+          this.listcatMayoreo.push(element);
+        }
+      });
+    }
   }
 
   getRoles() {
@@ -61,11 +75,6 @@ export class AddUserComponent implements OnInit {
       this.roles = res;
       console.log(this.roles)
     })
-  }
-
-  //Para controlar qué rol está seleccionado y mostrar u ocultar opciones en dependencia
-  selectRole(rol: string) {
-    this.selectedRole = rol;
   }
 
   getCategories() {
@@ -97,7 +106,7 @@ export class AddUserComponent implements OnInit {
         }else{
           if(this.auth.Admin()){
             form.value.priceCategories = this.mayoreo;
-            console.log('ADMIN-> ' + form.value.priceCategories);
+            form.value.userCategories = this.categorias;
           }
         }
         this.userService.admin = this.auth.Admin()
@@ -112,6 +121,7 @@ export class AddUserComponent implements OnInit {
       } else {
         // CREAR NUEVO USUARIO
         this.userService.selectedUser.priceCategories = this.mayoreo;
+        this.userService.selectedUser.userCategories = this.categorias;
         this.userService.addUser(this.userService.selectedUser, this.img.toString());
         Swal.fire({
           position: 'top-end',
@@ -161,10 +171,10 @@ export class AddUserComponent implements OnInit {
         } else {
           this.mayoreo.push([this.categoriaMayoreo, this.tipoMayoreo, this.cantMayoreo])
         }
-        for (let index = 0; index < this.categories.length; index++) {
-          const element = this.categories[index];
+        for (let index = 0; index < this.listcatMayoreo.length; index++) {
+          const element = this.listcatMayoreo[index];
           if (element == this.categoriaMayoreo) {
-            this.categories.splice(index, 1);
+            this.listcatMayoreo.splice(index, 1);
             index = this.categoriaMayoreo.length;
           }
         }
@@ -192,7 +202,7 @@ export class AddUserComponent implements OnInit {
     for (let index = 0; index < this.mayoreo.length; index++) {
       const element = this.mayoreo[index];
       if (element[0] == categoria) {
-        this.categories.push(categoria);
+        this.listcatMayoreo.push(categoria);
         this.mayoreo.splice(index, 1);
         index = this.mayoreo.length;
       }
@@ -214,17 +224,47 @@ export class AddUserComponent implements OnInit {
     if (this.mayoreo && this.cleancategories) {
       this.cleancategories = false;
       this.mayoreo.forEach(element => {
-        for (let index = 0; index < this.categories.length; index++) {
-          const cat = this.categories[index];
+        for (let index = 0; index < this.listcatMayoreo.length; index++) {
+          const cat = this.listcatMayoreo[index];
           if (cat == element[0]) {
-            this.categories.splice(index, 1);
-            index = this.categories.length;
+            this.listcatMayoreo.splice(index, 1);
+            index = this.listcatMayoreo.length;
           }
         }
       });
     }
   }
 
+  //Gestionando el arreglo de Categorías de productos a los que puede acceder ese usuario
+  selectCatProd(item: string) {
+    let categoryNotIn = true;
+    for (let index = 0; index < this.categorias.length; index++) {
+      const element = this.categorias[index];
+      if (item == element) {
+        this.categorias.splice(index, 1)
+        categoryNotIn = false;
+      }
+    }
+    for (let index = 0; index < this.listcatMayoreo.length; index++) {
+      const element = this.listcatMayoreo[index];
+      if (item == element) {
+        this.listcatMayoreo.splice(index, 1)
+      }
+    }
+    if (categoryNotIn) {
+      this.categorias.push(item);
+      this.listcatMayoreo.push(item);
+    }
+  }
 
+  verifyCatProd(item: string) {
+    for (let index = 0; index < this.categorias.length; index++) {
+      const element = this.categorias[index];
+      if (item == element) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 }

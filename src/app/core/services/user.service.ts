@@ -94,6 +94,8 @@ export class UserService {
               myNewObject.set('active', true);
               myNewObject.set('mayoreo', user.mayoreo);
               myNewObject.set('priceCategories', user.priceCategories);
+              myNewObject.set('userCategories', user.userCategories);
+              console.log('ca!!---> ' + user.userCategories);
               if(this.userImg){
                 myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
                 this.userImg = false;
@@ -137,6 +139,7 @@ export class UserService {
         myNewObject.set('active', true);
         myNewObject.set('mayoreo', User.mayoreo);
         myNewObject.set('priceCategories', User.priceCategories);
+        myNewObject.set('userCategories', User.userCategories);
         if(this.userImg){
           myNewObject.set('logo', new Parse.File("logo.jpg", { uri: img }));
           this.userImg = false;

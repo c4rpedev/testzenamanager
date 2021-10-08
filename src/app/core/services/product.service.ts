@@ -1,3 +1,4 @@
+import { AuthServices } from './auth.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from 'src/app/core/models/product';
@@ -24,7 +25,8 @@ export class ProductService {
 
   constructor(private http:HttpClient,
               private router: Router,
-              private stateService: StatesService
+              private stateService: StatesService,
+              private auth: AuthServices
               ) {
 
               }
@@ -150,6 +152,7 @@ export class ProductService {
     const Products = Parse.Object.extend('products');
       const query = new Parse.Query(Products);
       query.containedIn("productAgencys", [agency, 'Todas']);
+      query.containedIn("category", this.auth.logedUser.userCategories);
       query.contains('productProvinces', province);
       if(this.queryDescendingPrice){
         query.descending('price');

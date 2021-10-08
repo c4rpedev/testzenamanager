@@ -87,16 +87,25 @@
         <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="form-text text-danger">Este campo es
           requerido!</small>
 
+          <!-- ROL -->
         <div class="col">
           <div class="form-group mt-2"><label for="last_name"><strong>Rol</strong><br /></label>
             <select [(ngModel)]="userService.selectedUser.userRole" [disabled]="!auth.Admin()" class="form-select"
               name="userRole" [class.is-invalid]="userRole.invalid && userRole.touched" #userRole="ngModel" required>
-              <option (click)="selectRole(item.attributes.name)" [value]="item.attributes.name"
+              <option [value]="item.attributes.name"
                 *ngFor="let item of roles">
                 {{item.attributes.name}}
               </option>
             </select>
           </div>
+        </div>
+
+        <div *ngIf="auth.Admin() && userService.selectedUser.userRole == 'Agencia'" class="form-group mt-2"><label for="last_name"><strong>Categorías de Productos</strong><br /></label>
+          <select multiple class="form-select" name="productAgency">
+            <option *ngFor="let t of categories" (click)="selectCatProd(t)">
+              {{t}} <i *ngIf="verifyCatProd(t)" class="fa fa-check"></i>
+            </option>
+          </select>
         </div>
 
         <!-- MAYOREO!! -->
@@ -110,7 +119,7 @@
               [class.is-invalid]="cateMayoreo.invalid && cateMayoreo.touched" #cateMayoreo="ngModel"
               (click)="actualizarCategories()">
               <option>--Seleccione una categoría--</option>
-              <option *ngFor="let item of categories">
+              <option *ngFor="let item of listcatMayoreo">
                 {{item}}
               </option>
             </select>
@@ -134,30 +143,6 @@
             <button (click)="addMayoreo()" type="button">Añadir</button>
           </div>
         </div>
-
-        <!-- DEFINIR PRECIO POR CATEGORÍAS A UNA AGENCIA -->
-        <!-- <div class="row mt-2" *ngIf="auth.Admin() && userService.selectedUser.userRole == 'Agencia'">
-          <label for="last_name mb-1"><strong>Definir precio de productos</strong><br /></label>
-          <div class="form-group col-3"><label for="last_name"><strong>Catergoría</strong><br /></label>
-            <select [(ngModel)]="categoriaMayoreo" class="form-select" name="cateMayoreo"
-              [class.is-invalid]="cateMayoreo.invalid && cateMayoreo.touched" #cateMayoreo="ngModel"
-              (click)="actualizarCategories()">
-              <option>--Seleccione una categoría--</option>
-              <option *ngFor="let item of categories">
-                {{item}}
-              </option>
-            </select>
-          </div>
-          <div class="col-3">
-            <label> <strong>Cantidad</strong> </label>
-            <input type="number" class="form-control" [(ngModel)]="cantMayoreo"
-              [class.is-invalid]="cantMayoreoo.invalid && cantMayoreoo.touched" name="cantMayoreo"
-              #cantMayoreoo="ngModel">
-          </div>
-          <div class="col-3 mt-3">
-            <button (click)="addMayoreo()" type="button">Añadir</button>
-          </div>
-        </div> -->
 
         <label class="mt-2" *ngIf="!editar"><strong>Contraseña *</strong> </label>
         <div class="row" *ngIf="!editar">
